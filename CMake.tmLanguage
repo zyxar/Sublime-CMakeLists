@@ -17,7 +17,7 @@
 			<key>match</key>
 			<string>\b(?i:APPLE|BORLAND|CMAKE_(CL_64|COMPILER_2005|HOST_APPLE|HOST_SYSTEM|HOST_SYSTEM_NAME|HOST_SYSTEM_PROCESSOR|HOST_SYSTEM_VERSION|HOST_UNIX|HOST_WIN32|LIBRARY_ARCHITECTURE|LIBRARY_ARCHITECTURE_REGEX|OBJECT_PATH_MAX|SYSTEM|SYSTEM_NAME|SYSTEM_PROCESSOR|SYSTEM_VERSION)|CYGWIN|MSVC|MSVC80|MSVC_IDE|MSVC_VERSION|UNIX|WIN32|XCODE_VERSION)\b</string>
 			<key>name</key>
-			<string>variable.source.cmake</string>
+			<string>constant.source.cmake</string>
 		</dict>
 		<dict>
 			<key>comment</key>
@@ -47,7 +47,7 @@
 			<key>match</key>
 			<string>\$\{\w+\}</string>
 			<key>name</key>
-			<string>variable.source.cmake</string>
+			<string>storage.source.cmake</string>
 		</dict>
 		<dict>
 			<key>comment</key>
