@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>Indent</string>
+	<key>scope</key>
+	<string>source.cmake</string>
+	<key>settings</key>
+	<dict>
+		<key>decreaseIndentPattern</key>
+		<string>^\s*(?i:elseif|else|endif|endforeach|endfunction|endmacro|endwhile|[^(]*\))\s*$</string>
+		<key>increaseIndentPattern</key>
+		<string>^\s*(?i:else|elseif|if|function|foreach|while|macro)|.*\([^)]*$</string>
+	</dict>
+	<key>uuid</key>
+	<string>cd45e923-9fe3-4d1c-8482-90e651d5bcdb</string>
+</dict>
+</plist>

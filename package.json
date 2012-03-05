@@ -1,0 +1,7 @@
+{
+    "repo": "CMake",
+    "name": "CMake",
+    "description": "CMake syntax highlighting and auto-indentation",
+    "author": "Marcus Zy",
+    "homepage": "https://github.com/zyxar/Sublime-CMakeLists"
+}
