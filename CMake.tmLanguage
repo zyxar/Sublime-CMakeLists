@@ -135,6 +135,14 @@
 			<key>name</key>
 			<string>invalid.deprecated.source.cmake</string>
 		</dict>
+		<dict>
+			<key>comment</key>
+			<string>Compiler Flags</string>
+			<key>match</key>
+			<string>\b(?i:(CMAKE_)?(CXX_FLAGS|CMAKE_CXX_FLAGS_DEBUG|CMAKE_CXX_FLAGS_MINSIZEREL|CMAKE_CXX_FLAGS_RELEASE|CMAKE_CXX_FLAGS_RELWITHDEBINFO))\b</string>
+			<key>name</key>
+			<string>variable.source.cmake</string>
+		</dict>
 	</array>
 	<key>scopeName</key>
 	<string>source.cmake</string>
