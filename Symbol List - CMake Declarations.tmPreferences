@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>Symbol List - CMake Declarations</string>
+	<key>scope</key>
+	<string>source.cmake meta.symbol</string>
+	<key>settings</key>
+	<dict>
+		<key>showInSymbolList</key>
+		<integer>1</integer>
+		<key>symbolTransformation</key>
+		<string>
+      s/^\s*//;                   # strip whitespace at beginning
+      s/\s+/ /;                   # replace multiple spaces by one
+      s/#.*\n//g;                 # strip out comments
+      s/\s*#*\s*\z//g;            # strip trailing space and #'s</string>
+	</dict>
+	<key>uuid</key>
+	<string>37f93647-6047-4edf-9995-9571059f5d95</string>
+</dict>
+</plist>

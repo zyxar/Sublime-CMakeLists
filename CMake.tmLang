@@ -13,11 +13,12 @@ Indent::
         ^\s*(?i:else|elseif|if|function|foreach|while|macro)|.*\([^)]*$
 
 Symbol List - CMake Declarations::
-    scope: source.cmake meta.declaration
+    scope: source.cmake meta.symbol
     uuid: 37f93647-6047-4edf-9995-9571059f5d95
     showInSymbolList: 1
     symbolTransformation:
       s/^\s*//;                   # strip whitespace at beginning
+      s/\s+/ /;                   # replace multiple spaces by one
       s/#.*\n//g;                 # strip out comments
       s/\s*#*\s*\z//g;            # strip trailing space and #'s
 
@@ -349,6 +350,30 @@ cmake-comment
         (?x) \# .* $
 
 cmake-functions
+    meta.symbol.function.cmake
+        (?i)^\s*(macro|function)\s*\(\s*(\w+)\s
+        1: keyword.cmake
+        2: entity.name.function.cmake
+
+        \)
+
+        variable.parameter.function.cmake
+            \w+
+
+    meta.symbol.target.cmake
+        (?i)^\s*(add_custom_target|add_library|add_executable|project)\s*\(
+        1: keyword.cmake
+        2: entity.name.target.cmake
+
+        #cmake-comment
+        #cmake-constants
+        #cmake-keywords
+        #cmake-strings
+        #cmake-variables
+
+        \)
+
+
     meta.function-call.cmake
         (?i)^\s*(if|elseif)\s*\(
         1: support.function.builtin.cmake
@@ -692,20 +717,20 @@ cmake_variable
 cmake_variable_names
     support.variable.cmake
         (?x) \b(?i:(CMAKE_)?(\w+_POSTFIX|ARCHIVE_OUTPUT_DIRECTORY|AUTOMOC
-            |AUTOMOC_MOC_OPTIONS|BUILD_WITH_INSTALL_RPATH|DEBUG_POSTFIX
-            |EXE_LINKER_FLAGS|EXE_LINKER_FLAGS_\w+|Fortran_FORMAT
-            |Fortran_MODULE_DIRECTORY|GNUtoMS|INCLUDE_CURRENT_DIR
-            |INCLUDE_CURRENT_DIR_IN_INTERFACE|INSTALL_NAME_DIR
-            |INSTALL_RPATH|INSTALL_RPATH_USE_LINK_PATH
-            |LIBRARY_OUTPUT_DIRECTORY|LIBRARY_PATH_FLAG|LINK_DEF_FILE_FLAG
-            |LINK_DEPENDS_NO_SHARED|LINK_INTERFACE_LIBRARIES
-            |LINK_LIBRARY_FILE_FLAG|LINK_LIBRARY_FLAG|MACOSX_BUNDLE
-            |NO_BUILTIN_CHRPATH|PDB_OUTPUT_DIRECTORY
-            |POSITION_INDEPENDENT_CODE|RUNTIME_OUTPUT_DIRECTORY
-            |SKIP_BUILD_RPATH|SKIP_INSTALL_RPATH|TRY_COMPILE_CONFIGURATION
-            |USE_RELATIVE_PATHS|WIN32_EXECUTABLE)
-        |EXECUTABLE_OUTPUT_PATH
-        |LIBRARY_OUTPUT_PATH)\b
+                |AUTOMOC_MOC_OPTIONS|BUILD_WITH_INSTALL_RPATH|DEBUG_POSTFIX
+                |EXE_LINKER_FLAGS|EXE_LINKER_FLAGS_\w+|Fortran_FORMAT
+                |Fortran_MODULE_DIRECTORY|GNUtoMS|INCLUDE_CURRENT_DIR
+                |INCLUDE_CURRENT_DIR_IN_INTERFACE|INSTALL_NAME_DIR
+                |INSTALL_RPATH|INSTALL_RPATH_USE_LINK_PATH
+                |LIBRARY_OUTPUT_DIRECTORY|LIBRARY_PATH_FLAG|LINK_DEF_FILE_FLAG
+                |LINK_DEPENDS_NO_SHARED|LINK_INTERFACE_LIBRARIES
+                |LINK_LIBRARY_FILE_FLAG|LINK_LIBRARY_FLAG|MACOSX_BUNDLE
+                |NO_BUILTIN_CHRPATH|PDB_OUTPUT_DIRECTORY
+                |POSITION_INDEPENDENT_CODE|RUNTIME_OUTPUT_DIRECTORY
+                |SKIP_BUILD_RPATH|SKIP_INSTALL_RPATH|TRY_COMPILE_CONFIGURATION
+                |USE_RELATIVE_PATHS|WIN32_EXECUTABLE)
+            |EXECUTABLE_OUTPUT_PATH
+            |LIBRARY_OUTPUT_PATH)\b
 
     support.variable.cmake
         (?x) \b(?i:CMAKE_(AR|ARGC|ARGV0|BINARY_DIR|BUILD_TOOL|CACHEFILE_DIR
