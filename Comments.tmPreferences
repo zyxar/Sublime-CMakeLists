@@ -17,29 +17,6 @@
 				<string>yes</string>
 			</dict>
 		</array>
-		<key>smartTypingPairs</key>
-		<array>
-			<array>
-				<string>(</string>
-				<string>)</string>
-			</array>
-			<array>
-				<string>{</string>
-				<string>}</string>
-			</array>
-			<array>
-				<string>"</string>
-				<string>"</string>
-			</array>
-			<array>
-				<string>'</string>
-				<string>'</string>
-			</array>
-			<array>
-				<string>foreach</string>
-				<string>endforeach()</string>
-			</array>
-		</array>
 	</dict>
 	<key>uuid</key>
 	<string>c6955f68-6b2c-4a7a-a294-dcdac101ce09</string>
