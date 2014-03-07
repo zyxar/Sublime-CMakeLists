@@ -12,9 +12,9 @@
 		<array>
 			<dict>
 				<key>name</key>
-				<string>TM_COMMENT_START</string>
+				<string>TM_COMMENT_DISABLE_INDENT</string>
 				<key>value</key>
-				<string># </string>
+				<string>yes</string>
 			</dict>
 		</array>
 	</dict>
@@ -22,4 +22,3 @@
 	<string>c6955f68-6b2c-4a7a-a294-dcdac101ce09</string>
 </dict>
 </plist>
-
