@@ -27,9 +27,6 @@ Comments::
     scope: source.cmake
     TM_COMMENT_DISABLE_INDENT: yes
 
-Settings::
-    auto_complete_selector: text
-
 CMAKE_CONSTANTS_opt_CMAKE_prefix =
     CL_64
     COMPILER_2005
@@ -63,6 +60,20 @@ CMAKE_CONSTANTS_no_CMAKE_prefix =
     MSVC70
     MSVC90
     MSVC71
+
+_CMAKE_COMPILER_FLAGS = 
+    CMAKE_CXX_FLAGS
+    CMAKE_CXX_FLAGS_DEBUG
+    CMAKE_CXX_FLAGS_MINSIZEREL
+    CMAKE_CXX_FLAGS_RELEASE
+    CMAKE_CXX_FLAGS_RELWITHDEBINFO
+    CMAKE_C_FLAGS
+    CMAKE_C_FLAGS_DEBUG
+    CMAKE_C_FLAGS_MINSIZEREL
+    CMAKE_C_FLAGS_RELEASE
+    CMAKE_C_FLAGS_RELWITHDEBINFO
+
+CMAKE_COMPILER_FLAGS = {alternatives: {_CMAKE_COMPILER_FLAGS}}
 
 CMAKE_KEYWORDS =
     ABSOLUTE
@@ -749,4 +760,9 @@ cmake_variable_names
              |USING_VC_FREE_TOOLS|VERBOSE_MAKEFILE|VERSION)|PROJECT_BINARY_DIR
              |PROJECT_NAME|PROJECT_SOURCE_DIR|\w+_BINARY_DIR|\w+_SOURCE_DIR
              )\b
+
+    support.variable.cmake
+        {kwstart}{alternatives: {CMAKE_COMPILER_FLAGS}}{kwend}
+
+
 
