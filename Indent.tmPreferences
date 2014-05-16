@@ -9,9 +9,9 @@
 	<key>settings</key>
 	<dict>
 		<key>decreaseIndentPattern</key>
-		<string>^\s*(?i:elseif|else|endif|endforeach|endfunction|endmacro|endwhile|[^(]*\))\s*$</string>
+		<string>^\s*(?i:elseif|else|endif|endforeach|endfunction|endmacro|endwhile)\s*\([^\(]*\)\s*$</string>
 		<key>increaseIndentPattern</key>
-		<string>^\s*(?i:else|elseif|if|function|foreach|while|macro)|.*\([^)]*$</string>
+		<string>^\s*(?i:else|elseif|if|function|foreach|while|macro)\s*\([^)]*\)\s*$</string>
 	</dict>
 	<key>uuid</key>
 	<string>cd45e923-9fe3-4d1c-8482-90e651d5bcdb</string>
