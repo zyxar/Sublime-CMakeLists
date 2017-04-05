@@ -14,11 +14,12 @@ contexts:
   main:
     - include: comments
     - include: control-flow
-    - include: function-call
+    - include: function-calls
     - include: variable-invalid
 
   control-flow:
     - include: control-flow-if-elif-else-endif
+    - include: control-flow-foreach
 
   control-flow-if-elif-else-endif:
     - match: (?=if|elif|else|endif{{spaces}}\()
@@ -44,7 +45,8 @@ contexts:
 
   control-flow-if-elif-else-endif-arguments:
     - meta_content_scope: meta.function-call.arguments.cmake
-    - match: \bSTREQUAL\b|\bAND\b|\bNOT\b|\bVERSION_LESS\b|\bPOLICY\b|\bDEFINED\b|\bOR\b|\bEXISTS\b|\bEQUAL\b|\bCOMMAND\b
+      scope: keyword.operator.logical.cmake
+    - match: \bSTREQUAL\b|\bAND\b|\bNOT\b|\bVERSION_LESS\b|\bPOLICY\b|\bDEFINED\b|\bOR\b|\bEXISTS\b|\bEQUAL\b|\bCOMMAND\b|\bMATCHES\b
       scope: keyword.operator.logical.cmake
     - match: (?=\))
       pop: true
@@ -56,7 +58,51 @@ contexts:
       push: variable
     - include: comments
 
-  function-call-impl:
+  control-flow-foreach:
+    - match: (?=(?:end)?foreach{{spaces}}\()
+      push: control-flow-foreach-impl
+
+  control-flow-foreach-impl:
+    - meta_scope: meta.function-call.cmake
+    - match: \)
+      scope: punctuation.section.arguments.end.cmake
+      pop: true
+    - match: (?={{identifier}}{{spaces}}\()
+      push:
+        - match: (?={{spaces}}\()
+          pop: true
+        - match: (?={{identifier}})
+          push:
+            - match: '{{identifier}}'
+              scope: keyword.control.cmake
+              pop: true
+    - match: \(
+      scope: punctuation.section.arguments.begin.cmake
+      push: control-flow-foreach-arguments
+
+  control-flow-foreach-arguments:
+    - meta_content_scope: meta.function-call.arguments.cmake
+    - match: \bIN\b|\bLISTS\b|\bITEMS\b|\bRANGE\b
+      scope: keyword.operator.logical.cmake
+    - match: (?=\))
+      pop: true
+    - match: '"'
+      push: quoted-argument
+    - match: (?=\w|\$)
+      push: unquoted-argument
+    - match: (?={{variable_start}})
+      push: variable
+    - include: comments
+
+  function-calls:
+    - include: message-function-call
+    - include: generic-function-call
+
+  message-function-call:
+    - match: (?=message{{spaces}}\()
+      push: generic-function-call-impl
+
+  generic-function-call-impl:
     - meta_scope: meta.function-call.cmake
     - match: \)
       scope: punctuation.section.arguments.end.cmake
@@ -72,13 +118,13 @@ contexts:
               pop: true
     - match: \(
       scope: punctuation.section.arguments.begin.cmake
-      push: function-arguments
+      push: generic-function-arguments
 
-  function-call:
+  generic-function-call:
     - match: (?={{identifier}}{{spaces}}\()
-      push: function-call-impl
+      push: generic-function-call-impl
 
-  function-arguments:
+  generic-function-arguments:
     - meta_content_scope: meta.function-call.arguments.cmake
     - match: (?=\))
       pop: true

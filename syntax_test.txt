@@ -82,3 +82,10 @@ elif  (STREQUALasdf STREQUAL COMMAND ANDNOT AND NOT)
 
 endif   ()
 #^^^^ keyword.control.cmake
+
+foreach(item ${items})
+    message(STATUS "The item is ${item}")
+endforeach()
+
+if (NOT "${the_var}" MATCHES "[A-Za-z]\\d+")
+# maybe add regex as an embedded syntax here
