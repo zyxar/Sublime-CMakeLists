@@ -94,6 +94,10 @@ endforeach()
 if (NOT "${the_var}" MATCHES "[A-Za-z]\\d+")
 # maybe add regex as an embedded syntax here
 
+if ($ENV{LD_LIBRARY_PATH} STREQUAL /usr/local/lib)
+#   ^^^^^ punctuation.definition.variable.cmake
+endif()
+
 include(AddFileDependencies)
 include(CMakeParseArguments)
 
@@ -101,7 +105,7 @@ include(CMakeParseArguments)
     ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/LLVMConfig.cmake
     ${llvm_cmake_builddir}/LLVMConfigVersion.cmake
     LLVM-Config.cmake
-#   ^ meta.string.unquoted.cmake
+#   ^ meta.string.unquoted.cmake -- this fails at the moment!
     DESTINATION ${LLVM_INSTALL_PACKAGE_DIR}
 #   ^ variable.parameter.cmake
     COMPONENT cmake-exports)
