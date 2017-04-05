@@ -97,6 +97,13 @@ if (NOT "${the_var}" MATCHES "[A-Za-z]\\d+")
 include(AddFileDependencies)
 include(CMakeParseArguments)
 
+  install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/LLVMConfig.cmake
+    ${llvm_cmake_builddir}/LLVMConfigVersion.cmake
+    LLVM-Config.cmake
+    DESTINATION ${LLVM_INSTALL_PACKAGE_DIR}
+    COMPONENT cmake-exports)
+
 function(llvm_replace_compiler_option var old new)
   # Replaces a compiler option or switch `old' in `var' by `new'.
   # If `old' is not in `var', appends `new' to `var'.
