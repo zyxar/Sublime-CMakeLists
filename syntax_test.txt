@@ -43,7 +43,7 @@ message(STATUS "The some_var variable has the value \"${some_var}\"")
 #              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double.cmake
 #                                                   ^^ constant.character.escape.cmake
 #                                                     ^^ punctuation.definition.variable.cmake
-#                                                       ^^^^^^^^ variable.parameter.cmake
+#                                                       ^^^^^^^^ variable.other.bracket.cmake
 #                                                               ^ punctuation.definition.variable.cmake
 #                                                                ^^ constant.character.escape.cmake
 
@@ -64,3 +64,21 @@ set(some_list "one;two;thre\;e")
 #                 ^ punctuation.separator.cmake
 #                     ^ punctuation.separator.cmake
 #                          ^^ constant.character.escape.cmake
+
+if("${somevar}" STREQUAL "something else")
+#^ keyword.control.cmake
+
+elif("${somevar}" STREQUAL whatever AND NOT ${another_var} VERSION_LESS 1.2.3)
+#^^^ keyword.control.cmake
+
+elif  (STREQUALasdf STREQUAL COMMAND ANDNOT AND NOT)
+#^^^ keyword.control.cmake
+#      ^^^^^^^^^^^^ meta.string.unquoted.cmake 
+#                   ^^^^^^^^ keyword.operator.logical.cmake
+#                            ^^^^^^^ keyword.operator.logical.cmake
+#                                    ^^^^^^ meta.string.unquoted.cmake 
+#                                           ^^^ keyword.operator.logical.cmake
+#                                               ^^^ keyword.operator.logical.cmake
+
+endif   ()
+#^^^^ keyword.control.cmake
