@@ -54,6 +54,8 @@ contexts:
       scope: constant.character.escape.cmake
     - match: '"'
       pop: true
+    - match: ;
+      scope: punctuation.separator.cmake
     - include: variable
 
   unquoted-argument:

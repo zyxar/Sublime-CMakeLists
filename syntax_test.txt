@@ -59,3 +59,8 @@ set(nested_vars_test some${var_inside_${another_var}_and_moving_on}_even_further
 #                                     ^^ punctuation.definition.variable.cmake
 #                                                  ^ punctuation.definition.variable.cmake
 #                                                                 ^ punctuation.definition.variable.cmake
+
+set(some_list "one;two;thre\;e")
+#                 ^ punctuation.separator.cmake
+#                     ^ punctuation.separator.cmake
+#                          ^^ constant.character.escape.cmake
