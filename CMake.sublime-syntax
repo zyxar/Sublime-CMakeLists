@@ -47,7 +47,11 @@ contexts:
   control-flow-if-elif-else-endif-arguments:
     - meta_content_scope: meta.function-call.arguments.cmake
       scope: variable.parameter.cmake
-    - match: \bSTREQUAL\b|\bAND\b|\bNOT\b|\bVERSION_LESS\b|\bPOLICY\b|\bDEFINED\b|\bOR\b|\bEXISTS\b|\bEQUAL\b|\bCOMMAND\b|\bMATCHES\b
+    - match: |-
+        (?x)\b(STREQUAL|AND|NOT|VERSION_LESS|POLICY|DEFINED|OR|EXISTS|EQUAL|
+        COMMAND|MATCHES|TARGET|IS_NEWER_THAN|IS_DIRECTORY|IS_SYMLINK|
+        IS_ABSOLUTE|LESS|GREATER|EQUAL|STRLESS|STRGREATER|VERSION_EQUAL|
+        VERSION_GREATER)\b
       scope: variable.parameter.cmake
     - match: (?=\))
       pop: true

@@ -71,10 +71,10 @@ if("${somevar}" STREQUAL "something else")
 elif("${somevar}" STREQUAL whatever AND NOT ${another_var} VERSION_LESS 1.2.3)
 #^^^ keyword.control.cmake
 
-elif  (STREQUALasdf STREQUAL COMMAND ANDNOT AND NOT)
+elif  (STREQUALasdf sTREQUAL COMMAND ANDNOT AND NOT VERSION_GREATER TARGET)
 #^^^ keyword.control.cmake
 #      ^^^^^^^^^^^^ meta.string.unquoted.cmake 
-#                   ^^^^^^^^ variable.parameter.cmake
+#                   ^^^^^^^^ meta.string.unquoted.cmake 
 #                            ^^^^^^^ variable.parameter.cmake
 #                                    ^^^^^^ meta.string.unquoted.cmake 
 #                                           ^^^ variable.parameter.cmake
