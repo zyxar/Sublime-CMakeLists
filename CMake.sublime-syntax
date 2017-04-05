@@ -45,9 +45,9 @@ contexts:
 
   control-flow-if-elif-else-endif-arguments:
     - meta_content_scope: meta.function-call.arguments.cmake
-      scope: variable.parameter.python
+      scope: variable.parameter.cmake
     - match: \bSTREQUAL\b|\bAND\b|\bNOT\b|\bVERSION_LESS\b|\bPOLICY\b|\bDEFINED\b|\bOR\b|\bEXISTS\b|\bEQUAL\b|\bCOMMAND\b|\bMATCHES\b
-      scope: variable.parameter.python
+      scope: variable.parameter.cmake
     - match: (?=\))
       pop: true
     - match: '"'
@@ -83,7 +83,7 @@ contexts:
   control-flow-foreach-arguments:
     - meta_content_scope: meta.function-call.arguments.cmake
     - match: \bIN\b|\bLISTS\b|\bITEMS\b|\bRANGE\b
-      scope: variable.parameter.python
+      scope: variable.parameter.cmake
     - match: (?=\))
       pop: true
     - match: '"'
@@ -125,7 +125,7 @@ contexts:
     - match: (?=\))
       pop: true
     - match: \bSTATUS\b|\bWARNING\b|\bAUTHOR_WARNING\b|\bSEND_ERROR\b|\bFATAL_ERROR\b|\bDEPRECATION\b
-      scope: variable.parameter.python
+      scope: variable.parameter.cmake
     - match: '"'
       push: quoted-argument
     - match: (?=\w|\$)
