@@ -39,7 +39,7 @@ set(blarg
 
 message(STATUS "The some_var variable has the value \"${some_var}\"")
 #       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.function-call.arguments.cmake
-#       ^^^^^^ meta.string.unquoted.cmake 
+#       ^^^^^^ variable.parameter.cmake 
 #              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double.cmake
 #                                                   ^^ constant.character.escape.cmake
 #                                                     ^^ punctuation.definition.variable.cmake
@@ -74,11 +74,11 @@ elif("${somevar}" STREQUAL whatever AND NOT ${another_var} VERSION_LESS 1.2.3)
 elif  (STREQUALasdf STREQUAL COMMAND ANDNOT AND NOT)
 #^^^ keyword.control.cmake
 #      ^^^^^^^^^^^^ meta.string.unquoted.cmake 
-#                   ^^^^^^^^ keyword.operator.logical.cmake
-#                            ^^^^^^^ keyword.operator.logical.cmake
+#                   ^^^^^^^^ variable.parameter.cmake
+#                            ^^^^^^^ variable.parameter.cmake
 #                                    ^^^^^^ meta.string.unquoted.cmake 
-#                                           ^^^ keyword.operator.logical.cmake
-#                                               ^^^ keyword.operator.logical.cmake
+#                                           ^^^ variable.parameter.cmake
+#                                               ^^^ variable.parameter.cmake
 
 endif   ()
 #^^^^ keyword.control.cmake
@@ -101,8 +101,12 @@ include(CMakeParseArguments)
     ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/LLVMConfig.cmake
     ${llvm_cmake_builddir}/LLVMConfigVersion.cmake
     LLVM-Config.cmake
+#   ^ meta.string.unquoted.cmake
     DESTINATION ${LLVM_INSTALL_PACKAGE_DIR}
+#   ^ variable.parameter.cmake
     COMPONENT cmake-exports)
+#   ^ variable.parameter.cmake
+#             ^ meta.string.unquoted.cmake
 
 function(llvm_replace_compiler_option var old new)
   # Replaces a compiler option or switch `old' in `var' by `new'.
