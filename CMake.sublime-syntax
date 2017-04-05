@@ -1,0 +1,109 @@
+%YAML 1.2
+---
+name: CMake
+file_extensions: [CMakeLists.txt, cmake]
+scope: source.cmake
+
+variables:
+  spaces: '[ \t]*'
+  identifier: \b[A-Za-z_][A-Za-z0-9_]*\b
+  variable_start: \$\{
+  variable_end: \}
+
+contexts:
+  main:
+    - include: comments
+    - include: function-call
+    - include: variable-invalid
+
+  function-call:
+    - match: (?={{identifier}}{{spaces}}\()
+      push:
+        - meta_scope: meta.function-call.cmake
+        - match: \)
+          scope: punctuation.section.arguments.end.cmake
+          pop: true
+        - match: (?={{identifier}}{{spaces}}\()
+          push:
+            - match: (?={{spaces}}\()
+              pop: true
+            - match: (?={{identifier}})
+              push:
+                - match: '{{identifier}}'
+                  scope: variable.function.cmake
+                  pop: true
+        - match: \(
+          scope: punctuation.section.arguments.begin.cmake
+          push: function-arguments
+
+  function-arguments:
+    - meta_content_scope: meta.function-call.arguments.cmake
+    - match: (?=\))
+      pop: true
+    - match: '"'
+      push: quoted-argument
+    - match: (?=\w|\$)
+      push: unquoted-argument
+    - match: (?={{variable_start}})
+      push: variable
+    - include: comments
+
+  quoted-argument:
+    - meta_scope: string.quoted.double.cmake
+    - match: \\.
+      scope: constant.character.escape.cmake
+    - match: '"'
+      pop: true
+    - include: variable
+
+  unquoted-argument:
+    # It seems color themes color the unquoted string as greenish, which makes
+    # things harder to read actually.
+    - meta_scope: meta.string.unquoted.cmake
+    - match: (?=\t| |\(|\)|\#|\"|\\)
+      pop: true
+    - include: variable
+
+  line-continuation:
+    - match: (\\)(.*)$\n?
+      captures:
+        1: punctuation.separator.continuation.line.cmake
+        2: invalid.illegal.unexpected-text.cmake
+    # make sure to resume parsing at next line
+      push:
+        # This prevents strings after a continuation from being a docstring
+        - match: '(?=\S)'
+          pop: true
+
+  line-continuation-or-pop:
+    - include: line-continuation
+    - match: $|(?=;|#)
+      pop: true
+
+  variable:
+    - match: '{{variable_start}}'
+      scope: punctuation.definition.variable.cmake
+      push:
+        - meta_content_scope: variable.parameter.cmake
+        - match: '{{variable_end}}'
+          scope: punctuation.definition.variable.cmake
+          pop: true
+        - include: variable
+
+  variable-invalid:
+    - match: '{{variable_start}}'
+      scope: invalid.illegal.variable.cmake
+      push:
+        - meta_content_scope: invalid.illegal.variable.parameter.cmake
+        - match: '{{variable_end}}'
+          scope: invalid.illegal.variable.cmake
+          pop: true
+        - include: variable-invalid
+
+  comments:
+    - match: "#"
+      scope: punctuation.definition.comment.cmake
+      push:
+        - meta_scope: comment.line.number-sign.cmake
+        - match: \n
+          pop: true

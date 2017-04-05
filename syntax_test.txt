@@ -1,0 +1,61 @@
+# SYNTAX TEST "Packages/Sublime-CMakeLists/CMake.sublime-syntax"
+
+# This is a comment
+# ^^^^^^^^^^^^^^^^^^ comment.line.number-sign.cmake
+#      ^^^^^^^^^^^^^ comment.line.number-sign.cmake
+
+# <- source.cmake
+
+
+        # a comment on a non-zero column
+#         ^ comment.line.number-sign.cmake
+
+${asdf}
+# ^ invalid.illegal
+
+cmake_minimum_required(VERSION 3.0)
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.function-call.cmake
+#                     ^ punctuation.section.arguments.begin.cmake
+#                                 ^ punctuation.section.arguments.end.cmake
+#                      ^^^^^^^^^^^ meta.function-call.arguments.cmake
+#         ^ variable.function.cmake
+
+set(some_var "Hello, world!")
+# ^ variable.function.cmake
+#   ^ meta.string.unquoted.cmake
+#            ^ string.quoted.double.cmake
+#  ^ punctuation.section.arguments.begin.cmake
+#                           ^ punctuation.section.arguments.end.cmake
+
+set(var_with_quotes "This is a string with \"embedded\" quotes.")
+
+set(another ${some_var})
+#                      ^ punctuation.section.arguments.end.cmake
+
+set(blarg
+    # A comment inbetween
+#     ^ comment.line.number-sign.cmake
+    foobar)
+
+message(STATUS "The some_var variable has the value \"${some_var}\"")
+#       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.function-call.arguments.cmake
+#       ^^^^^^ meta.string.unquoted.cmake 
+#              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double.cmake
+#                                                   ^^ constant.character.escape.cmake
+#                                                     ^^ punctuation.definition.variable.cmake
+#                                                       ^^^^^^^^ variable.parameter.cmake
+#                                                               ^ punctuation.definition.variable.cmake
+#                                                                ^^ constant.character.escape.cmake
+
+target_link_libraries(mytarget PUBLIC
+        ${Boost_LIBRARIES}
+        ThisSpansMultipleLines
+        ButNoProblem
+        )
+
+set(nested_vars_test some${var_inside_${another_var}_and_moving_on}_even_further)
+#  ^ punctuation.section.arguments.begin.cmake
+#                        ^^ punctuation.definition.variable.cmake
+#                                     ^^ punctuation.definition.variable.cmake
+#                                                  ^ punctuation.definition.variable.cmake
+#                                                                 ^ punctuation.definition.variable.cmake
