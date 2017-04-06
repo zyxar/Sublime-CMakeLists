@@ -196,6 +196,13 @@ target_include_directories(module PUBLIC $<CMAKE_COMPILER_ID>)
 #                                                           ^ keyword.other.block.end.cmake
 #                                                            ^ punctuation.section.arguments.end.cmake
 
+
+while(${var})
+#^^^^ keyword.control.cmake
+  myfunc(mytarget NAMED_ARG some_value)
+endwhile(${var})
+#^^^^^^^ keyword.control.cmake
+
 set(TGT_PATH $<TARGET_FILE:tgt1>)
 
 if(NOT (CMAKE_VERSION VERSION_LESS 3.0))  # CMake >= 3.0
