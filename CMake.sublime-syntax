@@ -5,42 +5,11 @@ file_extensions: [CMakeLists.txt, cmake]
 scope: source.cmake
 
 variables:
-
-  # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#escape-sequences
-  escape_semicolon: \\;
-  escape_encoded: \\t|\\r|\\n
-  escape_identity: \\\(|\\\)|\\\#|\\\"|\\ |\\\\|\\\$|\\@|\\\^
-  escape_sequence: '{{escape_identity}}|{{escape_encoded}}|{{escape_semicolon}}'
-
-  # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#source-files
-  space: "[ \t]+"
-  newline: "\n"
-  line_ending: '{{line_comment}}?{{newline}}'
-
-  # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#line-comment
-  line_comment: \#.*
-
-  # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#bracket-argument
-  bracket_open: \[=*\[
-  bracket_close: \]=*\]
-  bracket_content: '[^{{bracket_open}}{{bracket_close}}]*'
-  bracket_argument: '{{bracket_open}}{{bracket_content}}{{bracket_close}}'
-
-  # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#quoted-argument
-  quoted_continuation: \\{{newline}}
-  quoted_element: '[^\\"]|{{escape_sequence}}|quoted_continuation'
-  quoted_argument: '"{{quoted_element}}*"'
-
   # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#unquoted-argument
   # Note: we're not doing legacy
   unquoted_element: "[^ \t()#\"\\']"
   unquoted_argument: "{{unquoted_element}}+"
 
-  argument: '{{bracket_argument}}|{{quoted_argument}}|{{unquoted_argument}}'
-  separation: '{{space}}|{{line_ending}}'
-  separated_arguments: '{{separation}}+{{argument}}?|{{separation}}*\({{arguments}}\)'
-
-  boundary: (?=[^\w-<>])
   spaces: '[ \t]*'
   identifier: \b[A-Za-z_][A-Za-z0-9_]*\b
   IDENTIFIER: \b@?[A-Z_][A-Z0-9_]*(?=[^\w-<>=\$])
@@ -122,22 +91,6 @@ contexts:
           scope: punctuation.definition.string.end.cmake
           pop: true
 
-  line-continuation:
-    - match: (\\)(.*)$\n?
-      captures:
-        1: punctuation.separator.continuation.line.cmake
-        2: invalid.illegal.unexpected-text.cmake
-    # make sure to resume parsing at next line
-      push:
-        # This prevents strings after a continuation from being a docstring
-        - match: '(?=\S)'
-          pop: true
-
-  line-continuation-or-pop:
-    - include: line-continuation
-    - match: $|(?=;|#)
-      pop: true
-
   variable:
     - match: '{{variable_start}}'
       scope: keyword.other.block.start.cmake
@@ -164,11 +117,6 @@ contexts:
           scope: punctuation.definition.generator-expression.separator.cmake
         - include: generator-expression
         - include: variable
-
-  invalid:
-    - meta_scope: invalid.illegal.scope.cmake
-    - match: (?=\))
-      pop: true
 
   comment:
     - include: bracket-comment
