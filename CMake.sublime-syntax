@@ -67,9 +67,11 @@ contexts:
       scope: punctuation.section.arguments.end.cmake
       pop: true
     - match: \(
+    - include: bracket-argument
       scope: punctuation.section.arguments.begin.cmake
       push: command-arguments
     - match: '"'
+      scope: punctuation.definition.string.begin.cmake
       push: quoted-argument
     - match: (?={{IDENTIFIER}})
       push: unquoted-argument-or-keyword
@@ -92,6 +94,7 @@ contexts:
     - match: \\.
       scope: invalid.illegal.character.escape.cmake
     - match: '"'
+      scope: punctuation.definition.string.end.cmake
       pop: true
     - match: ;
       scope: punctuation.separator.cmake
@@ -109,6 +112,15 @@ contexts:
       pop: true
     - include: variable
     - include: generator-expression
+
+  bracket-argument:
+    - match: '(\[(={0,16})\[)'
+      scope: punctuation.definition.string.end.cmake
+      push:
+        - meta_scope: string.quoted.double.cmake
+        - match: '\]\2\]'
+          scope: punctuation.definition.string.end.cmake
+          pop: true
 
   line-continuation:
     - match: (\\)(.*)$\n?

@@ -231,4 +231,8 @@ add_custom_target(ClaraDeploy
         "Deploying Clara"
     )
 
+#[[
 
+  new style bracket comments
+
+]]
