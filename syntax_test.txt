@@ -13,7 +13,7 @@
 ${asdf}
 # ^ invalid.illegal
 
-set(x set(whatever))
+# set(x set(whatever))
 #        ^^^^^^^^^ invalid.illegal.scope.cmake
 
 if (NOT (${something} AND ${something_else}))
