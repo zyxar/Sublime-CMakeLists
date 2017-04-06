@@ -11,6 +11,10 @@
 #         ^ comment.line
 
 if (NOT (${something} AND ${something_else}))
+#  ^ punctuation.section.arguments.begin.cmake
+#       ^ punctuation.section.arguments.begin.cmake
+#                                          ^ punctuation.section.arguments.end.cmake
+#                                           ^ punctuation.section.arguments.end.cmake
 
 endif()
 
