@@ -42,7 +42,7 @@ cmake_minimum_required(VERSION 3.0)
 
 set(some_var "Hello, world!")
 # ^ variable.function.cmake
-#   ^ meta.string.unquoted.cmake
+#   ^ string.unquoted.cmake
 #            ^ string.quoted.double.cmake
 #  ^ punctuation.section.arguments.begin.cmake
 #                           ^ punctuation.section.arguments.end.cmake
@@ -62,9 +62,9 @@ message(STATUS "The some_var variable has the value \"${some_var}\"")
 #       ^^^^^^ variable.parameter.cmake 
 #              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double.cmake
 #                                                   ^^ constant.character.escape.cmake
-#                                                     ^^ punctuation.definition.variable.begin.cmake
-#                                                       ^^^^^^^^ variable.cmake
-#                                                               ^ punctuation.definition.variable.end.cmake
+#                                                     ^^ keyword.other.block.start.cmake
+#                                                       ^^^^^^^^ meta.text-substitution.cmake
+#                                                               ^ keyword.other.block.end.cmake
 #                                                                ^^ constant.character.escape.cmake
 
 target_link_libraries(mytarget PUBLIC
@@ -73,12 +73,12 @@ target_link_libraries(mytarget PUBLIC
         ButNoProblem
         )
 
-set(nested_vars_test some${var_inside_${another_var}_and_moving_on}_even_further)
+set(asdf nested_vars_test some${var_inside_${another_var}_and_moving_on}_even_further)
 #  ^ punctuation.section.arguments.begin.cmake
-#                        ^^ punctuation.definition.variable.begin.cmake
-#                                     ^^ punctuation.definition.variable.begin.cmake
-#                                                  ^ punctuation.definition.variable.end.cmake
-#                                                                 ^ punctuation.definition.variable.end.cmake
+#                             ^^ keyword.other.block.start.cmake
+#                                          ^^ keyword.other.block.start.cmake
+#                                                       ^ keyword.other.block.end.cmake
+#                                                                      ^ keyword.other.block.end.cmake
 
 set(some_list "one;two;thre\;e")
 #                 ^ punctuation.separator.cmake
@@ -93,10 +93,10 @@ elif("${somevar}" STREQUAL whatever AND NOT ${another_var} VERSION_LESS 1.2.3)
 
 elif  (STREQUALasdf sTREQUAL COMMAND ANDNOT AND NOT VERSION_GREATER TARGET)
 #^^^ keyword.control.cmake
-#      ^^^^^^^^^^^^ meta.string.unquoted.cmake 
-#                   ^^^^^^^^ meta.string.unquoted.cmake 
+#      ^^^^^^^^^^^^ string.unquoted.cmake 
+#                   ^^^^^^^^ string.unquoted.cmake 
 #                            ^^^^^^^ variable.parameter.cmake
-#                                    ^^^^^^ meta.string.unquoted.cmake 
+#                                    ^^^^^^ string.unquoted.cmake 
 #                                           ^^^ variable.parameter.cmake
 #                                               ^^^ variable.parameter.cmake
 
@@ -117,7 +117,8 @@ if (NOT "${the_var}" MATCHES "[A-Za-z]\\d+")
 # maybe add regex as an embedded syntax here
 
 if ($ENV{LD_LIBRARY_PATH} STREQUAL /usr/local/lib)
-#   ^^^^^ punctuation.definition.variable.begin.cmake
+#   ^^^^^ keyword.other.block.start.cmake
+#                                  ^^^^^^^^^^^^^^ string.unquoted.cmake
 endif()
 
 include(AddFileDependencies)
@@ -127,12 +128,12 @@ include(CMakeParseArguments)
     ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/LLVMConfig.cmake
     ${llvm_cmake_builddir}/LLVMConfigVersion.cmake
     LLVM-Config.cmake
-#   ^ meta.string.unquoted.cmake
+#   ^ string.unquoted.cmake
     DESTINATION ${LLVM_INSTALL_PACKAGE_DIR}
 #   ^ variable.parameter.cmake
     COMPONENT cmake-exports)
 #   ^ variable.parameter.cmake
-#             ^ meta.string.unquoted.cmake
+#             ^ string.unquoted.cmake
 
 function(llvm_replace_compiler_option var old new)
   # Replaces a compiler option or switch `old' in `var' by `new'.
@@ -175,16 +176,16 @@ configure_file(
   ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/LLVMConfig.cmake
   @ONLY)
 
-target_include_directories(module PUBLIC $<CMAKE_COMPILER_ID> )
+target_include_directories(module PUBLIC $<CMAKE_COMPILER_ID>)
 # ^^^^^^^^^^^^^^^^^^^^^^^^ variable.function.cmake
 #                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.function-call.cmake
 #                         ^ punctuation.section.arguments.begin.cmake
-#                          ^^^^^^ meta.string.unquoted.cmake
+#                          ^^^^^^ string.unquoted.cmake
 #                                 ^^^^^^ variable.parameter.cmake
-#                                        ^^ punctuation.definition.variable.begin.cmake
-#                                          ^^^^^^^^^^^^^^^^^ variable.cmake
-#                                                           ^ punctuation.definition.variable.end.cmake
-#                                                             ^ punctuation.section.arguments.end.cmake
+#                                        ^^ keyword.other.block.start.cmake
+#                                          ^^^^^^^^^^^^^^^^^ meta.text-substitution.cmake
+#                                                           ^ keyword.other.block.end.cmake
+#                                                            ^ punctuation.section.arguments.end.cmake
 
 set(TGT_PATH $<TARGET_FILE:tgt1>)
 

@@ -5,6 +5,41 @@ file_extensions: [CMakeLists.txt, cmake]
 scope: source.cmake
 
 variables:
+
+  # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#escape-sequences
+  escape_semicolon: \\;
+  escape_encoded: \\t|\\r|\\n
+  escape_identity: \\\(|\\\)|\\\#|\\\"|\\ |\\\\|\\\$|\\@|\\\^
+  escape_sequence: '{{escape_identity}}|{{escape_encoded}}|{{escape_semicolon}}'
+
+  # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#source-files
+  space: "[ \t]+"
+  newline: "\n"
+  line_ending: '{{line_comment}}?{{newline}}'
+
+  # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#line-comment
+  line_comment: \#.*
+
+  # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#bracket-argument
+  bracket_open: \[=*\[
+  bracket_close: \]=*\]
+  bracket_content: '[^{{bracket_open}}{{bracket_close}}]*'
+  bracket_argument: '{{bracket_open}}{{bracket_content}}{{bracket_close}}'
+
+  # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#quoted-argument
+  quoted_continuation: \\{{newline}}
+  quoted_element: '[^\\"]|{{escape_sequence}}|quoted_continuation'
+  quoted_argument: '"{{quoted_element}}*"'
+
+  # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#unquoted-argument
+  # Note: we're not doing legacy
+  unquoted_element: "[^ \t()#\"\\']"
+  unquoted_argument: "{{unquoted_element}}+"
+
+  argument: '{{bracket_argument}}|{{quoted_argument}}|{{unquoted_argument}}'
+  separation: '{{space}}|{{line_ending}}'
+  separated_arguments: '{{separation}}+{{argument}}?|{{separation}}*\({{arguments}}\)'
+
   boundary: (?=[^\w-<>])
   spaces: '[ \t]*'
   identifier: \b[A-Za-z_][A-Za-z0-9_]*\b
@@ -135,12 +170,8 @@ contexts:
       push: quoted-argument
     - match: (?={{IDENTIFIER}})
       push: unquoted-argument-or-keyword
-    - match: (?={{identifier}}|{{variable_start}})
+    - match: (?={{unquoted_argument}})
       push: unquoted-argument
-    - match: (?={{variable_start}})
-      push: variable
-    - match: (?=\$<)
-      push: generator-expression
     - include: comments
 
   # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#unquoted-argument
@@ -162,10 +193,11 @@ contexts:
     - match: ;
       scope: punctuation.separator.cmake
     - include: variable
+    - include: generator-expression
 
   # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#unquoted-argument
   unquoted-argument:
-    - meta_scope: meta.string.unquoted.cmake
+    - meta_scope: string.unquoted.cmake
     - match: \\[()#"\\]
       scope: constant.character.escape.cmake
     - match: \\.
@@ -173,6 +205,7 @@ contexts:
     - match: (?=\t| |\(|\)|\#|\"|\\)
       pop: true
     - include: variable
+    - include: generator-expression
 
   line-continuation:
     - match: (\\)(.*)$\n?
@@ -192,21 +225,21 @@ contexts:
 
   variable:
     - match: '{{variable_start}}'
-      scope: punctuation.definition.variable.begin.cmake
+      scope: keyword.other.block.start.cmake
       push:
-        - meta_content_scope: meta.structure.substitution variable.cmake
+        - meta_content_scope: meta.text-substitution.cmake
         - match: '{{variable_end}}'
-          scope: punctuation.definition.variable.end.cmake
+          scope: keyword.other.block.end.cmake
           pop: true
         - include: variable
 
   generator-expression:
     - match: \$<
-      scope: punctuation.definition.variable.begin.cmake
+      scope: keyword.other.block.start.cmake
       push:
-        - meta_content_scope: meta.structure.substitution variable.cmake
+        - meta_content_scope: meta.text-substitution.cmake
         - match: '>'
-          scope: punctuation.definition.variable.end.cmake
+          scope: keyword.other.block.end.cmake
           pop: true
         - match: ':'
           scope: punctuation.definition.generator-expression.separator.cmake
