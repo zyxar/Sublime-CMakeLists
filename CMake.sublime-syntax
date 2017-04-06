@@ -5,9 +5,10 @@ file_extensions: [CMakeLists.txt, cmake]
 scope: source.cmake
 
 variables:
+  boundary: (?=[^\w-<>])
   spaces: '[ \t]*'
   identifier: \b[A-Za-z_][A-Za-z0-9_]*\b
-  IDENTIFIER: \b@?[A-Z_][A-Z0-9_]*(?=[^\w-]|$)
+  IDENTIFIER: \b@?[A-Z_][A-Z0-9_]*(?=[^\w-<>])
   variable_start: \$(?:ENV)?\{
   variable_end: \}
 
@@ -87,7 +88,7 @@ contexts:
 
   control-flow-foreach-arguments:
     - meta_content_scope: meta.function-call.arguments.cmake
-    - match: \bIN\b|\bLISTS\b|\bITEMS\b|\bRANGE\b
+    - match: (?x)\b(IN|LISTS|ITEMS|RANGE)
       scope: variable.parameter.cmake
     - match: (?=\))
       pop: true
@@ -128,6 +129,8 @@ contexts:
     - meta_content_scope: meta.function-call.arguments.cmake
     - match: (?=\))
       pop: true
+    - match: \(
+      push: invalid
     - match: '"'
       push: quoted-argument
     - match: (?={{IDENTIFIER}})
@@ -136,8 +139,11 @@ contexts:
       push: unquoted-argument
     - match: (?={{variable_start}})
       push: variable
+    - match: (?=\$<)
+      push: generator-expression
     - include: comments
 
+  # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#unquoted-argument
   unquoted-argument-or-keyword:
     - meta_scope: variable.parameter.cmake
     - match: (?=\t| |\(|\)|\#|\"|\\)
@@ -146,18 +152,24 @@ contexts:
 
   quoted-argument:
     - meta_scope: string.quoted.double.cmake
-    - match: \\.
+    # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#escape-sequences
+    - match: \\[()#" \\$@^trn;]
       scope: constant.character.escape.cmake
+    - match: \\.
+      scope: invalid.illegal.character.escape.cmake
     - match: '"'
       pop: true
     - match: ;
       scope: punctuation.separator.cmake
     - include: variable
 
+  # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#unquoted-argument
   unquoted-argument:
-    # It seems color themes color the unquoted string as greenish, which makes
-    # things harder to read actually.
     - meta_scope: meta.string.unquoted.cmake
+    - match: \\[()#"\\]
+      scope: constant.character.escape.cmake
+    - match: \\.
+      scope: invalid.illegal.character.escape.cmake
     - match: (?=\t| |\(|\)|\#|\"|\\)
       pop: true
     - include: variable
@@ -180,13 +192,31 @@ contexts:
 
   variable:
     - match: '{{variable_start}}'
-      scope: punctuation.definition.variable.cmake
+      scope: punctuation.definition.variable.begin.cmake
       push:
-        - meta_content_scope: variable.other.bracket.cmake
+        - meta_content_scope: meta.structure.substitution variable.cmake
         - match: '{{variable_end}}'
-          scope: punctuation.definition.variable.cmake
+          scope: punctuation.definition.variable.end.cmake
           pop: true
         - include: variable
+
+  generator-expression:
+    - match: \$<
+      scope: punctuation.definition.variable.begin.cmake
+      push:
+        - meta_content_scope: meta.structure.substitution variable.cmake
+        - match: '>'
+          scope: punctuation.definition.variable.end.cmake
+          pop: true
+        - match: ':'
+          scope: punctuation.definition.generator-expression.separator.cmake
+        - include: generator-expression
+        - include: variable
+
+  invalid:
+    - meta_scope: invalid.illegal.scope.cmake
+    - match: (?=\))
+      pop: true
 
   variable-invalid:
     - match: '{{variable_start}}'
