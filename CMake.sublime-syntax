@@ -239,10 +239,12 @@ contexts:
     - match: \$<
       scope: keyword.other.block.start.cmake
       push:
-        - meta_content_scope: meta.text-substitution.cmake
+        - meta_scope: meta.text-substitution.cmake
         - match: '>'
           scope: keyword.other.block.end.cmake
           pop: true
+        - match: '{{identifier}}'
+          scope: variable.cmake
         - match: ':'
           scope: punctuation.definition.generator-expression.separator.cmake
         - include: generator-expression
