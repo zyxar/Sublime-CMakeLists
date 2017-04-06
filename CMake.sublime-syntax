@@ -43,7 +43,7 @@ variables:
   boundary: (?=[^\w-<>])
   spaces: '[ \t]*'
   identifier: \b[A-Za-z_][A-Za-z0-9_]*\b
-  IDENTIFIER: \b@?[A-Z_][A-Z0-9_]*(?=[^\w-<>])
+  IDENTIFIER: \b@?[A-Z_][A-Z0-9_]*(?=[^\w-<>=])
   variable_start: \$(?:ENV)?\{
   variable_end: \}
 
