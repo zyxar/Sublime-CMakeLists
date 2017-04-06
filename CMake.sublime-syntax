@@ -43,54 +43,39 @@ variables:
   boundary: (?=[^\w-<>])
   spaces: '[ \t]*'
   identifier: \b[A-Za-z_][A-Za-z0-9_]*\b
-  IDENTIFIER: \b@?[A-Z_][A-Z0-9_]*(?=[^\w-<>=])
+  IDENTIFIER: \b@?[A-Z_][A-Z0-9_]*(?=[^\w-<>=\$])
   variable_start: \$(?:ENV)?\{
   variable_end: \}
 
 contexts:
   main:
-    - include: comments
-    - include: function-calls
+    - include: comment
+    - include: command
 
-  function-calls:
-    - match: (?={{identifier}}{{spaces}}\()
-      push: generic-function-call-impl
+  command:
+    - match: 'if|elif|else|endif|foreach|endforeach|while|endwhile{{spaces}}'
+      scope: keyword.control.cmake
+    - match: '{{identifier}}{{spaces}}'
+      scope: variable.function.cmake
+    - match: \(
+      scope: punctuation.section.arguments.begin.cmake
+      push: command-arguments
 
-  generic-function-call-impl:
-    - meta_scope: meta.function-call.cmake
+  command-arguments:
+    - meta_scope: meta.function-call.arguments.cmake
     - match: \)
       scope: punctuation.section.arguments.end.cmake
       pop: true
-    - match: (?={{identifier}}{{spaces}}\()
-      push:
-        - match: (?={{spaces}}\()
-          pop: true
-        - match: (?={{identifier}})
-          push:
-            - match: if|elif|else|endif|foreach|endforeach|while|endwhile
-              scope: keyword.control.cmake
-              pop: true
-            - match: '{{identifier}}'
-              scope: variable.function.cmake
-              pop: true
     - match: \(
       scope: punctuation.section.arguments.begin.cmake
-      push: generic-function-arguments
-
-  generic-function-arguments:
-    - meta_content_scope: meta.function-call.arguments.cmake
-    - match: (?=\))
-      pop: true
-    - match: \(
-      scope: punctuation.section.arguments.begin.cmake
-      push: generic-function-arguments
+      push: command-arguments
     - match: '"'
       push: quoted-argument
     - match: (?={{IDENTIFIER}})
       push: unquoted-argument-or-keyword
     - match: (?={{unquoted_argument}})
       push: unquoted-argument
-    - include: comments
+    - include: comment
 
   # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#unquoted-argument
   unquoted-argument-or-keyword:
@@ -173,10 +158,5 @@ contexts:
     - match: (?=\))
       pop: true
 
-  comments:
-    - match: "#"
-      scope: punctuation.definition.comment.cmake
-      push:
-        - meta_scope: comment.line.number-sign.cmake
-        - match: \n
-          pop: true
+  comment:
+    - include: scope:source.shell#comment
