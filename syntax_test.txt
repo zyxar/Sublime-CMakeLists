@@ -1,20 +1,14 @@
 # SYNTAX TEST "Packages/Sublime-CMakeLists/CMake.sublime-syntax"
 
 # This is a comment
-# ^^^^^^^^^^^^^^^^^^ comment.line.number-sign.cmake
-#      ^^^^^^^^^^^^^ comment.line.number-sign.cmake
+# ^^^^^^^^^^^^^^^^^^ comment.line
+#      ^^^^^^^^^^^^^ comment.line
 
 # <- source.cmake
 
 
         # a comment on a non-zero column
-#         ^ comment.line.number-sign.cmake
-
-# ${asdf}
-# invalid.illegal
-
-# set(x set(whatever))
-#        ^^^^^^^^^ invalid.illegal.scope.cmake
+#         ^ comment.line
 
 if (NOT (${something} AND ${something_else}))
 
@@ -38,7 +32,7 @@ set(x "\! \@ \# \$ \% \& \* \( \) \a \b \c \d \e \f \g \h \i \j \k \l \m \n \o \
 #                                                                        ^^ constant.character.escape.cmake
 
 cmake_minimum_required(VERSION 3.0)
-# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.function-call.cmake
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #                     ^ punctuation.section.arguments.begin.cmake
 #                                 ^ punctuation.section.arguments.end.cmake
 #                      ^^^^^^^^^^^ meta.function-call.arguments.cmake
@@ -58,7 +52,7 @@ set(another ${some_var})
 
 set(blarg
     # A comment inbetween
-#     ^ comment.line.number-sign.cmake
+#     ^ comment.line
     foobar)
 
 message(STATUS "The some_var variable has the value \"${some_var}\"")
@@ -81,8 +75,8 @@ set(asdf nested_vars_test some${var_inside_${anot${h}er_var}_and_moving_on}_even
 #  ^ punctuation.section.arguments.begin.cmake
 #                             ^^ keyword.other.block.start.cmake
 #                                          ^^ keyword.other.block.start.cmake
-#                                                       ^ keyword.other.block.end.cmake
-#                                                                      ^ keyword.other.block.end.cmake
+#                                                          ^ keyword.other.block.end.cmake
+#                                                                         ^ keyword.other.block.end.cmake
 
 set(some_list "one;two;thre\;e")
 #                 ^ punctuation.separator.cmake
@@ -100,7 +94,7 @@ elif  (STREQUALasdf sTREQUAL COMMAND ANDNOT AND NOT VERSION_GREATER TARGET)
 #      ^^^^^^^^^^^^ string.unquoted.cmake 
 #                   ^^^^^^^^ string.unquoted.cmake 
 #                            ^^^^^^^ variable.parameter.cmake
-#                                    ^^^^^^ string.unquoted.cmake 
+#                                    ^^^^^^ variable.parameter.cmake
 #                                           ^^^ variable.parameter.cmake
 #                                               ^^^ variable.parameter.cmake
 
@@ -182,7 +176,7 @@ configure_file(
 
 target_include_directories(module PUBLIC $<CMAKE_COMPILER_ID>)
 # ^^^^^^^^^^^^^^^^^^^^^^^^ variable.function.cmake
-#                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.function-call.cmake
+#                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #                         ^ punctuation.section.arguments.begin.cmake
 #                          ^^^^^^ string.unquoted.cmake
 #                                 ^^^^^^ variable.parameter.cmake
@@ -211,8 +205,22 @@ if(NOT (CMAKE_VERSION VERSION_LESS 3.0))  # CMake >= 3.0
   endif()
   target_compile_options(module INTERFACE $<BUILD_INTERFACE:${PYBIND11_CPP_STANDARD}>)
 
-  add_library(pybind11::module ALIAS module)  # to match exported target
+  add_library(pybind11::module #[[new style bracket comments!]] ALIAS module)  # to match exported target
 endif()
+
+#[=[
+
+  the following [[ snippet of text ]] should do nothing
+
+    special
+
+              in                                 [==[ not even this one ]==]
+
+                        particular
+
+]=] # and this is where a regular line comment starts 
+# ^ comment.block.cmake
+#   ^ comment.line
 
 add_custom_target(ClaraDeploy
     COMMAND
@@ -231,8 +239,32 @@ add_custom_target(ClaraDeploy
         "Deploying Clara"
     )
 
-#[[
-
-  new style bracket comments
-
-]]
+set(bedtime_story [=[
+[1] Non eram ${nescius}, \Brute, \cum, \q\u\a\e \s\u\m\m\i\s\ \i\n\g\e\n\i\i\s
+exquisitaque doctrina "${philosophi}" Graeco sermone tractavissent, ea Latinis
+litteris mandaremus, fore ut hic noster labor in varias reprehensiones
+incurreret. [[ x ]] nam quibusdam, et iis quidem non admodum indoctis, totum hoc
+displicet philosophari. quidam autem non tam id reprehendunt, si remissius
+agatur, sed tantum studium tamque multam operam ponendam in eo non arbitrantur.
+erunt etiam, et ii quidem eruditi Graecis litteris, contemnentes Latinas, qui se
+dicant in Graecis legendis operam malle consumere. postremo aliquos futuros
+suspicor, qui me ad alias litteras vocent, genus hoc scribendi, etsi sit
+elegans, personae tamen et dignitatis esse negent. [2] Contra quos omnis
+dicendum breviter existimo. Quamquam philosophiae quidem vituperatoribus satis
+responsum est eo libro, quo a nobis philosophia defensa et collaudata est, cum
+esset accusata et vituperata ab Hortensio. qui liber cum et tibi probatus
+videretur et iis, quos ego posse iudicare arbitrarer, plura suscepi veritus ne
+movere hominum studia viderer, retinere non posse. Qui autem, si maxime hoc
+placeat, moderatius tamen id volunt fieri, difficilem quandam temperantiam
+postulant in eo, quod semel admissum coerceri reprimique non potest, ut
+propemodum iustioribus utamur illis, qui omnino avocent a philosophia, quam his,
+qui rebus infinitis modum constituant in reque eo meliore, quo maior sit,
+mediocritatem desiderent. [3] Sive enim ad sapientiam perveniri potest, non
+paranda nobis solum ea, sed fruenda etiam [sapientia] est; sive hoc difficile
+est, tamen nec modus est ullus investigandi veri, nisi inveneris, et quaerendi
+defatigatio turpis est, cum id, quod quaeritur, sit pulcherrimum. etenim si
+delectamur, cum scribimus, quis est tam invidus, qui ab eo nos abducat? sin
+laboramus, quis est, qui alienae modum statuat industriae? nam ut Terentianus
+Chremes non inhumanus, qui novum vicinum non vult 'fodere aut arare aut aliquid
+ferre denique' -- non enim illum ab industria, sed ab inliberali labore deterret
+--, sic isti curiosi, quos offendit noster minime nobis iniucundus labor. ]=])

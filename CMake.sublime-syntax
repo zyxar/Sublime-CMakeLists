@@ -115,7 +115,7 @@ contexts:
 
   bracket-argument:
     - match: '(\[(={0,16})\[)'
-      scope: punctuation.definition.string.end.cmake
+      scope: punctuation.definition.string.begin.cmake
       push:
         - meta_scope: string.quoted.double.cmake
         - match: '\]\2\]'
@@ -171,4 +171,14 @@ contexts:
       pop: true
 
   comment:
+    - include: bracket-comment
     - include: scope:source.shell#comment
+
+  bracket-comment:
+    - match: \#(\[(={0,16})\[)
+      scope: punctuation.definition.comment.begin.cmake
+      push:
+        - meta_scope: comment.block.cmake
+        - match: '\]\2\]'
+          scope: punctuation.definition.comment.end.cmake
+          pop: true

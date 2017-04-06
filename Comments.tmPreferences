@@ -16,10 +16,26 @@
 				<key>value</key>
 				<string># </string>
 			</dict>
+            <dict> <!-- bracket comment length 0 -->
+                <key>name</key>
+                <string>TM_COMMENT_START_2</string>
+                <key>value</key>
+                <string>#[[</string>
+            </dict>
+            <dict>
+                <key>name</key>
+                <string>TM_COMMENT_END_2</string>
+                <key>value</key>
+                <string>]]</string>
+            </dict>
+            <dict>
+                <key>name</key>
+                <string>TM_COMMENT_DISABLE_INDENT_2</string>
+                <key>value</key>
+                <string>yes</string>
+            </dict>
 		</array>
 	</dict>
-	<key>uuid</key>
-	<string>c6955f68-6b2c-4a7a-a294-dcdac101ce09</string>
 </dict>
 </plist>
 
