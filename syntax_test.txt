@@ -245,6 +245,13 @@ endif()
 # ^ comment.block.cmake
 #   ^ comment.line
 
+add_executable(hel#lo main.cpp)
+#             ^^^^ meta.function-call.arguments
+#                 ^^^^^^^^^^^^^ comment.line
+    main.cpp)
+#   ^^^^^^^^ meta.function-call.arguments
+#           ^ punctuation.section.arguments.end
+
 add_custom_target(ClaraDeploy
     COMMAND
         ${CMAKE_COMMAND} 

@@ -1,6 +1,7 @@
 %YAML 1.2
 ---
 name: CMake
+comment: Written by Raoul Wols <raoulwols@gmail.com>, 2017
 file_extensions: [CMakeLists.txt, cmake]
 scope: source.cmake
 
@@ -120,7 +121,7 @@ contexts:
 
   comment:
     - include: bracket-comment
-    - include: scope:source.shell#comment
+    - include: line-comment
 
   bracket-comment:
     - match: \#(\[(={0,16})\[)
@@ -129,4 +130,12 @@ contexts:
         - meta_scope: comment.block.cmake
         - match: \]\2\]
           scope: punctuation.definition.comment.end.cmake
+          pop: true
+
+  line-comment:
+    - match: \#
+      scope: punctuation.definition.comment.begin.cmake
+      push:
+        - meta_scope: comment.line.cmake
+        - match: \n
           pop: true
