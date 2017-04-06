@@ -227,10 +227,12 @@ contexts:
     - match: '{{variable_start}}'
       scope: keyword.other.block.start.cmake
       push:
-        - meta_content_scope: meta.text-substitution.cmake
+        - meta_scope: meta.text-substitution.cmake
         - match: '{{variable_end}}'
           scope: keyword.other.block.end.cmake
           pop: true
+        - match: '{{identifier}}'
+          scope: variable.cmake
         - include: variable
 
   generator-expression:

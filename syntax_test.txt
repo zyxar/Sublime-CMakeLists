@@ -16,6 +16,10 @@ ${asdf}
 set(x set(whatever))
 #        ^^^^^^^^^ invalid.illegal.scope.cmake
 
+if (NOT (${something} AND ${something_else}))
+
+endif()
+
 set(x "\! \@ \# \$ \% \& \* \( \) \a \b \c \d \e \f \g \h \i \j \k \l \m \n \o \p \q \r \s \t \u \v \w \x \y \z")
 #      ^^ invalid.illegal.character.escape.cmake
 #         ^^ constant.character.escape.cmake
@@ -204,4 +208,22 @@ if(NOT (CMAKE_VERSION VERSION_LESS 3.0))  # CMake >= 3.0
 
   add_library(pybind11::module ALIAS module)  # to match exported target
 endif()
+
+add_custom_target(ClaraDeploy
+    COMMAND
+        ${CMAKE_COMMAND} 
+            -D VERSION=${PROJECT_VERSION} 
+#              ^^^^^^^^ string.unquoted.cmake
+            -D SUBLIME_PLATFORM_EXT=${SUBLIME_PLATFORM_EXT} 
+#              ^^^^^^^^^^^^^^^^^^^^^ string.unquoted.cmake
+            -D ZIPFILE="${Clara_tar_output}" 
+#              ^^^^^^^^string.unquoted.cmake
+            -P "${CMAKE_CURRENT_SOURCE_DIR}/Deploy.cmake"
+#              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double.cmake
+    DEPENDS
+        ClaraPackage
+    COMMENT
+        "Deploying Clara"
+    )
+
 
