@@ -252,6 +252,21 @@ add_executable(hel#lo main.cpp)
 #   ^^^^^^^^ meta.function-call.arguments
 #           ^ punctuation.section.arguments.end
 
+foreach(arg
+    NoSpace
+    Escaped\ Space
+#   ^^^^^^^^^^^^^^ string.unquoted
+    This;Divides;Into;Five;Arguments
+#       ^ punctuation.separator.cmake
+#               ^ punctuation.separator.cmake
+#                    ^ punctuation.separator.cmake
+#                         ^ punctuation.separator.cmake
+    Escaped\;Semicolon
+#   ^^^^^^^^^^^^^^^^^^ string.unquoted
+    )
+  message("${arg}")
+endforeach()
+
 add_custom_target(ClaraDeploy
     COMMAND
         ${CMAKE_COMMAND} 

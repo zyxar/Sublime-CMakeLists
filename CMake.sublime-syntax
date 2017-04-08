@@ -74,12 +74,14 @@ contexts:
   # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#unquoted-argument
   unquoted-argument:
     - meta_scope: string.unquoted.cmake
-    - match: \\[()#"\\]
+    - match: \\[; ()#"\\]
       scope: constant.character.escape.cmake
     - match: \\.
       scope: invalid.illegal.character.escape.cmake
     - match: (?=\t| |\(|\)|\#|\"|\\)
       pop: true
+    - match: ;
+      scope: punctuation.separator.cmake
     - include: variable
     - include: generator-expression
 
