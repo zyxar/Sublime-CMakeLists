@@ -61,7 +61,7 @@ contexts:
       scope: punctuation.section.parens.end.cmake
       pop: true
     - match: \(
-      scope: punctuation.section.parens.begin.cmae
+      scope: punctuation.section.parens.begin.cmake
       push: command-arguments
     - include: bracket-argument
     - match: '"'

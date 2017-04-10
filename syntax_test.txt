@@ -11,10 +11,10 @@
 #         ^ comment.line
 
 if (NOT (${something} AND ${something_else}))
-#  ^ punctuation.section.arguments.begin.cmake
-#       ^ punctuation.section.arguments.begin.cmake
-#                                          ^ punctuation.section.arguments.end.cmake
-#                                           ^ punctuation.section.arguments.end.cmake
+#  ^ punctuation.section.parens.begin.cmake
+#       ^ punctuation.section.parens.begin.cmake
+#                                          ^ punctuation.section.parens.end.cmake
+#                                           ^ punctuation.section.parens.end.cmake
 
 endif()
 
@@ -37,22 +37,22 @@ set(x "\! \@ \# \$ \% \& \* \( \) \a \b \c \d \e \f \g \h \i \j \k \l \m \n \o \
 
 cmake_minimum_required(VERSION 3.0)
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-#                     ^ punctuation.section.arguments.begin.cmake
-#                                 ^ punctuation.section.arguments.end.cmake
+#                     ^ punctuation.section.parens.begin.cmake
+#                                 ^ punctuation.section.parens.end.cmake
 #                      ^^^^^^^^^^^ meta.function-call.arguments.cmake
 #         ^ variable.function.cmake
 
 set(some_var "Hello, world!")
 # ^ variable.function.cmake
-#   ^ string.unquoted.cmake
+#   ^ variable.other.cmake
 #            ^ string.quoted.double.cmake
-#  ^ punctuation.section.arguments.begin.cmake
-#                           ^ punctuation.section.arguments.end.cmake
+#  ^ punctuation.section.parens.begin.cmake
+#                           ^ punctuation.section.parens.end.cmake
 
 set(var_with_quotes "This is a string with \"embedded\" quotes.")
 
 set(another ${some_var})
-#                      ^ punctuation.section.arguments.end.cmake
+#                      ^ punctuation.section.parens.end.cmake
 
 set(blarg
     # A comment inbetween
@@ -76,7 +76,7 @@ target_link_libraries(mytarget PUBLIC
         )
 
 set(asdf nested_vars_test some${var_inside_${anot${h}er_var}_and_moving_on}_even_further)
-#  ^ punctuation.section.arguments.begin.cmake
+#  ^ punctuation.section.parens.begin.cmake
 #                             ^^ keyword.other.block.start.cmake
 #                                          ^^ keyword.other.block.start.cmake
 #                                                          ^ keyword.other.block.end.cmake
@@ -188,13 +188,13 @@ configure_file(
 target_include_directories(module PUBLIC $<CMAKE_COMPILER_ID>)
 # ^^^^^^^^^^^^^^^^^^^^^^^^ variable.function.cmake
 #                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-#                         ^ punctuation.section.arguments.begin.cmake
+#                         ^ punctuation.section.parens.begin.cmake
 #                          ^^^^^^ string.unquoted.cmake
 #                                 ^^^^^^ variable.parameter.cmake
 #                                        ^^ keyword.other.block.start.cmake
 #                                          ^^^^^^^^^^^^^^^^^ meta.text-substitution.cmake
 #                                                           ^ keyword.other.block.end.cmake
-#                                                            ^ punctuation.section.arguments.end.cmake
+#                                                            ^ punctuation.section.parens.end.cmake
 
 
 while(${var})
@@ -227,7 +227,7 @@ if(NOT (CMAKE_VERSION VERSION_LESS 3.0))  # CMake >= 3.0
 #                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
 #                                                               ^^^^^ variable.parameter.cmake
 #                                                                     ^^^^^^ string.unquoted.cmake
-#                                                                           ^ punctuation.section.arguments.end.cmake
+#                                                                           ^ punctuation.section.parens.end.cmake
                                               
 endif()
 
@@ -250,7 +250,7 @@ add_executable(hel#lo main.cpp)
 #                 ^^^^^^^^^^^^^ comment.line
     main.cpp)
 #   ^^^^^^^^ meta.function-call.arguments
-#           ^ punctuation.section.arguments.end
+#           ^ punctuation.section.parens.end
 
 foreach(arg
     NoSpace
@@ -292,4 +292,4 @@ incurreret. [[ x ]] nam quibusdam, et iis quidem non admodum indoctis, totum hoc
 displicet philosophari. ]=])
 #^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double
 #                       ^^^ punctuation.definition.string.end
-#                          ^ punctuation.section.arguments.end.cmake                                                                 
+#                          ^ punctuation.section.parens.end.cmake                                                                 
