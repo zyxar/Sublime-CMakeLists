@@ -23,21 +23,45 @@ contexts:
     - include: command
 
   command:
-    - match: (?:end)?if|elif|else|(?:end)?foreach|(?:end)?while{{spaces}}
-      scope: keyword.control.cmake
-    - match: '{{identifier}}{{spaces}}'
-      scope: variable.function.cmake
+
+    # If we encounter a keyword, assign keyword.control to it.
+    - match: ((?:end)?if|elif|else|(?:end)?foreach|(?:end)?while){{spaces}}
+      captures:
+        0: meta.function-call.cmake
+        1: keyword.control.cmake
+
+    # If we encounter a set(...) command, go into set-special-handling.
+    - match: (set){{spaces}}
+      captures:
+        0: meta.function-call.cmake
+        1: variable.function.cmake
+      push: set-special-handling
+
+    # If we encounter any other identifier, assume it's a function/command
+    - match: '({{identifier}}){{spaces}}'
+      captures:
+        0: meta.function-call.cmake
+        1: variable.function.cmake
+
+    # If we encounter an opening parenthesis, start handling the arguments
     - match: \(
-      scope: punctuation.section.arguments.begin.cmake
+      scope: punctuation.section.parens.begin.cmake
       push: command-arguments
+
+  set-special-handling:
+    - match: (\(){{spaces}}({{unquoted_argument}})
+      captures:
+        1: punctuation.section.parens.begin.cmake
+        2: variable.other.cmake
+      set: command-arguments
 
   command-arguments:
     - meta_scope: meta.function-call.arguments.cmake
     - match: \)
-      scope: punctuation.section.arguments.end.cmake
+      scope: punctuation.section.parens.end.cmake
       pop: true
     - match: \(
-      scope: punctuation.section.arguments.begin.cmake
+      scope: punctuation.section.parens.begin.cmae
       push: command-arguments
     - include: bracket-argument
     - match: '"'
