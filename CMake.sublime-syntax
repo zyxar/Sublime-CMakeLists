@@ -31,7 +31,7 @@ contexts:
         1: keyword.control.cmake
 
     # If we encounter a set(...) command, go into set-special-handling.
-    - match: (set){{spaces}}
+    - match: (set){{spaces}}(?=\()
       captures:
         0: meta.function-call.cmake
         1: variable.function.cmake

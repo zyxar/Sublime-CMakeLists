@@ -293,3 +293,11 @@ displicet philosophari. ]=])
 #^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double
 #                       ^^^ punctuation.definition.string.end
 #                          ^ punctuation.section.parens.end.cmake                                                                 
+
+set_target_properties(gintonic PROPERTIES CXX_STANDARD 14)
+#  ^ meta.function-call variable.function
+#                     ^ string.unquoted
+#                              ^ variable.parameter
+#                                         ^ variable.parameter
+#                                                      ^ string.unquoted
+
