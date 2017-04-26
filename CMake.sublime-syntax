@@ -1,0 +1,167 @@
+%YAML 1.2
+---
+name: CMake
+comment: Written by Raoul Wols <raoulwols@gmail.com>, 2017
+file_extensions: [CMakeLists.txt, cmake]
+scope: source.cmake
+
+variables:
+  # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#unquoted-argument
+  # Note: we're not doing legacy
+  unquoted_element: "[^ \t()#\"\\']"
+  unquoted_argument: "{{unquoted_element}}+"
+
+  spaces: '[ \t]*'
+  identifier: \b[A-Za-z_][A-Za-z0-9_]*\b
+  IDENTIFIER: \b@?[A-Z_][A-Z0-9_]*(?=[^\w-<>=\$])
+  variable_start: \$(?:ENV)?\{
+  variable_end: \}
+
+contexts:
+  main:
+    - include: comment
+    - include: command
+
+  command:
+
+    # If we encounter a keyword, assign keyword.control to it.
+    - match: ((?:end)?if|elif|else|(?:end)?foreach|(?:end)?while){{spaces}}
+      captures:
+        0: meta.function-call.cmake
+        1: keyword.control.cmake
+
+    # If we encounter a set(...) command, go into set-special-handling.
+    - match: (set){{spaces}}(?=\()
+      captures:
+        0: meta.function-call.cmake
+        1: variable.function.cmake
+      push: set-special-handling
+
+    # If we encounter any other identifier, assume it's a function/command
+    - match: '({{identifier}}){{spaces}}'
+      captures:
+        0: meta.function-call.cmake
+        1: variable.function.cmake
+
+    # If we encounter an opening parenthesis, start handling the arguments
+    - match: \(
+      scope: punctuation.section.parens.begin.cmake
+      push: command-arguments
+
+  set-special-handling:
+    - match: (\(){{spaces}}({{unquoted_argument}})
+      captures:
+        1: punctuation.section.parens.begin.cmake
+        2: variable.other.cmake
+      set: command-arguments
+
+  command-arguments:
+    - meta_scope: meta.function-call.arguments.cmake
+    - match: \)
+      scope: punctuation.section.parens.end.cmake
+      pop: true
+    - match: \(
+      scope: punctuation.section.parens.begin.cmake
+      push: command-arguments
+    - include: bracket-argument
+    - match: '"'
+      scope: punctuation.definition.string.begin.cmake
+      push: quoted-argument
+    - match: (?={{IDENTIFIER}})
+      push: unquoted-argument-or-keyword
+    - match: (?={{unquoted_argument}})
+      push: unquoted-argument
+    - include: comment
+
+  # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#unquoted-argument
+  unquoted-argument-or-keyword:
+    - meta_scope: variable.parameter.cmake
+    - match: (?=\t| |\(|\)|\#|\"|\\)
+      pop: true
+    - include: variable 
+
+  quoted-argument:
+    - meta_scope: string.quoted.double.cmake
+    # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#escape-sequences
+    - match: \\[()#" \\$@^trn;]
+      scope: constant.character.escape.cmake
+    - match: \\.
+      scope: invalid.illegal.character.escape.cmake
+    - match: '"'
+      scope: punctuation.definition.string.end.cmake
+      pop: true
+    - match: ;
+      scope: punctuation.separator.cmake
+    - include: variable
+    - include: generator-expression
+
+  # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#unquoted-argument
+  unquoted-argument:
+    - meta_scope: string.unquoted.cmake
+    - match: \\[; ()#"\\]
+      scope: constant.character.escape.cmake
+    - match: \\.
+      scope: invalid.illegal.character.escape.cmake
+    - match: (?=\t| |\(|\)|\#|\"|\\)
+      pop: true
+    - match: ;
+      scope: punctuation.separator.cmake
+    - include: variable
+    - include: generator-expression
+
+  bracket-argument:
+    - match: (\[(={0,16})\[)
+      scope: punctuation.definition.string.begin.cmake
+      push:
+        - meta_scope: string.quoted.double.cmake
+        - match: \]\2\]
+          scope: punctuation.definition.string.end.cmake
+          pop: true
+
+  variable:
+    - match: '{{variable_start}}'
+      scope: keyword.other.block.start.cmake
+      push:
+        - meta_scope: meta.text-substitution.cmake
+        - match: '{{variable_end}}'
+          scope: keyword.other.block.end.cmake
+          pop: true
+        - match: '{{identifier}}'
+          scope: variable.cmake
+        - include: variable
+
+  generator-expression:
+    - match: \$<
+      scope: keyword.other.block.start.cmake
+      push:
+        - meta_scope: meta.text-substitution.cmake
+        - match: '>'
+          scope: keyword.other.block.end.cmake
+          pop: true
+        - match: '{{identifier}}'
+          scope: variable.cmake
+        - match: ':'
+          scope: punctuation.definition.generator-expression.separator.cmake
+        - include: generator-expression
+        - include: variable
+
+  comment:
+    - include: bracket-comment
+    - include: line-comment
+
+  bracket-comment:
+    - match: \#(\[(={0,16})\[)
+      scope: punctuation.definition.comment.begin.cmake
+      push:
+        - meta_scope: comment.block.cmake
+        - match: \]\2\]
+          scope: punctuation.definition.comment.end.cmake
+          pop: true
+
+  line-comment:
+    - match: \#
+      scope: punctuation.definition.comment.begin.cmake
+      push:
+        - meta_scope: comment.line.cmake
+        - match: \n
+          pop: true
