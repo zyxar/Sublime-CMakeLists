@@ -1,0 +1,16 @@
+// SYNTAX TEST "Packages/Sublime-CMakeLists/CMake C++ Header.sublime-syntax"
+
+#define X ${Y}
+//<- meta.preprocessor.macro keyword.control.import.define - keyword.control.import.cmakedefine
+//        ^^ meta.preprocessor.macro variable.cmake keyword.other.block.start.cmake
+//          ^ meta.preprocessor.macro variable.cmake
+//           ^ meta.preprocessor.macro variable.cmake keyword.other.block.end.cmake
+
+#define X @Y@
+//<- meta.preprocessor.macro keyword.control.import.define - keyword.control.import.cmakedefine
+//        ^ meta.preprocessor.macro variable.cmake keyword.other.block.start.cmake
+//         ^ meta.preprocessor.macro variable.cmake
+//          ^ meta.preprocessor.macro variable.cmake keyword.other.block.end.cmake
+
+#cmakedefine Z
+//<- meta.preprocessor.macro keyword.control.import.cmakedefine
