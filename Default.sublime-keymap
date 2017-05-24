@@ -19,7 +19,7 @@
         "keys": ["ctrl+shift+,"], "command": "insert_snippet",
         "args":
         {
-            "contents": "<$SELECTION:${1:argument}>"
+            "contents": "\\$<$SELECTION:${1:argument}>"
         },
         "context":
         [
@@ -32,7 +32,7 @@
         "keys": ["ctrl+shift+."], "command": "insert_snippet",
         "args":
         {
-            "contents": "<$SELECTION>"
+            "contents": "\\$<$SELECTION>"
         },
         "context":
         [
