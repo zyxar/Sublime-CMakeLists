@@ -11,7 +11,7 @@
         "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "source.cmake" }
+            { "key": "selector", "operator": "equal", "operand": "source.cmake meta.function-call" }
         ]
     },
     {
@@ -24,7 +24,7 @@
         "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "source.cmake" }
+            { "key": "selector", "operator": "equal", "operand": "source.cmake meta.function-call" }
         ]
     },
     {
@@ -37,7 +37,7 @@
         "context":
         [
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-            { "key": "selector", "operator": "equal", "operand": "source.cmake" }
+            { "key": "selector", "operator": "equal", "operand": "source.cmake meta.function-call" }
         ]
     }
 ]
