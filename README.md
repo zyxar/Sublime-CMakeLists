@@ -18,19 +18,19 @@
 * `while`
 
 If an argument to a command is optional, it is selectable when you tab through
-the snippet, and you can then press escape to remove the optional argument.
+the snippet, and you can then press backspace to remove the optional argument.
 
 ## Available Key Bindings
 
-* Select a word, and type the dollar-sign character (`$`) to wrap the selection
+* Select a word, and press <kbd>$</kbd> to wrap the selection
   as a [variable substitution][3]. The newly inserted text will stay selected, 
-  so that you can press the double-quotes character (`"`) to enclose the 
+  so that you can press the double-quotes character <kbd>"</kbd> to enclose the 
   selection in double-qoutes too. Press tab to get out of the selection if you 
-  don't want  double-quotes.
-* Select a word, and type the less-than character (`<`) to wrap the selection
-  as a [generator expression][2] with an argument.
-* Select a word, and type the greater-than character (`>`) to wrap the selection
-  as a [generator expression][2] without an argument.
+  don't want double-quotes.
+* Select a word, and press <kbd>ctrl</kbd><kbd>shift</kbd><kbd>,</kbd> to wrap 
+  the selection as a [generator expression][2] with an argument.
+* Select a word, and press <kbd>ctrl</kbd><kbd>shift</kbd><kbd>.</kbd> to wrap
+  the selection as a [generator expression][2] without an argument.
 
 [1]: https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html
 [2]: https://cmake.org/cmake/help/v3.0/manual/cmake-generator-expressions.7.html
