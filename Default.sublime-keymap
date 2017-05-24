@@ -16,7 +16,7 @@
     },
     {
         // Wrap selection as a generator expression with an argument selection.
-        "keys": ["<"], "command": "insert_snippet",
+        "keys": ["ctrl+shift+,"], "command": "insert_snippet",
         "args":
         {
             "contents": "<$SELECTION:${1:argument}>"
@@ -29,7 +29,7 @@
     },
     {
         // Wrap selection as a generator expression without an argument.
-        "keys": [">"], "command": "insert_snippet",
+        "keys": ["ctrl+shift+."], "command": "insert_snippet",
         "args":
         {
             "contents": "<$SELECTION>"
