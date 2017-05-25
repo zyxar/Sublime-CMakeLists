@@ -1,0 +1,8 @@
+<snippet>
+	<description>control flow</description>
+	<content><![CDATA[while(${1:predicate})
+	$0
+endwhile(${1:predicate})]]></content>
+	<tabTrigger>while</tabTrigger>
+	<scope>source.cmake - meta.function-call.arguments - string - comment</scope>
+</snippet>

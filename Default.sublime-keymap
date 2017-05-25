@@ -1,0 +1,43 @@
+[
+    {
+        // Wrap selection as a variable substitution.
+        // Keeps the variable selected so that you can also press double-quotes
+        // (") and it will wrap it in double quotes.
+        "keys": ["$"], "command": "insert_snippet",
+        "args":
+        {
+            "contents": "${1:\\${$SELECTION\\}}"
+        },
+        "context":
+        [
+            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "source.cmake meta.function-call.arguments" }
+        ]
+    },
+    {
+        // Wrap selection as a generator expression with an argument selection.
+        "keys": ["ctrl+shift+,"], "command": "insert_snippet",
+        "args":
+        {
+            "contents": "\\$<$SELECTION:${1:argument}>"
+        },
+        "context":
+        [
+            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "source.cmake meta.function-call.arguments" }
+        ]
+    },
+    {
+        // Wrap selection as a generator expression without an argument.
+        "keys": ["ctrl+shift+."], "command": "insert_snippet",
+        "args":
+        {
+            "contents": "\\$<$SELECTION>"
+        },
+        "context":
+        [
+            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "source.cmake meta.function-call.arguments" }
+        ]
+    }
+]

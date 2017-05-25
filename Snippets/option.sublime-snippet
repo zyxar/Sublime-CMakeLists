@@ -1,0 +1,6 @@
+<snippet>
+	<description>command</description>
+	<content><![CDATA[option(${1:option_variable} "${2:help string describing ${1:option_variable}}" ${3:initial value of ${1:option_variable}})]]></content>
+	<tabTrigger>option</tabTrigger>
+	<scope>source.cmake - meta.function-call.arguments - string - comment</scope>
+</snippet>

@@ -1,0 +1,6 @@
+<snippet>
+	<description>command</description>
+	<content><![CDATA[project(${1:name of this project} ${2:VERSION ${3:0.1.0}} ${4:LANGUAGES ${5:CXX and/or C}})]]></content>
+	<tabTrigger>project</tabTrigger>
+	<scope>source.cmake - meta.function-call.arguments - string - comment</scope>
+</snippet>
