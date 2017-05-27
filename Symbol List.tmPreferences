@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
    <key>name</key>
-   <string>Symbol List</string>
+   <string>Symbol List - Variables</string>
    <key>scope</key>
-   <string>variable.other.cmake</string>
+   <string>entity.name.tag.cmake</string>
    <key>settings</key>
    <dict>
       <key>showInSymbolList</key>
@@ -14,6 +13,20 @@
       <!-- No need to show local variables in the global symbol list -->
       <key>showInIndexedSymbolList</key>
       <integer>0</integer>
+   </dict>
+</dict>
+<dict>
+   <key>name</key>
+   <string>Symbol List - Functions</string>
+   <key>scope</key>
+   <string>entity.name.function.cmake</string>
+   <key>settings</key>
+   <dict>
+      <key>showInSymbolList</key>
+      <integer>1</integer>
+
+      <key>showInIndexedSymbolList</key>
+      <integer>1</integer>
    </dict>
 </dict>
 </plist>
