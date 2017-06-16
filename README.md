@@ -3,7 +3,10 @@
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/zyxar/Sublime-CMakeLists?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 * Simple auto-indentation support.
-* Syntax highlighting, based on [CMake 3.0][1].
+* Syntax highlighting for CMakeLists.txt files and `*.cmake` files, based on 
+  [CMake 3.0][1].
+* Syntax highlighting for CMakeCache.txt files.
+* Syntax highlighting for `.h.in` and `.hpp.in` files.
 * Basic snippets.
 * Basic keybindings.
 
