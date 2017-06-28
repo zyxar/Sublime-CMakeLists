@@ -2,21 +2,6 @@
 <plist version="1.0">
 <dict>
    <key>name</key>
-   <string>Symbol List - Variables</string>
-   <key>scope</key>
-   <string>entity.name.tag.cmake</string>
-   <key>settings</key>
-   <dict>
-      <key>showInSymbolList</key>
-      <integer>1</integer>
-
-      <!-- No need to show local variables in the global symbol list -->
-      <key>showInIndexedSymbolList</key>
-      <integer>0</integer>
-   </dict>
-</dict>
-<dict>
-   <key>name</key>
    <string>Symbol List - Functions</string>
    <key>scope</key>
    <string>entity.name.function.cmake</string>
@@ -24,9 +9,10 @@
    <dict>
       <key>showInSymbolList</key>
       <integer>1</integer>
-
       <key>showInIndexedSymbolList</key>
       <integer>1</integer>
+      <key>symbolTransformation</key>
+      <string>s/.+/function\: $0/</string>
    </dict>
 </dict>
 </plist>
