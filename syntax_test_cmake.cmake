@@ -58,12 +58,27 @@ elseif(bar)
   # ^ meta.function-call - meta.function-call.arguments
   #   ^ meta.function-call.arguments - meta.function-call.cmake
   #        ^ - meta.function-call
-  myfunc(myargument)
+  myfunc(FOO myargument)
+  # <- meta.function-call.generic variable.function.generic
+  #     ^ meta.function-call.arguments.generic punctuation.section.parens.begin
+  #      ^^^ meta.function-call.arguments.generic variable.parameter.generic
+  #          ^^^^^^^^^^ meta.function-call.arguments.generic meta.string.unquoted
+  #                    ^ meta.function-call.arguments.generic punctuation.section.parens.end
 elseif(baz)
   myfunc(myargument)
 else(foo)
   myfunc(foo)
 endif(blah)
+
+add_custom_target(COMMAND FOO)
+# <- meta.function-call support.function
+#                ^ meta.function-call.arguments punctuation.section.parens.begin
+#                 ^^^^^^^ meta.function-call.arguments variable.parameter
+#                         ^^^ meta.function-call.arguments meta.string
+#                            ^ meta.function-call.arguments punctuation.section.parens.end
+
+cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+# <- meta.function-call support.function
 
 if (NOT (${something} AND ${something_else}))
 #  ^ punctuation.section.parens.begin
@@ -103,11 +118,11 @@ cmake_minimum_required(VERSION 3.0)
 #                     ^ punctuation.section.parens.begin
 #                                 ^ punctuation.section.parens.end
 #                      ^^^^^^^^^^^ meta.function-call.arguments
-#         ^ variable.function
+#         ^ support.function
 
 set(some_var "Hello, world!")
-# ^ variable.function
-#   ^ entity.name.tag
+# ^ support.function
+#   ^ variable.other.readwrite
 #            ^ string.quoted.double
 #  ^ punctuation.section.parens.begin
 #                           ^ punctuation.section.parens.end
@@ -126,7 +141,7 @@ set(FOO "${var_with_quotes}")
 
 message(STATUS "The some_var variable has the value \"${some_var}\"")
 #       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.function-call.arguments
-#       ^^^^^^ constant.language
+#       ^^^^^^ variable.parameter
 #              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double
 #                                                   ^^ constant.character.escape
 #                                                     ^^ keyword.other.block.begin
@@ -154,20 +169,20 @@ set(some_list "one;two;thre\;e")
 
 if("${somevar}" STREQUAL "something else" NOT_A_KEYWORD)
 #^ keyword.control
-#               ^ constant.language
-#                                         ^ string - constant.language
+#               ^ variable.parameter
+#                                         ^ meta.string - variable.parameter
 
 elseif("${somevar}" STREQUAL whatever AND NOT ${another_var} VERSION_LESS 1.2.3)
 #^^^ keyword.control
 
 elseif  (STREQUALasdf sTREQUAL COMMAND ANDNOT AND NOT VERSION_GREATER TARGET)
 #^^^ keyword.control
-#        ^^^^^^^^^^^^ string.unquoted 
-#                     ^^^^^^^^ string.unquoted 
-#                              ^^^^^^^ constant
-#                                      ^^^^^^ string
-#                                             ^^^ constant
-#                                                 ^^^ constant
+#        ^^^^^^^^^^^^ meta.string.unquoted 
+#                     ^^^^^^^^ meta.string.unquoted 
+#                              ^^^^^^^ variable.parameter
+#                                      ^^^^^^ meta.string
+#                                             ^^^ keyword.operator.logical
+#                                                 ^^^ keyword.operator.logical
 
 endif   ()
 #^^^^ keyword.control
@@ -203,33 +218,33 @@ endif()
 
 if ($ENV{LD_LIBRARY_PATH} STREQUAL /usr/local/lib)
 #   ^^^^^ keyword.other.block.begin
-#                                  ^^^^^^^^^^^^^^ string.unquoted
+#                                  ^^^^^^^^^^^^^^ meta.string.unquoted
 endif()
 
 include(AddFileDependencies RESULT_VARIABLE MY_VAR OPTIONAL)
 # ^ keyword.control.import
-#                           ^ constant.language
-#                                           ^ entity.name.tag
-#                                                     ^ constant.language
+#                           ^ variable.parameter
+#                                           ^ variable.other.readwrite
+#                                                     ^ variable.parameter
 include(CMakeParseArguments NO_POLICY_SCOPE)
 # ^ keyword.control.import
-#                           ^ constant.language
+#                           ^ variable.parameter
 
   install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/LLVMConfig
-#                                                   ^ string.unquoted
-#                                                    ^ - string.unquoted
+#                                                   ^ meta.string.unquoted
+#                                                    ^ - meta.string.unquoted
     ${llvm_cmake_builddir}/LLVMConfigVersion
-#                                          ^ string.unquoted
-#                                           ^ - string.unquoted
+#                                          ^ meta.string.unquoted
+#                                           ^ - meta.string.unquoted
     LLVM-Config
-#   ^ string.unquoted
-#              ^ - string.unquoted
+#   ^ meta.string.unquoted
+#              ^ - meta.string.unquoted
     DESTINATION ${LLVM_INSTALL_PACKAGE_DIR}
-#   ^ constant.language
+#   ^ variable.parameter
     COMPONENT cmake-exports)
-#   ^ constant.language
-#             ^ string.unquoted
+#   ^ variable.parameter
+#             ^ meta.string.unquoted
 
 function(llvm_replace_compiler_option var old new)
   # Replaces a compiler option or switch `old' in `var' by `new'.
@@ -254,7 +269,7 @@ function(llvm_replace_compiler_option var old new)
     string( REGEX REPLACE "(^| )${old}($| )" " ${n} " ${var} "${${var}}" )
   else()
     set( ${var} "${${var}} ${n}" )
-    # <- variable.function
+    # <- support.function
     #  ^ punctuation
     #    ^^ keyword.other.block
     #      ^^^ meta.text-substitution variable
@@ -297,7 +312,7 @@ set(LLVM_CONFIG_CMAKE_DIR "\${LLVM_INSTALL_PREFIX}/${LLVM_INSTALL_PACKAGE_DIR}")
 #                                                  ^^ keyword.other.block.begin
 #                                                                            ^ keyword.other.block.end
 set(LLVM_CONFIG_BINARY_DIR "\${LLVM_INSTALL_PREFIX}")
-#   ^ entity.name
+#   ^ variable.other.readwrite
 #                           ^^ constant.character.escape
 #                             ^ - keyword.other.block.begin
 #                                                 ^ - keyword.other.block.end
@@ -308,14 +323,14 @@ configure_file(
   LLVMConfig.in
   ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/LLVMConfig
   @ONLY)
-# ^^^^^ string.unquoted
+# ^^^^^ meta.string.unquoted
 
 target_include_directories(module PUBLIC $<CMAKE_COMPILER_ID>)
-# ^^^^^^^^^^^^^^^^^^^^^^^^ variable.function
+# ^^^^^^^^^^^^^^^^^^^^^^^^ support.function
 #                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.function-call.arguments
 #                         ^ punctuation.section.parens.begin
-#                          ^^^^^^ string.unquoted
-#                                 ^^^^^^ constant.language
+#                          ^^^^^^ meta.string.unquoted
+#                                 ^^^^^^ variable.parameter
 #                                        ^^ keyword.other.block.begin
 #                                          ^^^^^^^^^^^^^^^^^ meta.generator-expression
 #                                                           ^ keyword.other.block.end
@@ -329,6 +344,12 @@ while (${var})
 #     ^ meta.function-call.arguments - meta.function-call.cmake
 #             ^ - meta.function-call
   myfunc(mytarget NAMED_ARG some_value)
+  # <- meta.group.while meta.function-call.generic variable.function.generic
+  #     ^ meta.group.while meta.function-call.arguments.generic punctuation.section.parens.begin
+  #      ^^^^^^^^ meta.group.while meta.function-call.arguments.generic meta.string.unquoted
+  #               ^^^^^^^^^ meta.group.while meta.function-call.arguments.generic variable.parameter.generic
+  #                         ^^^^^^^^^^ meta.group.while meta.function-call.arguments.generic meta.string.unquoted
+  #                                   ^ meta.group.while meta.function-call.arguments.generic punctuation.section.parens.end
 endwhile(${var})
 #^^^^^^^ keyword.control
 
@@ -340,7 +361,7 @@ if(NOT (CMAKE_VERSION VERSION_LESS 3.0))  # CMake >= 3.0
   add_library(module INTERFACE)
   target_include_directories(module INTERFACE $<BUILD_INTERFACE:${PYBIND11_INCLUDE_DIR}>
 #                                               ^^^^^^^^^^^^^^^ variable
-#                                                              ^ punctuation.definition.separator
+#                                                              ^ punctuation.separator
 #                                                               ^^ keyword.other.block.begin
 #                                                                 ^^^^^^^^^^^^^^^^^^^^ variable
 #                                                                                     ^^ keyword.other.block.end
@@ -355,8 +376,8 @@ if(NOT (CMAKE_VERSION VERSION_LESS 3.0))  # CMake >= 3.0
 
   add_library(pybind11::module #[[new style bracket comments!]] ALIAS module)
 #                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
-#                                                               ^^^^^ constant.language
-#                                                                     ^^^^^^ string.unquoted
+#                                                               ^^^^^ variable.parameter
+#                                                                     ^^^^^^ meta.string.unquoted
 #                                                                           ^ punctuation.section.parens.end
                                               
 endif()
@@ -380,28 +401,28 @@ target_include_directories(module INTERFACE $<BUILD_INTERFACE:hello:world>)
 
 add_executable(hel#lo main.cpp)
 #             ^ meta.function-call.arguments
-#                 ^ comment.line - string.unquoted
+#                 ^ comment.line - meta.string.unquoted
     main.cpp)
 #   ^^^^^^^^ meta.function-call.arguments
 #           ^ punctuation.section.parens.end
 
 add_executable(hel#[[lo main.cpp]] main.cpp)
 #             ^ meta.function-call.arguments
-#                 ^ comment.block - string.unquoted
-#                                  ^^^^^^^^ meta.function-call.arguments string.unquoted
+#                 ^ comment.block - meta.string.unquoted
+#                                  ^^^^^^^^ meta.function-call.arguments meta.string.unquoted
 #                                          ^ punctuation.section.parens.end
 
 foreach(arg
     NoSpace
     Escaped\ Space
-#   ^^^^^^^^^^^^^^ string.unquoted
+#   ^^^^^^^^^^^^^^ meta.string.unquoted
     This;Divides;Into;Five;Arguments
 #       ^ punctuation.separator
 #               ^ punctuation.separator
 #                    ^ punctuation.separator
 #                         ^ punctuation.separator
     Escaped\;Semicolon
-#   ^^^^^^^^^^^^^^^^^^ string.unquoted
+#   ^^^^^^^^^^^^^^^^^^ meta.string.unquoted
     )
   message("${arg}")
 endforeach()
@@ -410,11 +431,11 @@ add_custom_target(ClaraDeploy
     COMMAND
         ${CMAKE_COMMAND} 
             -D VERSION=${PROJECT_VERSION} 
-#              ^^^^^^^^ string.unquoted
+#              ^^^^^^^^ meta.string.unquoted
             -D SUBLIME_PLATFORM_EXT=${SUBLIME_PLATFORM_EXT} 
-#              ^^^^^^^^^^^^^^^^^^^^^ string.unquoted
+#              ^^^^^^^^^^^^^^^^^^^^^ meta.string.unquoted
             -D ZIPFILE="${Clara_tar_output}" 
-#              ^^^^^^^^string.unquoted
+#              ^^^^^^^^meta.string.unquoted
             -P "${CMAKE_CURRENT_SOURCE_DIR}/Deploy"
 #              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double
     DEPENDS
@@ -434,14 +455,13 @@ displicet philosophari. ]=])
 #                          ^ punctuation.section.parens.end                                                                 
 
 set_target_properties(gintonic PROPERTIES CXX_STANDARD 14)
-#  ^ meta.function-call variable.function
-#                     ^ string.unquoted
-#                              ^ constant.language
-#                                         ^ constant.language
-#                                                      ^ string.unquoted
+#  ^ meta.function-call support.function
+#                     ^ meta.string.unquoted
+#                              ^ variable.parameter
+#                                                      ^ meta.string.unquoted
 
 macro(Hello var1 var2)
 #     ^ entity.name.function
 
 endmacro()
-# <- variable.function
+# <- support.function

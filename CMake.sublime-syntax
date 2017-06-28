@@ -22,6 +22,7 @@ contexts:
     - include: generator-expression
 
   main:
+    - include: scope:commands.builtin.cmake#main
     - include: if
     - include: foreach
     - include: while
@@ -50,6 +51,13 @@ contexts:
     - match: (?i)\bendmacro\b
       scope: invalid.illegal.stray.endmacro.cmake
 
+  args-illegal-boilerplate:
+    - match: \s+
+    - match: \n
+    - match: .+
+      scope: invalid.illegal.expected-opening-brace.cmake
+      pop: true
+
   # --- INCLUDE ----------------------------------------------------------------
 
   include:
@@ -62,22 +70,19 @@ contexts:
             - match: \(
               scope: punctuation.section.parens.begin.cmake
               set: include-args
-        - match: \s+
-        - match: \n
-        - match: .+
-          scope: invalid.illegal.expected-opening-brace.cmake
+        - include: args-illegal-boilerplate
 
   include-args:
     - meta_scope: meta.function-call.arguments.cmake
     - match: \bOPTIONAL\b
-      scope: constant.language.include.OPTIONAL.cmake
+      scope: variable.parameter.include.OPTIONAL.cmake
     - match: \bNO_POLICY_SCOPE\b
-      scope: constant.language.include.NO_POLICY_SCOPE.cmake
+      scope: variable.parameter.include.NO_POLICY_SCOPE.cmake
     - match: \bRESULT_VARIABLE\b
-      scope: constant.language.include.RESULT_VARIABLE.cmake
+      scope: variable.parameter.include.RESULT_VARIABLE.cmake
       push:
         - match: \b{{identifier}}\b
-          scope: entity.name.tag.cmake
+          scope: variable.other.readwrite.cmake
           pop: true
         - match: \s+
         - match: \n
@@ -89,7 +94,7 @@ contexts:
 
   function:
     - match: (?i)\bfunction\b
-      scope: variable.function.function.cmake
+      scope: support.function.function.cmake
       push:
         - meta_scope: meta.function-call.cmake
         - match: (?=\()
@@ -97,10 +102,7 @@ contexts:
             - match: \(
               scope: punctuation.section.parens.begin.cmake
               set: [function-body, function-args-first]
-        - match: \s+
-        - match: \n
-        - match: .+
-          scope: invalid.illegal.expected-opening-brace.cmake
+        - include: args-illegal-boilerplate
 
   function-args-first:
     - meta_scope: meta.function-call.arguments.cmake
@@ -125,7 +127,7 @@ contexts:
 
   endfunction:
     - match: (?i)\bendfunction\b
-      scope: variable.function.endfunction.cmake
+      scope: support.function.endfunction.cmake
       set:
         - meta_scope: meta.function-call.cmake
         - match: (?=\()
@@ -133,16 +135,13 @@ contexts:
             - match: \(
               scope: punctuation.section.parens.begin.cmake
               set: generic-args
-        - match: \s+
-        - match: \n
-        - match: .+
-          scope: invalid.illegal.expected-opening-brace.cmake
+        - include: args-illegal-boilerplate
 
   # --- MACRO / ENDMACRO -------------------------------------------------------
 
   macro:
     - match: (?i)\bmacro\b
-      scope: variable.function.macro.cmake
+      scope: support.function.macro.cmake
       push:
         - meta_scope: meta.function-call.cmake
         - match: (?=\()
@@ -150,10 +149,7 @@ contexts:
             - match: \(
               scope: punctuation.section.parens.begin.cmake
               set: [macro-body, macro-args-first]
-        - match: \s+
-        - match: \n
-        - match: .+
-          scope: invalid.illegal.expected-opening-brace.cmake
+        - include: args-illegal-boilerplate
 
   macro-args-first:
     - meta_scope: meta.function-call.arguments.cmake
@@ -178,7 +174,7 @@ contexts:
 
   endmacro:
     - match: (?i)\bendmacro\b
-      scope: variable.function.endmacro.cmake
+      scope: support.function.endmacro.cmake
       set:
         - meta_scope: meta.function-call.cmake
         - match: (?=\()
@@ -186,10 +182,7 @@ contexts:
             - match: \(
               scope: punctuation.section.parens.begin.cmake
               set: generic-args
-        - match: \s+
-        - match: \n
-        - match: .+
-          scope: invalid.illegal.expected-opening-brace.cmake
+        - include: args-illegal-boilerplate
 
   # --- IF / ELSEIF / ELSE / ENDIF ---------------------------------------------
 
@@ -203,10 +196,7 @@ contexts:
             - match: \(
               scope: punctuation.section.parens.begin.cmake
               set: [if-body, if-args]
-        - match: \s+
-        - match: \n
-        - match: .+
-          scope: invalid.illegal.expected-opening-brace.cmake
+        - include: args-illegal-boilerplate
 
   if-body:
     - meta_scope: meta.group.if.cmake
@@ -222,43 +212,43 @@ contexts:
       scope: punctuation.section.parens.begin.cmake
       push: if-args
     - match: \bSTREQUAL\b
-      scope: constant.language.if.STREQUAL.cmake
+      scope: variable.parameter.if.STREQUAL.cmake
     - match: \bNOT\b
-      scope: constant.language.if.NOT.cmake
+      scope: keyword.operator.logical.NOT.cmake
     - match: \bAND\b
-      scope: constant.language.if.AND.cmake
+      scope: keyword.operator.logical.AND.cmake
     - match: \bOR\b
-      scope: constant.language.if.OR.cmake
+      scope: keyword.operator.logical.OR.cmake
     - match: \bCOMMAND\b
-      scope: constant.language.if.COMMAND.cmake
+      scope: variable.parameter.if.COMMAND.cmake
     - match: \bPOLICY\b
-      scope: constant.language.if.POLICY.cmake
+      scope: variable.parameter.if.POLICY.cmake
     - match: \bTARGET\b
-      scope: constant.language.if.TARGET.cmake
+      scope: variable.parameter.if.TARGET.cmake
     - match: \bTEST\b
-      scope: constant.language.if.TEST.cmake
+      scope: variable.parameter.if.TEST.cmake
     - match: \bEXISTS\b
-      scope: constant.language.if.EXISTS.cmake
+      scope: variable.parameter.if.EXISTS.cmake
     - match: \bIS_NEWER_THAN\b
-      scope: constant.language.if.IS_NEWER_THAN.cmake
+      scope: variable.parameter.if.IS_NEWER_THAN.cmake
     - match: \bIS_DIRECTORY\b
-      scope: constant.language.if.IS_DIRECTORY.cmake
+      scope: variable.parameter.if.IS_DIRECTORY.cmake
     - match: \bIS_SYMLINK\b
-      scope: constant.language.if.IS_SYMLINK.cmake
+      scope: variable.parameter.if.IS_SYMLINK.cmake
     - match: \bIS_ABSOLUTE\b
-      scope: constant.language.if.IS_ABSOLUTE.cmake
+      scope: variable.parameter.if.IS_ABSOLUTE.cmake
     - match: \b(VERSION_|STR)?LESS\b
-      scope: constant.language.if.LESS.cmake
+      scope: variable.parameter.if.LESS.cmake
     - match: \b(VERSION_|STR)?GREATER\b
-      scope: constant.language.if.GREATER.cmake
+      scope: variable.parameter.if.GREATER.cmake
     - match: \b(VERSION_|STR)?EQUAL\b
-      scope: constant.language.if.EQUAL.cmake
+      scope: variable.parameter.if.EQUAL.cmake
     - match: \b(VERSION_|STR)?LESS_EQUAL\b
-      scope: constant.language.if.LESS_EQUAL.cmake
+      scope: variable.parameter.if.LESS_EQUAL.cmake
     - match: \b(VERSION_|STR)?GREATER_EQUAL\b
-      scope: constant.language.if.GREATER_EQUAL.cmake
+      scope: variable.parameter.if.GREATER_EQUAL.cmake
     - match: \bMATCHES\b
-      scope: constant.language.if.MATCHES.cmake
+      scope: variable.parameter.if.MATCHES.cmake
       push:
         - match: \[(=*)\[
           captures:
@@ -286,10 +276,7 @@ contexts:
             - match: \(
               scope: punctuation.section.parens.begin.cmake
               set: [elseif-body, if-args]
-        - match: \s+
-        - match: \n
-        - match: .+
-          scope: invalid.illegal.expected-opening-brace.cmake
+        - include: args-illegal-boilerplate
 
   elseif-body:
     - meta_scope: meta.group.elseif.cmake
@@ -309,10 +296,7 @@ contexts:
             - match: \(
               scope: punctuation.section.parens.begin.cmake
               set: [else-body, if-args]
-        - match: \s+
-        - match: \n
-        - match: .+
-          scope: invalid.illegal.expected-opening-brace.cmake
+        - include: args-illegal-boilerplate
 
   else-body:
     - meta_scope: meta.group.else.cmake
@@ -334,10 +318,7 @@ contexts:
             - match: \(
               scope: punctuation.section.parens.begin.cmake
               set: if-args
-        - match: \s+
-        - match: \n
-        - match: .+
-          scope: invalid.illegal.expected-opening-brace.cmake
+        - include: args-illegal-boilerplate
 
   # --- FOREACH / ENDFOREACH ---------------------------------------------------
 
@@ -351,26 +332,24 @@ contexts:
             - match: \(
               scope: punctuation.section.parens.begin.cmake
               set: [foreach-body, foreach-args]
-        - match: \s+
-        - match: \n
-        - match: .+
-          scope: invalid.illegal.expected-opening-brace.cmake
+        - include: args-illegal-boilerplate
 
   foreach-args:
     - meta_scope: meta.function-call.arguments.cmake
     - include: args-common
     - match: \bIN\b
-      scope: constant.language.foreach.IN.cmake
+      scope: variable.parameter.foreach.IN.cmake
     - match: \bLISTS\b
-      scope: constant.language.foreach.LISTS.cmake
+      scope: variable.parameter.foreach.LISTS.cmake
     - match: \bITEMS\b
-      scope: constant.language.foreach.ITEMS.cmake
+      scope: variable.parameter.foreach.ITEMS.cmake
     - match: \bRANGE\b
-      scope: constant.language.foreach.RANGE.cmake
+      scope: variable.parameter.foreach.RANGE.cmake
 
   foreach-body:
     - meta_scope: meta.group.foreach.cmake
     - include: break
+    - include: continue
     - include: endforeach
     - include: main
 
@@ -384,10 +363,7 @@ contexts:
             - match: \(
               scope: punctuation.section.parens.begin.cmake
               set: foreach-args
-        - match: \s+
-        - match: \n
-        - match: .+
-          scope: invalid.illegal.expected-opening-brace.cmake
+        - include: args-illegal-boilerplate
 
   # --- WHILE / ENDWHILE -------------------------------------------------------
 
@@ -401,14 +377,12 @@ contexts:
             - match: \(
               scope: punctuation.section.parens.begin.cmake
               set: [while-body, if-args]
-        - match: \s+
-        - match: \n
-        - match: .+
-          scope: invalid.illegal.expected-opening-brace.cmake
+        - include: args-illegal-boilerplate
 
   while-body:
     - meta_scope: meta.group.while.cmake
     - include: break
+    - include: continue
     - include: endwhile
     - include: main
 
@@ -422,10 +396,7 @@ contexts:
             - match: \(
               scope: punctuation.section.parens.begin.cmake
               set: if-args
-        - match: \s+
-        - match: \n
-        - match: .+
-          scope: invalid.illegal.expected-opening-brace.cmake
+        - include: args-illegal-boilerplate
 
   # --- BREAK ------------------------------------------------------------------
 
@@ -439,12 +410,27 @@ contexts:
             - match: \(
               scope: punctuation.section.parens.begin.cmake
               set: break-args
-        - match: \s+
-        - match: \n
-        - match: .+
-          scope: invalid.illegal.expected-opening-brace.cmake
+        - include: args-illegal-boilerplate
 
   break-args:
+    - meta_scope: meta.function-call.arguments.cmake
+    - include: args-common
+
+  #--- CONTINUE ----------------------------------------------------------------
+  
+  continue:
+    - match: (?i)\bcontinue\b
+      scope: keyword.control.continue.cmake
+      push:
+        - meta_scope: meta.function-call.cmake
+        - match: (?=\()
+          set:
+            - match: \(
+              scope: punctuation.section.parens.begin.cmake
+              set: continue-args
+        - include: args-illegal-boilerplate
+
+  continue-args:
     - meta_scope: meta.function-call.arguments.cmake
     - include: args-common
 
@@ -452,7 +438,7 @@ contexts:
 
   set:
     - match: (?i)\bset\b
-      scope: variable.function.set.cmake
+      scope: support.function.set.cmake
       push:
         - meta_scope: meta.function-call.cmake
         - match: (?=\()
@@ -463,7 +449,7 @@ contexts:
 
   set-args-first:
     - match: '{{identifier}}'
-      scope: entity.name.tag.cmake
+      scope: variable.other.readwrite.assignment.cmake
       pop: true
     - include: variable-substitution
     - match: \s+
@@ -473,11 +459,11 @@ contexts:
   set-args-rest:
     - meta_scope: meta.function-call.arguments.cmake
     - match: \bFORCE\b
-      scope: constant.language.foreach.FORCE.cmake
+      scope: variable.parameter.foreach.FORCE.cmake
     - match: \bPARENT_SCOPE\b
-      scope: constant.language.foreach.PARENT_SCOPE.cmake
+      scope: variable.parameter.foreach.PARENT_SCOPE.cmake
     - match: \bCACHE\b
-      scope: constant.language.foreach.CACHE.cmake
+      scope: variable.parameter.foreach.CACHE.cmake
       push:
         - match: \s*(FILEPATH)
           captures:
@@ -540,7 +526,7 @@ contexts:
 
   # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#unquoted-argument
   unquoted-argument-or-keyword:
-    - meta_scope: constant.language.generic.cmake
+    - meta_scope: variable.parameter.generic.cmake
     - match: (?=\t| |\(|\)|\#|\"|\\)
       pop: true
 
@@ -594,7 +580,7 @@ contexts:
     - match: (?={{unquoted_argument}})
       push:
         - meta_include_prototype: false
-        - meta_scope: string.unquoted.cmake
+        - meta_scope: meta.string.unquoted.cmake
         - include: variable-substitution
         - include: generator-expression
         - match: \\[; ()#"\\]
@@ -632,7 +618,7 @@ contexts:
           scope: keyword.other.block.end.cmake
           pop: true
         - match: '{{identifier}}'
-          scope: variable.parameter.cmake
+          scope: variable.other.readwrite.cmake
         - include: prototype
 
   generator-expression:
@@ -642,7 +628,7 @@ contexts:
         - meta_scope: meta.generator-expression.cmake
         - include: generator-expression-common
         - match: ':'
-          scope: punctuation.definition.separator.cmake
+          scope: punctuation.separator.generator-expression.cmake
           set:
             - meta_content_scope: meta.generator-expression.cmake
             - match: ':'
@@ -656,7 +642,7 @@ contexts:
       scope: keyword.other.block.end.cmake
       pop: true
     - match: '{{identifier}}'
-      scope: variable.parameter.cmake
+      scope: variable.other.readwrite.cmake
 
   #--- COMMENT HANDLING --------------------------------------------------------
 
