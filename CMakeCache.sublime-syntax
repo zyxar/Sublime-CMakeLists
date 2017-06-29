@@ -33,7 +33,7 @@ contexts:
       scope: variable.parameter.cmakecache
       set: expect-type
     - match: .
-      scope: invalid.illegal
+      scope: invalid.illegal.cmakecache
 
   expect-type:
     - match: ':'
@@ -50,5 +50,5 @@ contexts:
     - match: $
       pop: true
     - match: .*
-      scope: string.unqouted.cmakecache
+      scope: string.unquoted.cmakecache
       pop: true
