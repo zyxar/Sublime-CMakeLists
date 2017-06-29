@@ -9,7 +9,7 @@ variables:
 contexts:
   main:
     - match: ""
-      push: "Packages/C++/C.sublime-syntax"
+      push: scope:source.c
       with_prototype:
         - match: \$\{
           scope: keyword.other.block.start.cmake
