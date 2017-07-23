@@ -1,0 +1,4 @@
+- Add syntax highlighting for cmake files
+- Add syntax highlighting for cmake cache files
+- Add syntax highlighting for cmake input header files
+- Add basic snippets
