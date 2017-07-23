@@ -609,20 +609,25 @@ contexts:
   #--- VARIABLES AND GENERATOR EXPRESSIONS -------------------------------------
 
   variable-substitution:
-    - match: \$(?:ENV)?\{
-      scope: keyword.other.block.begin.cmake
+    - match: (\$)(ENV)?(\{)
+      captures:
+        1: punctuation.definition.variable.substitution.cmake
+        2: keyword.operator.word.cmake
+        3: punctuation.section.braces.begin.cmake
       push:
         - meta_scope: meta.text-substitution.cmake
         - match: \}
-          scope: keyword.other.block.end.cmake
+          scope: punctuation.section.braces.end.cmake
           pop: true
         - match: '{{identifier}}'
           scope: variable.other.readwrite.cmake
         - include: prototype
 
   generator-expression:
-    - match: \$<
-      scope: keyword.other.block.begin.cmake
+    - match: (\$)(<)
+      captures:
+        1: punctuation.definition.variable.generator-expression.cmake
+        2: punctuation.section.block.begin.cmake
       push:
         - meta_scope: meta.generator-expression.cmake
         - include: generator-expression-common
@@ -638,7 +643,7 @@ contexts:
 
   generator-expression-common:
     - match: '>'
-      scope: keyword.other.block.end.cmake
+      scope: punctuation.section.block.end.cmake
       pop: true
     - match: '{{identifier}}'
       scope: variable.other.readwrite.cmake

@@ -63,9 +63,10 @@ message(STATUS "The some_var variable has the value \"${some_var}\"")
 #       ^^^^^^ variable.parameter 
 #              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double
 #                                                   ^^ constant.character.escape
-#                                                     ^^ keyword.other.block.begin
+#                                                     ^ punctuation.definition.variable
+#                                                      ^ punctuation.section
+#                                                               ^ punctuation.section
 #                                                       ^^^^^^^^ meta.text-substitution
-#                                                               ^ keyword.other.block.end
 #                                                                ^^ constant.character.escape
 
 target_link_libraries(mytarget PUBLIC
@@ -76,10 +77,12 @@ target_link_libraries(mytarget PUBLIC
 
 set(asdf nested_vars_test some${var_inside_${anot${h}er_var}_and_moving_on}_even_further)
 #  ^ punctuation.section.parens.begin
-#                             ^^ keyword.other.block.begin
-#                                          ^^ keyword.other.block.begin
-#                                                          ^ keyword.other.block.end
-#                                                                         ^ keyword.other.block.end
+#                             ^ punctuation.definition.variable
+#                              ^ punctuation.section
+#                                          ^ punctuation.definition.variable
+#                                           ^ punctuation.section
+#                                                          ^ punctuation.section
+#                                                                         ^ punctuation.section
 
 set(some_list "one;two;thre\;e")
 #                 ^ punctuation.separator
@@ -118,7 +121,10 @@ if (NOT "${the_var}" MATCHES "[A-Za-z]\\d+")
 # maybe add regex as an embedded syntax here
 
 if ($ENV{LD_LIBRARY_PATH} STREQUAL /usr/local/lib)
-#   ^^^^^ keyword.other.block.begin
+#   ^ punctuation.definition.variable
+#    ^^^ keyword.operator.word
+#       ^ punctuation.section
+#                       ^ punctuation.section
 #                                  ^^^^^^^^^^^^^^ meta.string.unquoted
 endif()
 
@@ -172,8 +178,9 @@ set(LLVM_CONFIG_LIBRARY_DIRS "\${LLVM_INSTALL_PREFIX}/lib\${LLVM_LIBDIR_SUFFIX}"
 set(LLVM_CONFIG_CMAKE_DIR "\${LLVM_INSTALL_PREFIX}/${LLVM_INSTALL_PACKAGE_DIR}")
 #                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double
 #                          ^^ constant.character.escape
-#                                                  ^^ keyword.other.block.begin
-#                                                                            ^ keyword.other.block.end
+#                                                  ^ punctuation.definition.variable
+#                                                   ^ punctuation.section
+#                                                                            ^ punctuation.section
 set(LLVM_CONFIG_BINARY_DIR "\${LLVM_INSTALL_PREFIX}")
 set(LLVM_CONFIG_TOOLS_BINARY_DIR "\${LLVM_INSTALL_PREFIX}/bin")
 set(LLVM_CONFIG_EXPORTS_FILE "\${LLVM_CMAKE_DIR}/LLVMExports")
@@ -190,9 +197,10 @@ target_include_directories(module PUBLIC $<CMAKE_COMPILER_ID>)
 #                         ^ punctuation.section.parens.begin
 #                          ^^^^^^ meta.string.unquoted
 #                                 ^^^^^^ variable.parameter
-#                                        ^^ keyword.other.block.begin
+#                                        ^ punctuation.definition.variable
+#                                         ^ punctuation.section
 #                                          ^^^^^^^^^^^^^^^^^ meta.generator-expression
-#                                                           ^ keyword.other.block.end
+#                                                           ^ punctuation.section
 #                                                            ^ punctuation.section.parens.end
 
 
@@ -210,9 +218,10 @@ if(NOT (CMAKE_VERSION VERSION_LESS 3.0))  # CMake >= 3.0
   target_include_directories(module INTERFACE $<BUILD_INTERFACE:${PYBIND11_INCLUDE_DIR}>
 #                                               ^^^^^^^^^^^^^^^ variable
 #                                                              ^ punctuation.separator
-#                                                               ^^ keyword.other.block.begin
+#                                                               ^ punctuation.definition.variable
+#                                                                ^ punctuation.section
 #                                                                 ^^^^^^^^^^^^^^^^^^^^ variable
-#                                                                                     ^^ keyword.other.block.end
+#                                                                                     ^^ punctuation.section
                                               $<BUILD_INTERFACE:${PYTHON_INCLUDE_DIRS}>
                                               $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
   if(WIN32 OR CYGWIN)
