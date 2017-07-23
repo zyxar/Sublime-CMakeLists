@@ -1,8 +1,8 @@
 # SYNTAX TEST "Packages/Sublime-CMakeLists/CMake.sublime-syntax"
 
 # This is a comment
-# ^^^^^^^^^^^^^^^^^^ comment.line
-#      ^^^^^^^^^^^^^ comment.line
+# ^^^^^^^^^^^^^^^^^ comment.line
+#      ^^^^^^^^^^^^ comment.line
 
 # <- source.cmake
 
@@ -11,48 +11,47 @@
 #         ^ comment.line
 
 if (NOT (${something} AND ${something_else}))
-#  ^ punctuation.section.parens.begin.cmake
-#       ^ punctuation.section.parens.begin.cmake
-#                                          ^ punctuation.section.parens.end.cmake
-#                                           ^ punctuation.section.parens.end.cmake
+#  ^ punctuation.section.parens.begin
+#       ^ punctuation.section.parens.begin
+#                                          ^ punctuation.section.parens.end
+#                                           ^ punctuation.section.parens.end
 
 endif()
 
 set(x "\! \@ \# \$ \% \& \* \( \) \a \b \c \d \e \f \g \h \i \j \k \l \m \n \o \p \q \r \s \t \u \v \w \x \y \z")
-#      ^^ invalid.illegal.character.escape.cmake
-#         ^^ constant.character.escape.cmake
-#            ^^ constant.character.escape.cmake
-#               ^^ constant.character.escape.cmake
-#                  ^^ invalid.illegal.character.escape.cmake
-#                        ^^ invalid.illegal.character.escape.cmake
-#                           ^^ constant.character.escape.cmake
-#                              ^^ constant.character.escape.cmake
-#                                 ^^ invalid.illegal.character.escape.cmake
-#                                    ^^ invalid.illegal.character.escape.cmake
-#                                       ^^ invalid.illegal.character.escape.cmake
-#                                          ^^ invalid.illegal.character.escape.cmake
-#                                             ^^ invalid.illegal.character.escape.cmake
-#                                                ^^ invalid.illegal.character.escape.cmake
-#                                                                        ^^ constant.character.escape.cmake
+#      ^^ invalid.illegal.character.escape
+#         ^^ constant.character.escape
+#            ^^ constant.character.escape
+#               ^^ constant.character.escape
+#                  ^^ invalid.illegal.character.escape
+#                        ^^ invalid.illegal.character.escape
+#                           ^^ constant.character.escape
+#                              ^^ constant.character.escape
+#                                 ^^ invalid.illegal.character.escape
+#                                    ^^ invalid.illegal.character.escape
+#                                       ^^ invalid.illegal.character.escape
+#                                          ^^ invalid.illegal.character.escape
+#                                             ^^ invalid.illegal.character.escape
+#                                                ^^ invalid.illegal.character.escape
+#                                                                        ^^ constant.character.escape
 
 cmake_minimum_required(VERSION 3.0)
-# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-#                     ^ punctuation.section.parens.begin.cmake
-#                                 ^ punctuation.section.parens.end.cmake
-#                      ^^^^^^^^^^^ meta.function-call.arguments.cmake
-#         ^ variable.function.cmake
+#                     ^ punctuation.section.parens.begin
+#                                 ^ punctuation.section.parens.end
+#                      ^^^^^^^^^^^ meta.function-call.arguments
+#         ^ variable.function
 
 set(some_var "Hello, world!")
-# ^ variable.function.cmake
-#   ^ variable.other.cmake
-#            ^ string.quoted.double.cmake
-#  ^ punctuation.section.parens.begin.cmake
-#                           ^ punctuation.section.parens.end.cmake
+# ^ support.function
+#   ^ variable.other
+#            ^ string.quoted.double
+#  ^ punctuation.section.parens.begin
+#                           ^ punctuation.section.parens.end
 
 set(var_with_quotes "This is a string with \"embedded\" quotes.")
 
 set(another ${some_var})
-#                      ^ punctuation.section.parens.end.cmake
+#                      ^ punctuation.section.parens.end
 
 set(blarg
     # A comment inbetween
@@ -60,14 +59,14 @@ set(blarg
     foobar)
 
 message(STATUS "The some_var variable has the value \"${some_var}\"")
-#       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.function-call.arguments.cmake
-#       ^^^^^^ variable.parameter.cmake 
-#              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double.cmake
-#                                                   ^^ constant.character.escape.cmake
-#                                                     ^^ keyword.other.block.start.cmake
-#                                                       ^^^^^^^^ meta.text-substitution.cmake
-#                                                               ^ keyword.other.block.end.cmake
-#                                                                ^^ constant.character.escape.cmake
+#       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.function-call.arguments
+#       ^^^^^^ variable.parameter 
+#              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double
+#                                                   ^^ constant.character.escape
+#                                                     ^^ keyword.other.block.begin
+#                                                       ^^^^^^^^ meta.text-substitution
+#                                                               ^ keyword.other.block.end
+#                                                                ^^ constant.character.escape
 
 target_link_libraries(mytarget PUBLIC
         ${Boost_LIBRARIES}
@@ -76,34 +75,34 @@ target_link_libraries(mytarget PUBLIC
         )
 
 set(asdf nested_vars_test some${var_inside_${anot${h}er_var}_and_moving_on}_even_further)
-#  ^ punctuation.section.parens.begin.cmake
-#                             ^^ keyword.other.block.start.cmake
-#                                          ^^ keyword.other.block.start.cmake
-#                                                          ^ keyword.other.block.end.cmake
-#                                                                         ^ keyword.other.block.end.cmake
+#  ^ punctuation.section.parens.begin
+#                             ^^ keyword.other.block.begin
+#                                          ^^ keyword.other.block.begin
+#                                                          ^ keyword.other.block.end
+#                                                                         ^ keyword.other.block.end
 
 set(some_list "one;two;thre\;e")
-#                 ^ punctuation.separator.cmake
-#                     ^ punctuation.separator.cmake
-#                          ^^ constant.character.escape.cmake
+#                 ^ punctuation.separator
+#                     ^ punctuation.separator
+#                          ^^ constant.character.escape
 
 if("${somevar}" STREQUAL "something else")
-#^ keyword.control.cmake
+#^ keyword.control
 
-elif("${somevar}" STREQUAL whatever AND NOT ${another_var} VERSION_LESS 1.2.3)
-#^^^ keyword.control.cmake
+elseif("${somevar}" STREQUAL whatever AND NOT ${another_var} VERSION_LESS 1.2.3)
+#^^^^^ keyword.control
 
-elif  (STREQUALasdf sTREQUAL COMMAND ANDNOT AND NOT VERSION_GREATER TARGET)
-#^^^ keyword.control.cmake
-#      ^^^^^^^^^^^^ string.unquoted.cmake 
-#                   ^^^^^^^^ string.unquoted.cmake 
-#                            ^^^^^^^ variable.parameter.cmake
-#                                    ^^^^^^ variable.parameter.cmake
-#                                           ^^^ variable.parameter.cmake
-#                                               ^^^ variable.parameter.cmake
+elseif  (STREQUALasdf sTREQUAL COMMAND ANDNOT AND NOT VERSION_GREATER TARGET)
+#^^^^^ keyword.control
+#        ^^^^^^^^^^^^ meta.string.unquoted 
+#                     ^^^^^^^^ meta.string.unquoted 
+#                              ^^^^^^^ variable.parameter
+#                                      ^^^^^^ - variable.parameter
+#                                             ^^^ keyword.operator
+#                                                 ^^^ keyword.operator
 
 endif   ()
-#^^^^ keyword.control.cmake
+#^^^^ keyword.control
 
 target_include_directories(mytarget PUBLIC $sdf>)
 
@@ -119,23 +118,23 @@ if (NOT "${the_var}" MATCHES "[A-Za-z]\\d+")
 # maybe add regex as an embedded syntax here
 
 if ($ENV{LD_LIBRARY_PATH} STREQUAL /usr/local/lib)
-#   ^^^^^ keyword.other.block.start.cmake
-#                                  ^^^^^^^^^^^^^^ string.unquoted.cmake
+#   ^^^^^ keyword.other.block.begin
+#                                  ^^^^^^^^^^^^^^ meta.string.unquoted
 endif()
 
 include(AddFileDependencies)
 include(CMakeParseArguments)
 
   install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/LLVMConfig.cmake
-    ${llvm_cmake_builddir}/LLVMConfigVersion.cmake
-    LLVM-Config.cmake
-#   ^ string.unquoted.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/LLVMConfig
+    ${llvm_cmake_builddir}/LLVMConfigVersion
+    LLVM-Config
+#   ^ meta.string.unquoted
     DESTINATION ${LLVM_INSTALL_PACKAGE_DIR}
-#   ^ variable.parameter.cmake
+#   ^ variable.parameter
     COMPONENT cmake-exports)
-#   ^ variable.parameter.cmake
-#             ^ string.unquoted.cmake
+#   ^ variable.parameter
+#             ^ meta.string.unquoted
 
 function(llvm_replace_compiler_option var old new)
   # Replaces a compiler option or switch `old' in `var' by `new'.
@@ -155,53 +154,53 @@ function(llvm_replace_compiler_option var old new)
   set( ${var} "${${var}}" PARENT_SCOPE )
 endfunction(llvm_replace_compiler_option)
 
-# Generate LLVMConfig.cmake for the install tree.
+# Generate LLVMConfig for the install tree.
 set(LLVM_CONFIG_CODE "
-# Compute the installation prefix from this LLVMConfig.cmake file location.
+# Compute the installation prefix from this LLVMConfig file location.
 get_filename_component(LLVM_INSTALL_PREFIX \"\${CMAKE_CURRENT_LIST_FILE}\" PATH)")
 # Construct the proper number of get_filename_component(... PATH)
 # calls to compute the installation prefix.
 string(REGEX REPLACE "/" ";" _count "${LLVM_INSTALL_PACKAGE_DIR}")
 foreach(p ${_count})
-#^^^^^^ keyword.control.cmake
+#^^^^^^ keyword.control
   set(LLVM_CONFIG_CODE "${LLVM_CONFIG_CODE}
 get_filename_component(LLVM_INSTALL_PREFIX \"\${LLVM_INSTALL_PREFIX}\" PATH)")
 endforeach(p)
-#^^^^^^^^^ keyword.control.cmake
+#^^^^^^^^^ keyword.control
 set(LLVM_CONFIG_INCLUDE_DIRS "\${LLVM_INSTALL_PREFIX}/include")
 set(LLVM_CONFIG_LIBRARY_DIRS "\${LLVM_INSTALL_PREFIX}/lib\${LLVM_LIBDIR_SUFFIX}")
 set(LLVM_CONFIG_CMAKE_DIR "\${LLVM_INSTALL_PREFIX}/${LLVM_INSTALL_PACKAGE_DIR}")
-#                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double.cmake
+#                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double
 #                          ^^ constant.character.escape
-#                                                  ^^ keyword.other.block.start
+#                                                  ^^ keyword.other.block.begin
 #                                                                            ^ keyword.other.block.end
 set(LLVM_CONFIG_BINARY_DIR "\${LLVM_INSTALL_PREFIX}")
 set(LLVM_CONFIG_TOOLS_BINARY_DIR "\${LLVM_INSTALL_PREFIX}/bin")
-set(LLVM_CONFIG_EXPORTS_FILE "\${LLVM_CMAKE_DIR}/LLVMExports.cmake")
+set(LLVM_CONFIG_EXPORTS_FILE "\${LLVM_CMAKE_DIR}/LLVMExports")
 set(LLVM_CONFIG_EXPORTS "${LLVM_EXPORTS}")
 configure_file(
-  LLVMConfig.cmake.in
-  ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/LLVMConfig.cmake
+  LLVMConfig.in
+  ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/LLVMConfig
   @ONLY)
-# ^^^^^ string.unquoted.cmake
+# ^^^^^ meta.string.unquoted
 
 target_include_directories(module PUBLIC $<CMAKE_COMPILER_ID>)
-# ^^^^^^^^^^^^^^^^^^^^^^^^ variable.function.cmake
+# ^^^^^^^^^^^^^^^^^^^^^^^^ variable.function
 #                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-#                         ^ punctuation.section.parens.begin.cmake
-#                          ^^^^^^ string.unquoted.cmake
-#                                 ^^^^^^ variable.parameter.cmake
-#                                        ^^ keyword.other.block.start.cmake
-#                                          ^^^^^^^^^^^^^^^^^ meta.text-substitution.cmake
-#                                                           ^ keyword.other.block.end.cmake
-#                                                            ^ punctuation.section.parens.end.cmake
+#                         ^ punctuation.section.parens.begin
+#                          ^^^^^^ meta.string.unquoted
+#                                 ^^^^^^ variable.parameter
+#                                        ^^ keyword.other.block.begin
+#                                          ^^^^^^^^^^^^^^^^^ meta.generator-expression
+#                                                           ^ keyword.other.block.end
+#                                                            ^ punctuation.section.parens.end
 
 
 while(${var})
-#^^^^ keyword.control.cmake
+#^^^^ keyword.control
   myfunc(mytarget NAMED_ARG some_value)
 endwhile(${var})
-#^^^^^^^ keyword.control.cmake
+#^^^^^^^ keyword.control
 
 set(TGT_PATH $<TARGET_FILE:tgt1>)
 
@@ -209,11 +208,11 @@ if(NOT (CMAKE_VERSION VERSION_LESS 3.0))  # CMake >= 3.0
   # Build an interface library target:
   add_library(module INTERFACE)
   target_include_directories(module INTERFACE $<BUILD_INTERFACE:${PYBIND11_INCLUDE_DIR}>
-#                                               ^^^^^^^^^^^^^^^ variable.cmake
-#                                                              ^ punctuation.definition.generator-expression.separator.cmake
-#                                                               ^^ keyword.other.block.start.cmake
-#                                                                 ^^^^^^^^^^^^^^^^^^^^ variable.cmake
-#                                                                                     ^^ keyword.other.block.end.cmake
+#                                               ^^^^^^^^^^^^^^^ variable
+#                                                              ^ punctuation.separator
+#                                                               ^^ keyword.other.block.begin
+#                                                                 ^^^^^^^^^^^^^^^^^^^^ variable
+#                                                                                     ^^ keyword.other.block.end
                                               $<BUILD_INTERFACE:${PYTHON_INCLUDE_DIRS}>
                                               $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
   if(WIN32 OR CYGWIN)
@@ -225,9 +224,9 @@ if(NOT (CMAKE_VERSION VERSION_LESS 3.0))  # CMake >= 3.0
 
   add_library(pybind11::module #[[new style bracket comments!]] ALIAS module)
 #                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.block
-#                                                               ^^^^^ variable.parameter.cmake
-#                                                                     ^^^^^^ string.unquoted.cmake
-#                                                                           ^ punctuation.section.parens.end.cmake
+#                                                               ^^^^^ variable.parameter
+#                                                                     ^^^^^^ meta.string.unquoted
+#                                                                           ^ punctuation.section.parens.end
                                               
 endif()
 
@@ -242,7 +241,7 @@ endif()
                         particular
 
 ]=] # and this is where a regular line comment starts 
-# ^ comment.block.cmake
+# ^ comment.block
 #   ^ comment.line
 
 add_executable(hel#lo main.cpp)
@@ -255,14 +254,14 @@ add_executable(hel#lo main.cpp)
 foreach(arg
     NoSpace
     Escaped\ Space
-#   ^^^^^^^^^^^^^^ string.unquoted
+#   ^^^^^^^^^^^^^^ meta.string.unquoted
     This;Divides;Into;Five;Arguments
-#       ^ punctuation.separator.cmake
-#               ^ punctuation.separator.cmake
-#                    ^ punctuation.separator.cmake
-#                         ^ punctuation.separator.cmake
+#       ^ punctuation.separator
+#               ^ punctuation.separator
+#                    ^ punctuation.separator
+#                         ^ punctuation.separator
     Escaped\;Semicolon
-#   ^^^^^^^^^^^^^^^^^^ string.unquoted
+#   ^^^^^^^^^^^^^^^^^^ meta.string.unquoted
     )
   message("${arg}")
 endforeach()
@@ -271,13 +270,13 @@ add_custom_target(ClaraDeploy
     COMMAND
         ${CMAKE_COMMAND} 
             -D VERSION=${PROJECT_VERSION} 
-#              ^^^^^^^^ string.unquoted.cmake
+#              ^^^^^^^^ meta.string.unquoted
             -D SUBLIME_PLATFORM_EXT=${SUBLIME_PLATFORM_EXT} 
-#              ^^^^^^^^^^^^^^^^^^^^^ string.unquoted.cmake
+#              ^^^^^^^^^^^^^^^^^^^^^ meta.string.unquoted
             -D ZIPFILE="${Clara_tar_output}" 
-#              ^^^^^^^^string.unquoted.cmake
-            -P "${CMAKE_CURRENT_SOURCE_DIR}/Deploy.cmake"
-#              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double.cmake
+#              ^^^^^^^^ meta.string.unquoted
+            -P "${CMAKE_CURRENT_SOURCE_DIR}/Deploy"
+#              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double
     DEPENDS
         ClaraPackage
     COMMENT
@@ -290,14 +289,14 @@ exquisitaque doctrina "${philosophi}" Graeco sermone tractavissent, ea Latinis
 litteris mandaremus, fore ut hic noster labor in varias reprehensiones
 incurreret. [[ x ]] nam quibusdam, et iis quidem non admodum indoctis, totum hoc
 displicet philosophari. ]=])
-#^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double
+#^^^^^^^^^^^^^^^^^^^^^^^^^^ string.raw
 #                       ^^^ punctuation.definition.string.end
-#                          ^ punctuation.section.parens.end.cmake                                                                 
+#                          ^ punctuation.section.parens.end                                                                 
 
 set_target_properties(gintonic PROPERTIES CXX_STANDARD 14)
 #  ^ meta.function-call variable.function
-#                     ^ string.unquoted
+#                     ^ meta.string.unquoted
 #                              ^ variable.parameter
 #                                         ^ variable.parameter
-#                                                      ^ string.unquoted
+#                                                      ^ meta.string.unquoted
 
