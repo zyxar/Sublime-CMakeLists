@@ -1,0 +1,7 @@
+<snippet>
+	<description>command</description>
+	<tabTrigger>ctest_empty_binary_directory</tabTrigger>
+	<scope>source.cmake - meta.function-call.arguments - string - comment</scope>
+	<content>
+<![CDATA[ctest_empty_binary_directory($0)]]>	</content>
+</snippet>
