@@ -1,0 +1,8 @@
+
+<snippet>
+	<description>command</description>
+	<tabTrigger>find_file</tabTrigger>
+	<scope>source.cmake - meta.function-call.arguments - string - comment</scope>
+	<content>
+<![CDATA[find_file($0)]]>	</content>
+</snippet>

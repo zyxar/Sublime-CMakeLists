@@ -1,0 +1,8 @@
+
+<snippet>
+	<description>command</description>
+	<tabTrigger>subdir_depends</tabTrigger>
+	<scope>source.cmake - meta.function-call.arguments - string - comment</scope>
+	<content>
+<![CDATA[subdir_depends($0)]]>	</content>
+</snippet>

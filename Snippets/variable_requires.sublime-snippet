@@ -1,0 +1,8 @@
+
+<snippet>
+	<description>command</description>
+	<tabTrigger>variable_requires</tabTrigger>
+	<scope>source.cmake - meta.function-call.arguments - string - comment</scope>
+	<content>
+<![CDATA[variable_requires($0)]]>	</content>
+</snippet>

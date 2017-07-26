@@ -1,0 +1,8 @@
+
+<snippet>
+	<description>command</description>
+	<tabTrigger>cmake_parse_arguments</tabTrigger>
+	<scope>source.cmake - meta.function-call.arguments - string - comment</scope>
+	<content>
+<![CDATA[cmake_parse_arguments($0)]]>	</content>
+</snippet>

@@ -1,0 +1,8 @@
+
+<snippet>
+	<description>command</description>
+	<tabTrigger>list</tabTrigger>
+	<scope>source.cmake - meta.function-call.arguments - string - comment</scope>
+	<content>
+<![CDATA[list($0)]]>	</content>
+</snippet>
