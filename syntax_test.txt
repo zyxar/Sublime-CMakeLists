@@ -39,7 +39,7 @@ cmake_minimum_required(VERSION 3.0)
 #                     ^ punctuation.section.parens.begin
 #                                 ^ punctuation.section.parens.end
 #                      ^^^^^^^^^^^ meta.function-call.arguments
-#         ^ variable.function
+#         ^ support.function
 
 set(some_var "Hello, world!")
 # ^ support.function
@@ -192,7 +192,7 @@ configure_file(
 # ^^^^^ meta.string.unquoted
 
 target_include_directories(module PUBLIC $<CMAKE_COMPILER_ID>)
-# ^^^^^^^^^^^^^^^^^^^^^^^^ variable.function
+# ^^^^^^^^^^^^^^^^^^^^^^^^ support.function
 #                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #                         ^ punctuation.section.parens.begin
 #                          ^^^^^^ meta.string.unquoted
@@ -303,9 +303,9 @@ displicet philosophari. ]=])
 #                          ^ punctuation.section.parens.end                                                                 
 
 set_target_properties(gintonic PROPERTIES CXX_STANDARD 14)
-#  ^ meta.function-call variable.function
+#  ^ meta.function-call support.function
 #                     ^ meta.string.unquoted
 #                              ^ variable.parameter
-#                                         ^ variable.parameter
+#                                         ^ - variable.parameter
 #                                                      ^ meta.string.unquoted
 
