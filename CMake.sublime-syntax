@@ -211,6 +211,8 @@ contexts:
     - match: \(
       scope: punctuation.section.parens.begin.cmake
       push: if-args
+    - match: \bDEFINED\b
+      scope: variable.parameter.if.DEFINED.cmake
     - match: \bSTREQUAL\b
       scope: variable.parameter.if.STREQUAL.cmake
     - match: \bNOT\b
@@ -417,7 +419,7 @@ contexts:
     - include: args-common
 
   #--- CONTINUE ----------------------------------------------------------------
-  
+
   continue:
     - match: (?i)\bcontinue\b
       scope: keyword.control.continue.cmake
@@ -541,7 +543,7 @@ contexts:
   string-raw:
     - match: \[(=*)\[
       scope: punctuation.definition.string.begin.cmake
-      push: 
+      push:
         - meta_include_prototype: false
         - meta_scope: string.raw.cmake
         - match: \]\1\]
@@ -588,7 +590,7 @@ contexts:
         - match: \\.
           scope: invalid.illegal.character.escape.cmake
         - match: (?=\t| |\(|\)|\#|\"|\\|\n)
-          pop: true  
+          pop: true
         - match: (?=\s*$)
           set:
             - match: \s*$
