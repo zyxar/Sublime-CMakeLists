@@ -18,6 +18,23 @@ if (NOT (${something} AND ${something_else}))
 
 endif()
 
+if (DEFINED ENV{DUMMY})
+#   ^ variable.parameter
+#           ^ - variable.parameter - keyword
+#              ^ - punctuation
+#                    ^ - punctuation
+# pass
+else()
+    message(FATAL_ERROR "DUMMY is not defined. \n  ")
+endif()
+if (DEFINED $ENV{DUMMY})
+#   ^ variable.parameter
+#           ^ punctuation.definition
+# pass
+else()
+    message(FATAL_ERROR "DUMMY is not defined. \n  ")
+endif()
+
 set(x "\! \@ \# \$ \% \& \* \( \) \a \b \c \d \e \f \g \h \i \j \k \l \m \n \o \p \q \r \s \t \u \v \w \x \y \z")
 #      ^^ invalid.illegal.character.escape
 #         ^^ constant.character.escape
@@ -60,7 +77,7 @@ set(blarg
 
 message(STATUS "The some_var variable has the value \"${some_var}\"")
 #       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.function-call.arguments
-#       ^^^^^^ variable.parameter 
+#       ^^^^^^ variable.parameter
 #              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double
 #                                                   ^^ constant.character.escape
 #                                                     ^ punctuation.definition.variable
@@ -97,8 +114,8 @@ elseif("${somevar}" STREQUAL whatever AND NOT ${another_var} VERSION_LESS 1.2.3)
 
 elseif  (STREQUALasdf sTREQUAL COMMAND ANDNOT AND NOT VERSION_GREATER TARGET)
 #^^^^^ keyword.control
-#        ^^^^^^^^^^^^ meta.string.unquoted 
-#                     ^^^^^^^^ meta.string.unquoted 
+#        ^^^^^^^^^^^^ meta.string.unquoted
+#                     ^^^^^^^^ meta.string.unquoted
 #                              ^^^^^^^ variable.parameter
 #                                      ^^^^^^ - variable.parameter
 #                                             ^^^ keyword.operator
@@ -236,7 +253,7 @@ if(NOT (CMAKE_VERSION VERSION_LESS 3.0))  # CMake >= 3.0
 #                                                               ^^^^^ variable.parameter
 #                                                                     ^^^^^^ meta.string.unquoted
 #                                                                           ^ punctuation.section.parens.end
-                                              
+
 endif()
 
 #[=[
@@ -249,7 +266,7 @@ endif()
 
                         particular
 
-]=] # and this is where a regular line comment starts 
+]=] # and this is where a regular line comment starts
 # ^ comment.block
 #   ^ comment.line
 
@@ -277,12 +294,12 @@ endforeach()
 
 add_custom_target(ClaraDeploy
     COMMAND
-        ${CMAKE_COMMAND} 
-            -D VERSION=${PROJECT_VERSION} 
+        ${CMAKE_COMMAND}
+            -D VERSION=${PROJECT_VERSION}
 #              ^^^^^^^^ meta.string.unquoted
-            -D SUBLIME_PLATFORM_EXT=${SUBLIME_PLATFORM_EXT} 
+            -D SUBLIME_PLATFORM_EXT=${SUBLIME_PLATFORM_EXT}
 #              ^^^^^^^^^^^^^^^^^^^^^ meta.string.unquoted
-            -D ZIPFILE="${Clara_tar_output}" 
+            -D ZIPFILE="${Clara_tar_output}"
 #              ^^^^^^^^ meta.string.unquoted
             -P "${CMAKE_CURRENT_SOURCE_DIR}/Deploy"
 #              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double
@@ -300,7 +317,7 @@ incurreret. [[ x ]] nam quibusdam, et iis quidem non admodum indoctis, totum hoc
 displicet philosophari. ]=])
 #^^^^^^^^^^^^^^^^^^^^^^^^^^ string.raw
 #                       ^^^ punctuation.definition.string.end
-#                          ^ punctuation.section.parens.end                                                                 
+#                          ^ punctuation.section.parens.end
 
 set_target_properties(gintonic PROPERTIES CXX_STANDARD 14)
 #  ^ meta.function-call support.function
