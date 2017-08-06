@@ -6,7 +6,12 @@ class AutoComplete(sublime_plugin.ViewEventListener):
 
     @classmethod
     def is_applicable(cls, settings):
-        return settings.get("syntax", "").endswith("CMake.sublime-syntax")
+        if not settings:
+            return False
+        syntax = settings.get("syntax", None)
+        if not syntax:
+            return False
+        return syntax.endswith("CMake.sublime-syntax")
 
     def on_query_completions(self, prefix, locations):
         for point in locations:
