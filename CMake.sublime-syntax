@@ -12,7 +12,7 @@ variables:
   unquoted_argument_element: "[^ \t()#\"\\']"
   unquoted_argument: "{{unquoted_argument_element}}+"
   identifier: \b[[:alpha:]_][[:alnum:]_]*\b
-  generic_named_parameter: \b@?[A-Z_][A-Z0-9_]*(?=[^\w-<>=\$])
+  generic_named_parameter: \b@?[A-Z_][A-Z0-9_]*(?=[^\w\-<>=\$])
 #-------------------------------------------------------------------------------
 contexts:
   prototype:
