@@ -1,9 +1,11 @@
-from __future__ import print_function
 import yaml
 import sys
 import os
 
 def main():
+    if len(sys.argv) != 3:
+        print('usage:', sys.argv[0], 'PATH/TO/CMakeCommands.yml OUTPUTFILE')
+        return 1
     parent = "scope:source.cmake#"
     with open(sys.argv[1], "r") as stream:
         commands_input = yaml.load(stream)

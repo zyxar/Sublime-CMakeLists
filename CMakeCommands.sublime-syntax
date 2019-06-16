@@ -873,6 +873,14 @@ contexts:
     scope: variable.parameter.NAMELINK_SKIP.cmake
   - match: \bINCLUDES DESTINATION\b
     scope: variable.parameter.INCLUDES DESTINATION.cmake
+  - match: \bDIRECTORY\b
+    scope: variable.parameter.DIRECTORY.cmake
+  - match: \bFILES\b
+    scope: variable.parameter.FILES.cmake
+  - match: \bFILES_MATCHING\b
+    scope: variable.parameter.FILES_MATCHING.cmake
+  - match: \bPATTERN\b
+    scope: variable.parameter.PATTERN.cmake
   - include: scope:source.cmake#args-common
   install_files-args:
   - meta_scope: meta.function-call.arguments.cmake
@@ -947,126 +955,36 @@ contexts:
     scope: variable.parameter.COMMAND_NAME.cmake
   - include: scope:source.cmake#args-common
   main:
-  - match: (?i)\bfind_package\b
+  - match: (?i)\badd_compile_options\b
     push:
     - meta_scope: meta.function-call.cmake
     - match: (?=\()
       set:
       - match: \(
         scope: punctuation.section.parens.begin.cmake
-        set: find_package-args
+        set: add_compile_options-args
     - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.find_package.cmake
-  - match: (?i)\bget_property\b
+    scope: support.function.add_compile_options.cmake
+  - match: (?i)\badd_custom_command\b
     push:
     - meta_scope: meta.function-call.cmake
     - match: (?=\()
       set:
       - match: \(
         scope: punctuation.section.parens.begin.cmake
-        set: get_property-args
+        set: add_custom_command-args
     - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.get_property.cmake
-  - match: (?i)\btry_compile\b
+    scope: support.function.add_custom_command.cmake
+  - match: (?i)\badd_custom_target\b
     push:
     - meta_scope: meta.function-call.cmake
     - match: (?=\()
       set:
       - match: \(
         scope: punctuation.section.parens.begin.cmake
-        set: try_compile-args
+        set: add_custom_target-args
     - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.try_compile.cmake
-  - match: (?i)\bget_source_file_property\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: get_source_file_property-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.get_source_file_property.cmake
-  - match: (?i)\bcmake_host_system_information\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: cmake_host_system_information-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.cmake_host_system_information.cmake
-  - match: (?i)\bcmake_policy\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: cmake_policy-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.cmake_policy.cmake
-  - match: (?i)\bmark_as_advanced\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: mark_as_advanced-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.mark_as_advanced.cmake
-  - match: (?i)\bload_cache\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: load_cache-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.load_cache.cmake
-  - match: (?i)\badd_dependencies\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: add_dependencies-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.add_dependencies.cmake
-  - match: (?i)\bctest_start\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: ctest_start-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.ctest_start.cmake
-  - match: (?i)\bvariable_requires\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: variable_requires-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.variable_requires.cmake
-  - match: (?i)\bexecute_process\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: execute_process-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.execute_process.cmake
+    scope: support.function.add_custom_target.cmake
   - match: (?i)\badd_definitions\b
     push:
     - meta_scope: meta.function-call.cmake
@@ -1077,86 +995,16 @@ contexts:
         set: add_definitions-args
     - include: scope:source.cmake#args-illegal-boilerplate
     scope: support.function.add_definitions.cmake
-  - match: (?i)\binstall_programs\b
+  - match: (?i)\badd_dependencies\b
     push:
     - meta_scope: meta.function-call.cmake
     - match: (?=\()
       set:
       - match: \(
         scope: punctuation.section.parens.begin.cmake
-        set: install_programs-args
+        set: add_dependencies-args
     - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.install_programs.cmake
-  - match: (?i)\bctest_test\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: ctest_test-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.ctest_test.cmake
-  - match: (?i)\btry_run\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: try_run-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.try_run.cmake
-  - match: (?i)\bctest_sleep\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: ctest_sleep-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.ctest_sleep.cmake
-  - match: (?i)\bmessage\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: message-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.message.cmake
-  - match: (?i)\bfind_library\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: find_library-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.find_library.cmake
-  - match: (?i)\bbuild_command\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: build_command-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.build_command.cmake
-  - match: (?i)\bcmake_parse_arguments\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: cmake_parse_arguments-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.cmake_parse_arguments.cmake
+    scope: support.function.add_dependencies.cmake
   - match: (?i)\badd_executable\b
     push:
     - meta_scope: meta.function-call.cmake
@@ -1167,386 +1015,6 @@ contexts:
         set: add_executable-args
     - include: scope:source.cmake#args-illegal-boilerplate
     scope: support.function.add_executable.cmake
-  - match: (?i)\bfltk_wrap_ui\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: fltk_wrap_ui-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.fltk_wrap_ui.cmake
-  - match: (?i)\bdefine_property\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: define_property-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.define_property.cmake
-  - match: (?i)\bset_tests_properties\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: set_tests_properties-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.set_tests_properties.cmake
-  - match: (?i)\buse_mangled_mesa\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: use_mangled_mesa-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.use_mangled_mesa.cmake
-  - match: (?i)\bexport_library_dependencies\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: export_library_dependencies-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.export_library_dependencies.cmake
-  - match: (?i)\btarget_link_libraries\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: target_link_libraries-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.target_link_libraries.cmake
-  - match: (?i)\breturn\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: return-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.return.cmake
-  - match: (?i)\bstring\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: string-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.string.cmake
-  - match: (?i)\blink_directories\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: link_directories-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.link_directories.cmake
-  - match: (?i)\bfind_path\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: find_path-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.find_path.cmake
-  - match: (?i)\benable_language\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: enable_language-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.enable_language.cmake
-  - match: (?i)\badd_test\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: add_test-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.add_test.cmake
-  - match: (?i)\btarget_compile_definitions\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: target_compile_definitions-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.target_compile_definitions.cmake
-  - match: (?i)\binclude_directories\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: include_directories-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.include_directories.cmake
-  - match: (?i)\bctest_build\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: ctest_build-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.ctest_build.cmake
-  - match: (?i)\bbuild_name\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: build_name-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.build_name.cmake
-  - match: (?i)\bget_cmake_property\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: get_cmake_property-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.get_cmake_property.cmake
-  - match: (?i)\bfind_program\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: find_program-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.find_program.cmake
-  - match: (?i)\bremove_definitions\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: remove_definitions-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.remove_definitions.cmake
-  - match: (?i)\bctest_configure\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: ctest_configure-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.ctest_configure.cmake
-  - match: (?i)\bctest_submit\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: ctest_submit-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.ctest_submit.cmake
-  - match: (?i)\bsource_group\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: source_group-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.source_group.cmake
-  - match: (?i)\blist\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: list-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.list.cmake
-  - match: (?i)\bremove\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: remove-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.remove.cmake
-  - match: (?i)\btarget_compile_options\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: target_compile_options-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.target_compile_options.cmake
-  - match: (?i)\binstall_targets\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: install_targets-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.install_targets.cmake
-  - match: (?i)\bconfigure_file\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: configure_file-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.configure_file.cmake
-  - match: (?i)\binstall\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: install-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.install.cmake
-  - match: (?i)\bcreate_test_sourcelist\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: create_test_sourcelist-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.create_test_sourcelist.cmake
-  - match: (?i)\blink_libraries\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: link_libraries-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.link_libraries.cmake
-  - match: (?i)\bload_command\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: load_command-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.load_command.cmake
-  - match: (?i)\bset_source_files_properties\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: set_source_files_properties-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.set_source_files_properties.cmake
-  - match: (?i)\binclude_external_msproject\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: include_external_msproject-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.include_external_msproject.cmake
-  - match: (?i)\bsite_name\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: site_name-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.site_name.cmake
-  - match: (?i)\binstall_files\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: install_files-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.install_files.cmake
-  - match: (?i)\bqt_wrap_ui\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: qt_wrap_ui-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.qt_wrap_ui.cmake
-  - match: (?i)\bctest_read_custom_files\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: ctest_read_custom_files-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.ctest_read_custom_files.cmake
-  - match: (?i)\bexport\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: export-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.export.cmake
   - match: (?i)\badd_library\b
     push:
     - meta_scope: meta.function-call.cmake
@@ -1557,6 +1025,316 @@ contexts:
         set: add_library-args
     - include: scope:source.cmake#args-illegal-boilerplate
     scope: support.function.add_library.cmake
+  - match: (?i)\badd_subdirectory\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: add_subdirectory-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.add_subdirectory.cmake
+  - match: (?i)\badd_test\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: add_test-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.add_test.cmake
+  - match: (?i)\baux_source_directory\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: aux_source_directory-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.aux_source_directory.cmake
+  - match: (?i)\bbuild_command\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: build_command-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.build_command.cmake
+  - match: (?i)\bbuild_name\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: build_name-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.build_name.cmake
+  - match: (?i)\bcmake_host_system_information\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: cmake_host_system_information-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.cmake_host_system_information.cmake
+  - match: (?i)\bcmake_minimum_required\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: cmake_minimum_required-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.cmake_minimum_required.cmake
+  - match: (?i)\bcmake_parse_arguments\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: cmake_parse_arguments-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.cmake_parse_arguments.cmake
+  - match: (?i)\bcmake_policy\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: cmake_policy-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.cmake_policy.cmake
+  - match: (?i)\bconfigure_file\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: configure_file-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.configure_file.cmake
+  - match: (?i)\bcreate_test_sourcelist\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: create_test_sourcelist-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.create_test_sourcelist.cmake
+  - match: (?i)\bctest_build\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: ctest_build-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.ctest_build.cmake
+  - match: (?i)\bctest_configure\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: ctest_configure-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.ctest_configure.cmake
+  - match: (?i)\bctest_coverage\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: ctest_coverage-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.ctest_coverage.cmake
+  - match: (?i)\bctest_empty_binary_directory\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: ctest_empty_binary_directory-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.ctest_empty_binary_directory.cmake
+  - match: (?i)\bctest_memcheck\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: ctest_memcheck-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.ctest_memcheck.cmake
+  - match: (?i)\bctest_read_custom_files\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: ctest_read_custom_files-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.ctest_read_custom_files.cmake
+  - match: (?i)\bctest_run_script\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: ctest_run_script-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.ctest_run_script.cmake
+  - match: (?i)\bctest_sleep\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: ctest_sleep-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.ctest_sleep.cmake
+  - match: (?i)\bctest_start\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: ctest_start-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.ctest_start.cmake
+  - match: (?i)\bctest_submit\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: ctest_submit-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.ctest_submit.cmake
+  - match: (?i)\bctest_test\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: ctest_test-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.ctest_test.cmake
+  - match: (?i)\bctest_update\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: ctest_update-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.ctest_update.cmake
+  - match: (?i)\bctest_upload\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: ctest_upload-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.ctest_upload.cmake
+  - match: (?i)\bdefine_property\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: define_property-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.define_property.cmake
+  - match: (?i)\benable_language\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: enable_language-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.enable_language.cmake
+  - match: (?i)\benable_testing\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: enable_testing-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.enable_testing.cmake
+  - match: (?i)\bexec_program\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: exec_program-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.exec_program.cmake
+  - match: (?i)\bexecute_process\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: execute_process-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.execute_process.cmake
+  - match: (?i)\bexport\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: export-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.export.cmake
+  - match: (?i)\bexport_library_dependencies\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: export_library_dependencies-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.export_library_dependencies.cmake
   - match: (?i)\bfile\b
     push:
     - meta_scope: meta.function-call.cmake
@@ -1567,16 +1345,126 @@ contexts:
         set: file-args
     - include: scope:source.cmake#args-illegal-boilerplate
     scope: support.function.file.cmake
-  - match: (?i)\bwrite_file\b
+  - match: (?i)\bfind_file\b
     push:
     - meta_scope: meta.function-call.cmake
     - match: (?=\()
       set:
       - match: \(
         scope: punctuation.section.parens.begin.cmake
-        set: write_file-args
+        set: find_file-args
     - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.write_file.cmake
+    scope: support.function.find_file.cmake
+  - match: (?i)\bfind_library\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: find_library-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.find_library.cmake
+  - match: (?i)\bfind_package\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: find_package-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.find_package.cmake
+  - match: (?i)\bfind_path\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: find_path-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.find_path.cmake
+  - match: (?i)\bfind_program\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: find_program-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.find_program.cmake
+  - match: (?i)\bfltk_wrap_ui\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: fltk_wrap_ui-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.fltk_wrap_ui.cmake
+  - match: (?i)\bget_cmake_property\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: get_cmake_property-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.get_cmake_property.cmake
+  - match: (?i)\bget_directory_property\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: get_directory_property-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.get_directory_property.cmake
+  - match: (?i)\bget_filename_component\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: get_filename_component-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.get_filename_component.cmake
+  - match: (?i)\bget_property\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: get_property-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.get_property.cmake
+  - match: (?i)\bget_source_file_property\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: get_source_file_property-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.get_source_file_property.cmake
+  - match: (?i)\bget_target_property\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: get_target_property-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.get_target_property.cmake
   - match: (?i)\bget_test_property\b
     push:
     - meta_scope: meta.function-call.cmake
@@ -1587,16 +1475,166 @@ contexts:
         set: get_test_property-args
     - include: scope:source.cmake#args-illegal-boilerplate
     scope: support.function.get_test_property.cmake
-  - match: (?i)\bvariable_watch\b
+  - match: (?i)\binclude_directories\b
     push:
     - meta_scope: meta.function-call.cmake
     - match: (?=\()
       set:
       - match: \(
         scope: punctuation.section.parens.begin.cmake
-        set: variable_watch-args
+        set: include_directories-args
     - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.variable_watch.cmake
+    scope: support.function.include_directories.cmake
+  - match: (?i)\binclude_external_msproject\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: include_external_msproject-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.include_external_msproject.cmake
+  - match: (?i)\binclude_regular_expression\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: include_regular_expression-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.include_regular_expression.cmake
+  - match: (?i)\binstall\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: install-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.install.cmake
+  - match: (?i)\binstall_files\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: install_files-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.install_files.cmake
+  - match: (?i)\binstall_programs\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: install_programs-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.install_programs.cmake
+  - match: (?i)\binstall_targets\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: install_targets-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.install_targets.cmake
+  - match: (?i)\blink_directories\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: link_directories-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.link_directories.cmake
+  - match: (?i)\blink_libraries\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: link_libraries-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.link_libraries.cmake
+  - match: (?i)\blist\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: list-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.list.cmake
+  - match: (?i)\bload_cache\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: load_cache-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.load_cache.cmake
+  - match: (?i)\bload_command\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: load_command-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.load_command.cmake
+  - match: (?i)\bmake_directory\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: make_directory-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.make_directory.cmake
+  - match: (?i)\bmark_as_advanced\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: mark_as_advanced-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.mark_as_advanced.cmake
+  - match: (?i)\bmath\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: math-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.math.cmake
+  - match: (?i)\bmessage\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: message-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.message.cmake
   - match: (?i)\boption\b
     push:
     - meta_scope: meta.function-call.cmake
@@ -1627,36 +1665,6 @@ contexts:
         set: project-args
     - include: scope:source.cmake#args-illegal-boilerplate
     scope: support.function.project.cmake
-  - match: (?i)\butility_source\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: utility_source-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.utility_source.cmake
-  - match: (?i)\bfind_file\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: find_file-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.find_file.cmake
-  - match: (?i)\bget_filename_component\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: get_filename_component-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.get_filename_component.cmake
   - match: (?i)\bqt_wrap_cpp\b
     push:
     - meta_scope: meta.function-call.cmake
@@ -1667,246 +1675,46 @@ contexts:
         set: qt_wrap_cpp-args
     - include: scope:source.cmake#args-illegal-boilerplate
     scope: support.function.qt_wrap_cpp.cmake
-  - match: (?i)\bsubdirs\b
+  - match: (?i)\bqt_wrap_ui\b
     push:
     - meta_scope: meta.function-call.cmake
     - match: (?=\()
       set:
       - match: \(
         scope: punctuation.section.parens.begin.cmake
-        set: subdirs-args
+        set: qt_wrap_ui-args
     - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.subdirs.cmake
-  - match: (?i)\badd_compile_options\b
+    scope: support.function.qt_wrap_ui.cmake
+  - match: (?i)\bremove\b
     push:
     - meta_scope: meta.function-call.cmake
     - match: (?=\()
       set:
       - match: \(
         scope: punctuation.section.parens.begin.cmake
-        set: add_compile_options-args
+        set: remove-args
     - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.add_compile_options.cmake
-  - match: (?i)\bget_directory_property\b
+    scope: support.function.remove.cmake
+  - match: (?i)\bremove_definitions\b
     push:
     - meta_scope: meta.function-call.cmake
     - match: (?=\()
       set:
       - match: \(
         scope: punctuation.section.parens.begin.cmake
-        set: get_directory_property-args
+        set: remove_definitions-args
     - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.get_directory_property.cmake
-  - match: (?i)\bexec_program\b
+    scope: support.function.remove_definitions.cmake
+  - match: (?i)\breturn\b
     push:
     - meta_scope: meta.function-call.cmake
     - match: (?=\()
       set:
       - match: \(
         scope: punctuation.section.parens.begin.cmake
-        set: exec_program-args
+        set: return-args
     - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.exec_program.cmake
-  - match: (?i)\bmath\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: math-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.math.cmake
-  - match: (?i)\bget_target_property\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: get_target_property-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.get_target_property.cmake
-  - match: (?i)\btarget_sources\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: target_sources-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.target_sources.cmake
-  - match: (?i)\bset_directory_properties\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: set_directory_properties-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.set_directory_properties.cmake
-  - match: (?i)\bsubdir_depends\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: subdir_depends-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.subdir_depends.cmake
-  - match: (?i)\bset_target_properties\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: set_target_properties-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.set_target_properties.cmake
-  - match: (?i)\benable_testing\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: enable_testing-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.enable_testing.cmake
-  - match: (?i)\bctest_coverage\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: ctest_coverage-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.ctest_coverage.cmake
-  - match: (?i)\btarget_include_directories\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: target_include_directories-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.target_include_directories.cmake
-  - match: (?i)\bctest_empty_binary_directory\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: ctest_empty_binary_directory-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.ctest_empty_binary_directory.cmake
-  - match: (?i)\bmake_directory\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: make_directory-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.make_directory.cmake
-  - match: (?i)\bctest_memcheck\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: ctest_memcheck-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.ctest_memcheck.cmake
-  - match: (?i)\btarget_compile_features\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: target_compile_features-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.target_compile_features.cmake
-  - match: (?i)\badd_subdirectory\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: add_subdirectory-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.add_subdirectory.cmake
-  - match: (?i)\binclude_regular_expression\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: include_regular_expression-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.include_regular_expression.cmake
-  - match: (?i)\badd_custom_command\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: add_custom_command-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.add_custom_command.cmake
-  - match: (?i)\bctest_upload\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: ctest_upload-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.ctest_upload.cmake
-  - match: (?i)\bctest_run_script\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: ctest_run_script-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.ctest_run_script.cmake
-  - match: (?i)\bctest_update\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: ctest_update-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.ctest_update.cmake
-  - match: (?i)\bcmake_minimum_required\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: cmake_minimum_required-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.cmake_minimum_required.cmake
+    scope: support.function.return.cmake
   - match: (?i)\bseparate_arguments\b
     push:
     - meta_scope: meta.function-call.cmake
@@ -1917,26 +1725,16 @@ contexts:
         set: separate_arguments-args
     - include: scope:source.cmake#args-illegal-boilerplate
     scope: support.function.separate_arguments.cmake
-  - match: (?i)\badd_custom_target\b
+  - match: (?i)\bset_directory_properties\b
     push:
     - meta_scope: meta.function-call.cmake
     - match: (?=\()
       set:
       - match: \(
         scope: punctuation.section.parens.begin.cmake
-        set: add_custom_target-args
+        set: set_directory_properties-args
     - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.add_custom_target.cmake
-  - match: (?i)\baux_source_directory\b
-    push:
-    - meta_scope: meta.function-call.cmake
-    - match: (?=\()
-      set:
-      - match: \(
-        scope: punctuation.section.parens.begin.cmake
-        set: aux_source_directory-args
-    - include: scope:source.cmake#args-illegal-boilerplate
-    scope: support.function.aux_source_directory.cmake
+    scope: support.function.set_directory_properties.cmake
   - match: (?i)\bset_property\b
     push:
     - meta_scope: meta.function-call.cmake
@@ -1947,6 +1745,166 @@ contexts:
         set: set_property-args
     - include: scope:source.cmake#args-illegal-boilerplate
     scope: support.function.set_property.cmake
+  - match: (?i)\bset_source_files_properties\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: set_source_files_properties-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.set_source_files_properties.cmake
+  - match: (?i)\bset_target_properties\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: set_target_properties-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.set_target_properties.cmake
+  - match: (?i)\bset_tests_properties\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: set_tests_properties-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.set_tests_properties.cmake
+  - match: (?i)\bsite_name\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: site_name-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.site_name.cmake
+  - match: (?i)\bsource_group\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: source_group-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.source_group.cmake
+  - match: (?i)\bstring\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: string-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.string.cmake
+  - match: (?i)\bsubdir_depends\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: subdir_depends-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.subdir_depends.cmake
+  - match: (?i)\bsubdirs\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: subdirs-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.subdirs.cmake
+  - match: (?i)\btarget_compile_definitions\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: target_compile_definitions-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.target_compile_definitions.cmake
+  - match: (?i)\btarget_compile_features\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: target_compile_features-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.target_compile_features.cmake
+  - match: (?i)\btarget_compile_options\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: target_compile_options-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.target_compile_options.cmake
+  - match: (?i)\btarget_include_directories\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: target_include_directories-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.target_include_directories.cmake
+  - match: (?i)\btarget_link_libraries\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: target_link_libraries-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.target_link_libraries.cmake
+  - match: (?i)\btarget_sources\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: target_sources-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.target_sources.cmake
+  - match: (?i)\btry_compile\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: try_compile-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.try_compile.cmake
+  - match: (?i)\btry_run\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: try_run-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.try_run.cmake
   - match: (?i)\bunset\b
     push:
     - meta_scope: meta.function-call.cmake
@@ -1957,6 +1915,56 @@ contexts:
         set: unset-args
     - include: scope:source.cmake#args-illegal-boilerplate
     scope: support.function.unset.cmake
+  - match: (?i)\buse_mangled_mesa\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: use_mangled_mesa-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.use_mangled_mesa.cmake
+  - match: (?i)\butility_source\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: utility_source-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.utility_source.cmake
+  - match: (?i)\bvariable_requires\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: variable_requires-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.variable_requires.cmake
+  - match: (?i)\bvariable_watch\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: variable_watch-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.variable_watch.cmake
+  - match: (?i)\bwrite_file\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: write_file-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.write_file.cmake
   make_directory-args:
   - meta_scope: meta.function-call.arguments.cmake
   - include: scope:source.cmake#args-common
