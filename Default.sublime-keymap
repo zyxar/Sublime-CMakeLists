@@ -10,6 +10,7 @@
         },
         "context":
         [
+            { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
             { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
             { "key": "selector", "operator": "equal", "operand": "source.cmake meta.function-call.arguments" }
         ]
