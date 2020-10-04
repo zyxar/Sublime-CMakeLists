@@ -1867,6 +1867,16 @@ contexts:
         set: target_include_directories-args
     - include: scope:source.cmake#args-illegal-boilerplate
     scope: support.function.target_include_directories.cmake
+  - match: (?i)\btarget_link_directories\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: target_link_directories-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.target_link_directories.cmake
   - match: (?i)\btarget_link_libraries\b
     push:
     - meta_scope: meta.function-call.cmake
@@ -1877,6 +1887,26 @@ contexts:
         set: target_link_libraries-args
     - include: scope:source.cmake#args-illegal-boilerplate
     scope: support.function.target_link_libraries.cmake
+  - match: (?i)\btarget_link_options\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: target_link_options-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.target_link_options.cmake
+  - match: (?i)\btarget_precompile_headers\b
+    push:
+    - meta_scope: meta.function-call.cmake
+    - match: (?=\()
+      set:
+      - match: \(
+        scope: punctuation.section.parens.begin.cmake
+        set: target_precompile_headers-args
+    - include: scope:source.cmake#args-illegal-boilerplate
+    scope: support.function.target_precompile_headers.cmake
   - match: (?i)\btarget_sources\b
     push:
     - meta_scope: meta.function-call.cmake
@@ -2240,6 +2270,17 @@ contexts:
   - match: \bPRIVATE\b
     scope: variable.parameter.PRIVATE.cmake
   - include: scope:source.cmake#args-common
+  target_link_directories-args:
+  - meta_scope: meta.function-call.arguments.cmake
+  - match: \bBEFORE\b
+    scope: variable.parameter.BEFORE.cmake
+  - match: \bINTERFACE\b
+    scope: variable.parameter.INTERFACE.cmake
+  - match: \bPUBLIC\b
+    scope: variable.parameter.PUBLIC.cmake
+  - match: \bPRIVATE\b
+    scope: variable.parameter.PRIVATE.cmake
+  - include: scope:source.cmake#args-common
   target_link_libraries-args:
   - meta_scope: meta.function-call.arguments.cmake
   - match: \bINTERFACE\b
@@ -2254,6 +2295,26 @@ contexts:
     scope: variable.parameter.LINK_PRIVATE.cmake
   - match: \bLINK_INTERFACE_LIBRARIES\b
     scope: variable.parameter.LINK_INTERFACE_LIBRARIES.cmake
+  - include: scope:source.cmake#args-common
+  target_link_options-args:
+  - meta_scope: meta.function-call.arguments.cmake
+  - match: \bBEFORE\b
+    scope: variable.parameter.BEFORE.cmake
+  - match: \bINTERFACE\b
+    scope: variable.parameter.INTERFACE.cmake
+  - match: \bPUBLIC\b
+    scope: variable.parameter.PUBLIC.cmake
+  - match: \bPRIVATE\b
+    scope: variable.parameter.PRIVATE.cmake
+  - include: scope:source.cmake#args-common
+  target_precompile_headers-args:
+  - meta_scope: meta.function-call.arguments.cmake
+  - match: \bINTERFACE\b
+    scope: variable.parameter.INTERFACE.cmake
+  - match: \bPUBLIC\b
+    scope: variable.parameter.PUBLIC.cmake
+  - match: \bPRIVATE\b
+    scope: variable.parameter.PRIVATE.cmake
   - include: scope:source.cmake#args-common
   target_sources-args:
   - meta_scope: meta.function-call.arguments.cmake
