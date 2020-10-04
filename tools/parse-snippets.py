@@ -1,36 +1,36 @@
+import json
 import subprocess
-import dicttoxml  # pip install dicttoxml
-import os
-from xml.dom.minidom import parseString
+
 
 def main():
-    commands = subprocess.check_output(["cmake", "--help-command-list"]) \
-                         .decode("utf-8")                                \
-                         .splitlines()
-    existing_snippets = [ os.path.splitext(f)[0] for f in os.listdir("Snippets") ]
-    new_commands = set(commands) - set(existing_snippets)
-    if not new_commands:
-        print("No new commands.")
-        return
-    for cmd in new_commands:
-        print("New command:", cmd)
-        xml1 = dicttoxml.dicttoxml({ 
-            "description": "command", 
-            "tabTrigger": cmd, 
-            "scope": "source.cmake - meta.function-call.arguments - string - comment"},
-            attr_type=False,
-            root=False)
-        xml2 = dicttoxml.dicttoxml({ 
-            "content": cmd + "($0)" }, 
-            attr_type=False, 
-            cdata=True, 
-            root=False)
-        xml = b"<snippet>" + xml1 + xml2 + b"</snippet>"
-        xml = parseString(xml).toprettyxml()
-        xml = xml[len('<?xml version="1.0"?>') + 2:] # terrible hack, but works
-        with open(os.path.join("Snippets", cmd + ".sublime-snippet"), "w") as f:
-            f.write(xml)
-    return 0
+    commands = subprocess.check_output(["cmake", "--help-command-list"]).decode("utf-8").splitlines()
+    completions = []
+    for command in commands:
+        if command in ("function", "macro"):
+            continue
+        completions.append({
+            "trigger": "{}\tbuiltin".format(command),
+            "contents": "{}($0)".format(command)
+        })
+    completions.append({
+        "trigger": "function\tbuiltin",
+        "contents": "function(${1:name} ${2:arguments})\n\t${0:# function body}\nendfunction(${1:name})"
+    })
+    completions.append({
+        "trigger": "macro\tbuiltin",
+        "contents": "macro(${1:name} ${2:arguments})\n\t${0:# macro body}\nendmacro(${1:name})"
+    })
+    with open("CMake.sublime-completions", "w") as fp:
+        json.dump(
+            {
+                "scope": "source.cmake - meta.function-call.arguments - string - comment",
+                "completions": completions
+            },
+            fp,
+            sort_keys=True,
+            separators=(",", ":"),
+            check_circular=False
+        )
 
 if __name__ == '__main__':
-    exit(main())
+    main()
