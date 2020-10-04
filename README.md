@@ -12,16 +12,7 @@
 
 ## Available Snippets
 
-* `cmake_minimum_required`
-* `foreach`
-* `if`
-* `option`
-* `project`
-* `set`
-* `while`
-
-If an argument to a command is optional, it is selectable when you tab through
-the snippet, and you can then press backspace to remove the optional argument.
+All (recent) built-in commands from cmake are provided as a basic snippet.
 
 ## Available Key Bindings
 
