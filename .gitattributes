@@ -1,0 +1,3 @@
+syntax_test.txt export-ignore
+syntax_test_.h.in export-ignore
+syntax_test_.hpp.in export-ignore
