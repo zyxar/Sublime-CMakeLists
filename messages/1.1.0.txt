@@ -1,0 +1,4 @@
+- Make snippets simpler and dumber
+- Remove AutoComplete.py script, it did more harm than good
+- Fix: add missing params for install command
+- Fix: too eager with marking a colon invalid in a generator expression
