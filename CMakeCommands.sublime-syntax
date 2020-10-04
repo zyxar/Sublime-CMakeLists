@@ -875,6 +875,8 @@ contexts:
     scope: variable.parameter.INCLUDES DESTINATION.cmake
   - match: \bDIRECTORY\b
     scope: variable.parameter.DIRECTORY.cmake
+  - match: \bFILE\b
+    scope: variable.parameter.FILE.cmake
   - match: \bFILES\b
     scope: variable.parameter.FILES.cmake
   - match: \bFILES_MATCHING\b
