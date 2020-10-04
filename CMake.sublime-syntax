@@ -638,8 +638,6 @@ contexts:
           scope: punctuation.separator.generator-expression.cmake
           set:
             - meta_content_scope: meta.generator-expression.cmake
-            - match: ':'
-              scope: invalid.illegal.too-many-colons.cmake
             - include: generator-expression-common
             - include: prototype
         - include: prototype

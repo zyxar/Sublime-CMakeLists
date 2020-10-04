@@ -136,6 +136,8 @@ endforeach()
 
 if (NOT "${the_var}" MATCHES "[A-Za-z]\\d+")
 # maybe add regex as an embedded syntax here
+endif()
+# <- meta.group.if.cmake meta.function-call.cmake keyword.control.endif.cmake
 
 if ($ENV{LD_LIBRARY_PATH} STREQUAL /usr/local/lib)
 #   ^ punctuation.definition.variable
@@ -326,3 +328,9 @@ set_target_properties(gintonic PROPERTIES CXX_STANDARD 14)
 #                                         ^ - variable.parameter
 #                                                      ^ meta.string.unquoted
 
+target_compile_options(${PROJECT_NAME} PUBLIC $<$<CXX_COMPILER_ID:MSVC>:/fp:fast>)
+# ^^^^^^^^^^^^^^^^^^^^ meta.function-call.cmake support.function.target_compile_options.cmake
+#                                      ^^^^^^ meta.function-call.arguments.cmake variable.parameter.PUBLIC.cmake
+#                                                                      ^ meta.function-call.arguments.cmake meta.generator-expression.cmake punctuation.separator.generator-expression.cmake
+#                                                                       ^^^^^^^^ meta.function-call.arguments.cmake meta.generator-expression.cmake
+#                                                                          ^ - invalid.illegal
