@@ -338,7 +338,6 @@ contexts:
 
   foreach-args:
     - meta_scope: meta.function-call.arguments.cmake
-    - include: args-common
     - match: \bIN\b
       scope: variable.parameter.foreach.IN.cmake
     - match: \bLISTS\b
@@ -347,6 +346,7 @@ contexts:
       scope: variable.parameter.foreach.ITEMS.cmake
     - match: \bRANGE\b
       scope: variable.parameter.foreach.RANGE.cmake
+    - include: args-common
 
   foreach-body:
     - meta_scope: meta.group.foreach.cmake
