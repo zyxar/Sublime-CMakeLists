@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>CMake</string>
+	<key>scope</key>
+	<string>source.cmake</string>
+	<key>settings</key>
+	<dict>
+		<key>shellVariables</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>TM_COMMENT_START</string>
+				<key>value</key>
+				<string># </string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>TM_COMMENT_START_2</string>
+				<key>value</key>
+				<string>#[[</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>TM_COMMENT_END_2</string>
+				<key>value</key>
+				<string>]]</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>TM_COMMENT_DISABLE_INDENT_2</string>
+				<key>value</key>
+				<string>yes</string>
+			</dict>
+		</array>
+		<key>decreaseIndentPattern</key>
+		<string>^\s*(?i:elseif|else|endif|endforeach|endfunction|endmacro|endwhile)\s*\([^\(]*\)\s*$</string>
+		<key>increaseIndentPattern</key>
+		<string>^\s*(?i:else|elseif|if|function|foreach|while|macro)\s*\([^)]*\)\s*$</string>
+	</dict>
+</dict>
+</plist>
+
