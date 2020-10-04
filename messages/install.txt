@@ -1,0 +1,6 @@
+Thanks for installing. This package provides:
+
+- Syntax highlighting for .cmake and CMakeLists.txt files
+- CMakeCache.txt syntax highlighting
+- CMake "config" header syntax (*.h.in and *.hpp.in files)
+- Various static completions for built-in cmake functions
