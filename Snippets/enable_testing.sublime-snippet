@@ -1,0 +1,7 @@
+<snippet>
+	<description>builtin</description>
+	<content><![CDATA[enable_testing()
+$0]]></content>
+	<tabTrigger>enable_testing</tabTrigger>
+	<scope>source.cmake - meta.function-call.arguments - string - comment</scope>
+</snippet>
