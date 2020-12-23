@@ -19,7 +19,7 @@ def main():
             continue
         completions.append({
             "trigger": "{}\tbuiltin".format(command),
-            "contents": "{}($0)".format(command)
+            "contents": "{}($1)\n$0".format(command)
         })
     with open("CMake.sublime-completions", "w") as fp:
         json.dump(
