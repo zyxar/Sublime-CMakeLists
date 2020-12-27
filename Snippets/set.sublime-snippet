@@ -2,5 +2,5 @@
 	<description>builtin</description>
 	<content><![CDATA[set(${1:variable} ${2:value} ${3:CACHE} ${4:type_of_${1:variable}} ${5:"${6:Documentation for ${1:variable}}"} ${7:FORCE} ${8:PARENT_SCOPE})]]></content>
 	<tabTrigger>set</tabTrigger>
-	<scope>source.cmake - meta.function-call.arguments - string - comment</scope>
+	<scope>source.cmake - meta.function-call.arguments - variable.other.readwrite.cmake - string - comment</scope>
 </snippet>

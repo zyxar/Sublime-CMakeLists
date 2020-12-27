@@ -2,5 +2,5 @@
 	<description>builtin</description>
 	<content><![CDATA[option(${1:option_variable} "${2:help string describing ${1:option_variable}}" ${3:initial value of ${1:option_variable}})]]></content>
 	<tabTrigger>option</tabTrigger>
-	<scope>source.cmake - meta.function-call.arguments - string - comment</scope>
+	<scope>source.cmake - meta.function-call.arguments - variable.other.readwrite.cmake - string - comment</scope>
 </snippet>
