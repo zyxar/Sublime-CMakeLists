@@ -2,5 +2,5 @@
 	<description>builtin</description>
 	<content><![CDATA[cmake_minimum_required(VERSION ${1:3.0.0} ${2:FATAL_ERROR})]]></content>
 	<tabTrigger>cmake_minimum_required</tabTrigger>
-	<scope>source.cmake - meta.function-call.arguments - string - comment</scope>
+	<scope>source.cmake - meta.function-call.arguments - variable.other.readwrite.cmake - string - comment</scope>
 </snippet>

@@ -2,5 +2,5 @@
 	<description>builtin</description>
 	<content><![CDATA[enable_testing()]]></content>
 	<tabTrigger>enable_testing</tabTrigger>
-	<scope>source.cmake - meta.function-call.arguments - string - comment</scope>
+	<scope>source.cmake - meta.function-call.arguments - variable.other.readwrite.cmake - string - comment</scope>
 </snippet>
