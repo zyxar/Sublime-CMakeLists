@@ -16,7 +16,9 @@ def main():
         print("found special command", stem)
         specials.add(stem)
     commands = subprocess.check_output(["cmake", "--help-command-list"]).decode("utf-8").splitlines()
+    variables = subprocess.check_output(["cmake", "--help-variable-list"]).decode("utf-8").splitlines()
     completions = []
+    varcompletions = []
     for command in commands:
         if command in specials:
             print("skipping special command", command)
@@ -25,6 +27,25 @@ def main():
             "trigger": "{}\tbuiltin".format(command),
             "contents": "{}($0)".format(command)
         })
+    for variable in variables:
+        if '<' in variable:
+            continue
+        varcompletions.append({
+            "trigger": "{}\tbuildin variable".format(variable.lower()),
+            "contents": "{}".format(variable),
+        })
+            
+    with open("CMakeVariables.sublime-completions", "w") as fp:
+        json.dump(
+            {
+                "scope": "variable.other.readwrite.cmake",
+                "completions": varcompletions
+            },
+            fp,
+            sort_keys=True,
+            separators=(",", ":"),
+            check_circular=False
+        )
     with open("CMake.sublime-completions", "w") as fp:
         json.dump(
             {
