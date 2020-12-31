@@ -31,7 +31,7 @@ def main():
         if '<' in variable:
             continue
         varcompletions.append({
-            "trigger": "{}\tbuildin variable".format(variable.lower()),
+            "trigger": "{}\tbuiltin variable".format(variable),
             "contents": "{}".format(variable),
         })
             
