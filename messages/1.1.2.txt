@@ -1,0 +1,2 @@
+- Add custom snippet for enable_testing() (@arcturus140)
+- Add some built-in variable completions (@arcturus140)
