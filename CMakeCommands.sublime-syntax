@@ -883,6 +883,8 @@ contexts:
     scope: variable.parameter.FILES_MATCHING.cmake
   - match: \bPATTERN\b
     scope: variable.parameter.PATTERN.cmake
+  - match: \bPROGRAMS\b
+    scope: variable.parameter.PROGRAMS.cmake
   - include: scope:source.cmake#args-common
   install_files-args:
   - meta_scope: meta.function-call.arguments.cmake
