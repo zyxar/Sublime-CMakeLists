@@ -657,8 +657,6 @@ contexts:
       scope: keyword.set.cmake
     - match: \boptions\b
       scope: keyword.options.cmake
-    - match: \b\b
-      scope: keyword.cmake
   #--- CMAKE VARIABLE ------------------------------------------------------
   variable:
     - match: |-
