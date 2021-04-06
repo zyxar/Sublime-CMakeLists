@@ -524,7 +524,6 @@ contexts:
       push: unquoted-argument-or-keyword
     - include: string-unquoted
     - include: string-quoted-double
-    - include: string-quoted-single
 
   # https://cmake.org/cmake/help/v3.0/manual/cmake-language.7.html#unquoted-argument
   unquoted-argument-or-keyword:
@@ -537,7 +536,6 @@ contexts:
   string:
     - include: string-raw
     - include: string-quoted-double
-    - include: string-quoted-single
     - include: string-unquoted
 
   string-raw:
@@ -564,19 +562,6 @@ contexts:
         - include: variable-substitution
         - include: generator-expression
 
-  string-quoted-single:
-    - match: "'"
-      scope: punctuation.definition.string.begin.cmake
-      push:
-        - meta_include_prototype: false
-        - meta_scope: string.quoted.single.cmake
-        - match: "'"
-          scope: punctuation.definition.string.end.cmake
-          pop: true
-        - include: escape-sequences
-        - include: highlight-semicolon
-        - include: variable-substitution
-        - include: generator-expression
 
   string-unquoted:
     - match: (?={{unquoted_argument}})
