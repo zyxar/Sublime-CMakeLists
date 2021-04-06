@@ -1,0 +1,1 @@
+- Remove single-quoted string syntax highlighting (@arcturus140)
