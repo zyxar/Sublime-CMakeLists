@@ -1,4 +1,4 @@
-# SYNTAX TEST "Packages/Sublime-CMakeLists/CMake.sublime-syntax"
+# SYNTAX TEST "Packages/CMake/CMake.sublime-syntax"
 
 # This is a comment
 # ^^^^^^^^^^^^^^^^^ comment.line
@@ -25,7 +25,10 @@ if (DEFINED ENV{DUMMY})
 #                    ^ - punctuation
 # pass
 else()
+    message(FATAL_ERROR 'a')
+    #                   ^^^ - string
     message(FATAL_ERROR "DUMMY is not defined. \n  ")
+    #                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted
 endif()
 if (DEFINED $ENV{DUMMY})
 #   ^ variable.parameter
