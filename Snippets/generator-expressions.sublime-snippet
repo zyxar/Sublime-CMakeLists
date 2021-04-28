@@ -1,0 +1,8 @@
+<snippet>
+	<description>generator expression</description>
+	<content><![CDATA[
+\$<${1:op}${2::${3:exp}}>$0
+]]></content>
+	<tabTrigger>gen</tabTrigger>
+	<scope>source.cmake</scope>
+</snippet>
