@@ -2,7 +2,7 @@
 	<description>control flow</description>
 	<content><![CDATA[foreach(${1:item} ${2:items})
 	$0
-endforeach(${1:item})]]></content>
+endforeach()]]></content>
 	<tabTrigger>foreach</tabTrigger>
 	<scope>source.cmake - meta.function-call.arguments - variable.other.readwrite.cmake - string - comment</scope>
 </snippet>
