@@ -45,9 +45,9 @@ def main():
         print("# Automatically generated file -- do not edit!", file=stream)
         noalias_dumper = yaml.dumper.SafeDumper
         noalias_dumper.ignore_aliases = lambda self, data: True
-        yaml.dump(commands_output, stream, 
-                  default_flow_style=False, 
-                  allow_unicode=True, 
+        yaml.dump(commands_output, stream,
+                  default_flow_style=False,
+                  allow_unicode=True,
                   default_style='',
                   Dumper=noalias_dumper)
 
