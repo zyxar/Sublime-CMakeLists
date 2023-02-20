@@ -12,7 +12,7 @@ def main():
         return 1
     parent = "scope:source.cmake#"
     with open(sys.argv[1], "r") as stream:
-        commands_input = yaml.load(stream)
+        commands_input = yaml.safe_load(stream)
     main = []
     contexts = { "main": main}
     for command, keywords in commands_input.items():
