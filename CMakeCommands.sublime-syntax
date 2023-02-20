@@ -478,10 +478,28 @@ contexts:
   - include: scope:source.cmake#args-common
   file-args:
   - meta_scope: meta.function-call.arguments.cmake
-  - match: \bWRITE\b
-    scope: variable.parameter.WRITE.cmake
-  - match: \bAPPEND\b
-    scope: variable.parameter.APPEND.cmake
+  - match: \bNO_SOURCE_PERMISSIONS\b
+    scope: variable.parameter.NO_SOURCE_PERMISSIONS.cmake
+  - match: \bUSE_SOURCE_PERMISSIONS\b
+    scope: variable.parameter.USE_SOURCE_PERMISSIONS.cmake
+  - match: \bPERMISSIONS\b
+    scope: variable.parameter.PERMISSIONS.cmake
+  - match: \bFILE_PERMISSIONS\b
+    scope: variable.parameter.FILE_PERMISSIONS.cmake
+  - match: \bDIRECTORY_PERMISSIONS\b
+    scope: variable.parameter.DIRECTORY_PERMISSIONS.cmake
+  - match: \bREGEX\b
+    scope: variable.parameter.REGEX.cmake
+  - match: \bTIMEOUT\b
+    scope: variable.parameter.TIMEOUT.cmake
+  - match: \bINPUT\b
+    scope: variable.parameter.INPUT.cmake
+  - match: \bOUTPUT\b
+    scope: variable.parameter.OUTPUT.cmake
+  - match: \bDESTINATION\b
+    scope: variable.parameter.DESTINATION.cmake
+  - match: \bVERBOSE\b
+    scope: variable.parameter.VERBOSE.cmake
   - match: \bREAD\b
     scope: variable.parameter.READ.cmake
   - match: \bOFFSET\b
@@ -492,26 +510,170 @@ contexts:
     scope: variable.parameter.HEX.cmake
   - match: \bSTRINGS\b
     scope: variable.parameter.STRINGS.cmake
-  - match: \bHASH\b
-    scope: variable.parameter.HASH.cmake
+  - match: \bLENGTH_MAXIMUM\b
+    scope: variable.parameter.LENGTH_MAXIMUM.cmake
+  - match: \bLENGTH_MINIMUM\b
+    scope: variable.parameter.LENGTH_MINIMUM.cmake
+  - match: \bLIMIT_COUNT\b
+    scope: variable.parameter.LIMIT_COUNT.cmake
+  - match: \bLIMIT_INPUT\b
+    scope: variable.parameter.LIMIT_INPUT.cmake
+  - match: \bLIMIT_OUTPUT\b
+    scope: variable.parameter.LIMIT_OUTPUT.cmake
+  - match: \bNEWLINE_CONSUME\b
+    scope: variable.parameter.NEWLINE_CONSUME.cmake
+  - match: \bNO_HEX_CONVERSION\b
+    scope: variable.parameter.NO_HEX_CONVERSION.cmake
+  - match: \bENCODING\b
+    scope: variable.parameter.ENCODING.cmake
+  - match: \bMD5\b
+    scope: variable.parameter.MD5.cmake
+  - match: \bSHA1\b
+    scope: variable.parameter.SHA1.cmake
+  - match: \bSHA224\b
+    scope: variable.parameter.SHA224.cmake
+  - match: \bSHA256\b
+    scope: variable.parameter.SHA256.cmake
+  - match: \bSHA384\b
+    scope: variable.parameter.SHA384.cmake
+  - match: \bSHA512\b
+    scope: variable.parameter.SHA512.cmake
+  - match: \bSHA3_224\b
+    scope: variable.parameter.SHA3_224.cmake
+  - match: \bSHA3_256\b
+    scope: variable.parameter.SHA3_256.cmake
+  - match: \bSHA3_384\b
+    scope: variable.parameter.SHA3_384.cmake
+  - match: \bSHA3_512\b
+    scope: variable.parameter.SHA3_512.cmake
+  - match: \bTIMESTAMP\b
+    scope: variable.parameter.TIMESTAMP.cmake
+  - match: \bUTC\b
+    scope: variable.parameter.UTC.cmake
+  - match: \bGET_RUNTIME_DEPENDENCIES\b
+    scope: variable.parameter.GET_RUNTIME_DEPENDENCIES.cmake
+  - match: \bRESOLVED_DEPENDENCIES_VAR\b
+    scope: variable.parameter.RESOLVED_DEPENDENCIES_VAR.cmake
+  - match: \bUNRESOLVED_DEPENDENCIES_VAR\b
+    scope: variable.parameter.UNRESOLVED_DEPENDENCIES_VAR.cmake
+  - match: \bCONFLICTING_DEPENDENCIES_PREFIX\b
+    scope: variable.parameter.CONFLICTING_DEPENDENCIES_PREFIX.cmake
+  - match: \bEXECUTABLES\b
+    scope: variable.parameter.EXECUTABLES.cmake
+  - match: \bLIBRARIES\b
+    scope: variable.parameter.LIBRARIES.cmake
+  - match: \bMODULES\b
+    scope: variable.parameter.MODULES.cmake
+  - match: \bDIRECTORIES\b
+    scope: variable.parameter.DIRECTORIES.cmake
+  - match: \bBUNDLE_EXECUTABLE\b
+    scope: variable.parameter.BUNDLE_EXECUTABLE.cmake
+  - match: \bPRE_INCLUDE_REGEXES\b
+    scope: variable.parameter.PRE_INCLUDE_REGEXES.cmake
+  - match: \bPRE_EXCLUDE_REGEXES\b
+    scope: variable.parameter.PRE_EXCLUDE_REGEXES.cmake
+  - match: \bPOST_INCLUDE_REGEXES\b
+    scope: variable.parameter.POST_INCLUDE_REGEXES.cmake
+  - match: \bPOST_EXCLUDE_REGEXES\b
+    scope: variable.parameter.POST_EXCLUDE_REGEXES.cmake
+  - match: \bPOST_INCLUDE_FILES\b
+    scope: variable.parameter.POST_INCLUDE_FILES.cmake
+  - match: \bPOST_EXCLUDE_FILES\b
+    scope: variable.parameter.POST_EXCLUDE_FILES.cmake
+  - match: \bWRITE\b
+    scope: variable.parameter.WRITE.cmake
+  - match: \bAPPEND\b
+    scope: variable.parameter.APPEND.cmake
+  - match: \bTOUCH\b
+    scope: variable.parameter.TOUCH.cmake
+  - match: \bTOUCH_NOCREATE\b
+    scope: variable.parameter.TOUCH_NOCREATE.cmake
+  - match: \bGENERATE\b
+    scope: variable.parameter.GENERATE.cmake
+  - match: \bCONDITION\b
+    scope: variable.parameter.CONDITION.cmake
+  - match: \bTARGET\b
+    scope: variable.parameter.TARGET.cmake
+  - match: \bCONFIGURE\b
+    scope: variable.parameter.CONFIGURE.cmake
+  - match: \bESCAPE_QUOTES\b
+    scope: variable.parameter.ESCAPE_QUOTES.cmake
+  - match: \b@ONLY\b
+    scope: variable.parameter.@ONLY.cmake
+  - match: \bNEWLINE_STYLE\b
+    scope: variable.parameter.NEWLINE_STYLE.cmake
+  - match: \bUNIX\b
+    scope: variable.parameter.UNIX.cmake
+  - match: \bDOS\b
+    scope: variable.parameter.DOS.cmake
+  - match: \bWIN32\b
+    scope: variable.parameter.WIN32.cmake
+  - match: \bLF\b
+    scope: variable.parameter.LF.cmake
+  - match: \bCRLF\b
+    scope: variable.parameter.CRLF.cmake
+  - match: \bCONTENT\b
+    scope: variable.parameter.CONTENT.cmake
   - match: \bGLOB\b
     scope: variable.parameter.GLOB.cmake
-  - match: \bLIST_DIRECTORIES\b
-    scope: variable.parameter.LIST_DIRECTORIES.cmake
-  - match: \bRELATIVE\b
-    scope: variable.parameter.RELATIVE.cmake
   - match: \bGLOB_RECURSE\b
     scope: variable.parameter.GLOB_RECURSE.cmake
   - match: \bFOLLOW_SYMLINKS\b
     scope: variable.parameter.FOLLOW_SYMLINKS.cmake
-  - match: \bRENAME\b
-    scope: variable.parameter.RENAME.cmake
+  - match: \bLIST_DIRECTORIES\b
+    scope: variable.parameter.LIST_DIRECTORIES.cmake
+  - match: \bRELATIVE\b
+    scope: variable.parameter.RELATIVE.cmake
+  - match: \bCONFIGURE_DEPENDS\b
+    scope: variable.parameter.CONFIGURE_DEPENDS.cmake
+  - match: \bMAKE_DIRECTORY\b
+    scope: variable.parameter.MAKE_DIRECTORY.cmake
   - match: \bREMOVE\b
     scope: variable.parameter.REMOVE.cmake
   - match: \bREMOVE_RECURSE\b
     scope: variable.parameter.REMOVE_RECURSE.cmake
-  - match: \bMAKE_DIRECTORY\b
-    scope: variable.parameter.MAKE_DIRECTORY.cmake
+  - match: \bRENAME\b
+    scope: variable.parameter.RENAME.cmake
+  - match: \bNO_REPLACE\b
+    scope: variable.parameter.NO_REPLACE.cmake
+  - match: \bCOPY_FILE\b
+    scope: variable.parameter.COPY_FILE.cmake
+  - match: \bONLY_IF_DIFFERENT\b
+    scope: variable.parameter.ONLY_IF_DIFFERENT.cmake
+  - match: \bRESULT\b
+    scope: variable.parameter.RESULT.cmake
+  - match: \bCOPY\b
+    scope: variable.parameter.COPY.cmake
+  - match: \bINSTALL\b
+    scope: variable.parameter.INSTALL.cmake
+  - match: \bFOLLOW_SYMLINK_CHAIN\b
+    scope: variable.parameter.FOLLOW_SYMLINK_CHAIN.cmake
+  - match: \bFILES_MATCHING\b
+    scope: variable.parameter.FILES_MATCHING.cmake
+  - match: \bPATTERN\b
+    scope: variable.parameter.PATTERN.cmake
+  - match: \bEXCLUDE\b
+    scope: variable.parameter.EXCLUDE.cmake
+  - match: \bSIZE\b
+    scope: variable.parameter.SIZE.cmake
+  - match: \bREAD_SYMLINK\b
+    scope: variable.parameter.READ_SYMLINK.cmake
+  - match: \bCREATE_LINK\b
+    scope: variable.parameter.CREATE_LINK.cmake
+  - match: \bCOPY_ON_ERROR\b
+    scope: variable.parameter.COPY_ON_ERROR.cmake
+  - match: \bSYMBOLIC\b
+    scope: variable.parameter.SYMBOLIC.cmake
+  - match: \bCHMOD\b
+    scope: variable.parameter.CHMOD.cmake
+  - match: \bCHMOD_RECURSE\b
+    scope: variable.parameter.CHMOD_RECURSE.cmake
+  - match: \bREAL_PATH\b
+    scope: variable.parameter.REAL_PATH.cmake
+  - match: \bBASE_DIRECTORY\b
+    scope: variable.parameter.BASE_DIRECTORY.cmake
+  - match: \bEXPAND_TILDE\b
+    scope: variable.parameter.EXPAND_TILDE.cmake
   - match: \bRELATIVE_PATH\b
     scope: variable.parameter.RELATIVE_PATH.cmake
   - match: \bTO_CMAKE_PATH\b
@@ -522,44 +684,38 @@ contexts:
     scope: variable.parameter.DOWNLOAD.cmake
   - match: \bUPLOAD\b
     scope: variable.parameter.UPLOAD.cmake
-  - match: \bTIMESTAMP\b
-    scope: variable.parameter.TIMESTAMP.cmake
-  - match: \bUTC\b
-    scope: variable.parameter.UTC.cmake
-  - match: \bGENERATE\b
-    scope: variable.parameter.GENERATE.cmake
-  - match: \bOUTPUT\b
-    scope: variable.parameter.OUTPUT.cmake
-  - match: \bINPUT\b
-    scope: variable.parameter.INPUT.cmake
-  - match: \bCONTENT\b
-    scope: variable.parameter.CONTENT.cmake
-  - match: \bCONDITION\b
-    scope: variable.parameter.CONDITION.cmake
-  - match: \bCOPY\b
-    scope: variable.parameter.COPY.cmake
-  - match: \bINSTALL\b
-    scope: variable.parameter.INSTALL.cmake
-  - match: \bDESTINATION\b
-    scope: variable.parameter.DESTINATION.cmake
-  - match: \bFILE_PERMISSIONS\b
-    scope: variable.parameter.FILE_PERMISSIONS.cmake
-  - match: \bDIRECTORY_PERMISSIONS\b
-    scope: variable.parameter.DIRECTORY_PERMISSIONS.cmake
-  - match: \bNO_SOURCE_PERMISSIONS\b
-    scope: variable.parameter.NO_SOURCE_PERMISSIONS.cmake
-  - match: \bUSE_SOURCE_PERMISSIONS\b
-    scope: variable.parameter.USE_SOURCE_PERMISSIONS.cmake
-  - match: \bFILES_MATCHING\b
-    scope: variable.parameter.FILES_MATCHING.cmake
-  - match: \bPATTERN\b
-    scope: variable.parameter.PATTERN.cmake
-  - match: \bREGEX\b
-    scope: variable.parameter.REGEX.cmake
-  - match: \bEXCLUDE\b
-    scope: variable.parameter.EXCLUDE.cmake
-  - match: \bPERMISSIONS\b
-    scope: variable.parameter.PERMISSIONS.cmake
+  - match: \bINACTIVITY_TIMEOUT\b
+    scope: variable.parameter.INACTIVITY_TIMEOUT.cmake
+  - match: \bLOG\b
+    scope: variable.parameter.LOG.cmake
+  - match: \bSHOW_PROGRESS\b
+    scope: variable.parameter.SHOW_PROGRESS.cmake
+  - match: \bSTATUS\b
+    scope: variable.parameter.STATUS.cmake
+  - match: \bUSERPWD\b
+    scope: variable.parameter.USERPWD.cmake
+  - match: \bHTTPHEADER\b
+    scope: variable.parameter.HTTPHEADER.cmake
+  - match: \bNETRC\b
+    scope: variable.parameter.NETRC.cmake
+  - match: \bIGNORED\b
+    scope: variable.parameter.IGNORED.cmake
+  - match: \bOPTIONAL\b
+    scope: variable.parameter.OPTIONAL.cmake
+  - match: \bREQUIRED\b
+    scope: variable.parameter.REQUIRED.cmake
+  - match: \bTLS_VERIFY\b
+    scope: variable.parameter.TLS_VERIFY.cmake
+  - match: \bTLS_CAINFO\b
+    scope: variable.parameter.TLS_CAINFO.cmake
+  - match: \bEXPECTED_HASH\b
+    scope: variable.parameter.EXPECTED_HASH.cmake
+  - match: \bEXPECTED_MD5\b
+    scope: variable.parameter.EXPECTED_MD5.cmake
+  - match: \bRANGE_START\b
+    scope: variable.parameter.RANGE_START.cmake
+  - match: \bRANGE_END\b
+    scope: variable.parameter.RANGE_END.cmake
   - match: \bLOCK\b
     scope: variable.parameter.LOCK.cmake
   - match: \bDIRECTORY\b
@@ -568,10 +724,32 @@ contexts:
     scope: variable.parameter.RELEASE.cmake
   - match: \bGUARD\b
     scope: variable.parameter.GUARD.cmake
+  - match: \bFUNCTION\b
+    scope: variable.parameter.FUNCTION.cmake
+  - match: \bFILE\b
+    scope: variable.parameter.FILE.cmake
+  - match: \bPROCESS\b
+    scope: variable.parameter.PROCESS.cmake
   - match: \bRESULT_VARIABLE\b
     scope: variable.parameter.RESULT_VARIABLE.cmake
-  - match: \bTIMEOUT\b
-    scope: variable.parameter.TIMEOUT.cmake
+  - match: \bARCHIVE_CREATE\b
+    scope: variable.parameter.ARCHIVE_CREATE.cmake
+  - match: \bPATHS\b
+    scope: variable.parameter.PATHS.cmake
+  - match: \bFORMAT\b
+    scope: variable.parameter.FORMAT.cmake
+  - match: \bCOMPRESSION\b
+    scope: variable.parameter.COMPRESSION.cmake
+  - match: \bCOMPRESSION_LEVEL\b
+    scope: variable.parameter.COMPRESSION_LEVEL.cmake
+  - match: \bMTIME\b
+    scope: variable.parameter.MTIME.cmake
+  - match: \bARCHIVE_EXTRACT\b
+    scope: variable.parameter.ARCHIVE_EXTRACT.cmake
+  - match: \bPATTERNS\b
+    scope: variable.parameter.PATTERNS.cmake
+  - match: \bLIST_ONLY\b
+    scope: variable.parameter.LIST_ONLY.cmake
   - include: scope:source.cmake#args-common
   find_file-args:
   - meta_scope: meta.function-call.arguments.cmake
