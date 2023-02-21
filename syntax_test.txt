@@ -360,3 +360,18 @@ foreach(iexample RANGE ${nexample})
     #            ^^^^^ meta.group.foreach.cmake meta.function-call.arguments.cmake variable.parameter.foreach.RANGE.cmake
 endforeach()
 # <- meta.group.foreach.cmake meta.function-call.cmake keyword.control.endforeach.cmake
+
+test_nested_conditions(Abc CONDITION GCC AND (arch STREQUAL "x") COMPILE_OPTIONS -fno)
+# ^^^^^^^^^^^^^^^^^^^^ meta.function-call.generic.cmake variable.function.generic
+#                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.function-call.arguments.generic
+#                     ^ punctuation.section.parens.begin
+#                          ^^^^^^^^^ variable.parameter.generic
+#                                        ^^^ keyword.operator
+#                                            ^ punctuation.section.parens.begin
+#                                                  ^^^^^^^^ variable.parameter.if.STREQUAL.cmake
+#                                                              ^ punctuation.section.parens.end
+#                                                                ^^^^^^^^^^^^^^^ variable.parameter.generic
+#                                                                                ^^^^ meta.string.unquoted
+#                                                                                    ^ punctuation.section.parens.end
+
+# <- - meta.function-call

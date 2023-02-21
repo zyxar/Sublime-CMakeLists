@@ -206,8 +206,7 @@ contexts:
     - include: break
     - include: main
 
-  if-args:
-    - meta_scope: meta.function-call.arguments.cmake
+  if-args-inline:
     - match: \(
       scope: punctuation.section.parens.begin.cmake
       push: if-args
@@ -266,6 +265,10 @@ contexts:
         - match: \n
         - match: ''
           pop: true
+
+  if-args:
+    - meta_scope: meta.function-call.arguments.cmake
+    - include: if-args-inline
     - include: args-common
 
   elseif:
@@ -520,6 +523,8 @@ contexts:
     - match: \)
       scope: punctuation.section.parens.end.cmake
       pop: true
+    # This might be useful for commands which take literal condition expressions as arguments
+    - include: if-args-inline
     - match: (?={{generic_named_parameter}})
       push: unquoted-argument-or-keyword
     - include: string-unquoted
