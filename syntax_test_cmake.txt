@@ -361,6 +361,15 @@ foreach(iexample RANGE ${nexample})
 endforeach()
 # <- meta.group.foreach.cmake meta.function-call.cmake keyword.control.endforeach.cmake
 
+file(GENERATE
+    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}${configsubdir}/foo.hpp"
+    CONTENT "
+        $<$<BOOL:Python_FOUND>:#define PYTHON_IS_PRESENT>
+        #                      ^^^^^^^^^^^^^^^^^^^^^^^^^^ - comment.line
+    "
+)
+# <- - string.quoted
+
 test_nested_conditions(Abc CONDITION GCC AND (arch STREQUAL "x") COMPILE_OPTIONS -fno)
 # ^^^^^^^^^^^^^^^^^^^^ meta.function-call.generic.cmake variable.function.generic
 #                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.function-call.arguments.generic
