@@ -629,7 +629,8 @@ contexts:
           set:
             - meta_content_scope: meta.generator-expression.cmake
             - include: generator-expression-common
-            - include: prototype
+            - include: variable-substitution
+            - include: generator-expression
         - include: prototype
 
   generator-expression-common:
