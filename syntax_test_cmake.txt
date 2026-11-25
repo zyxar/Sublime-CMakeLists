@@ -233,6 +233,10 @@ endwhile(${var})
 #^^^^^^^ keyword.control
 
 set(TGT_PATH $<TARGET_FILE:tgt1>)
+#            ^ punctuation.definition.variable
+#             ^ punctuation.section.block.begin
+#                         ^ punctuation.separator.generator-expression
+#                              ^ punctuation.section.block.end
 
 if(NOT (CMAKE_VERSION VERSION_LESS 3.0))  # CMake >= 3.0
   # Build an interface library target:
@@ -384,3 +388,15 @@ test_nested_conditions(Abc CONDITION GCC AND (arch STREQUAL "x") COMPILE_OPTIONS
 #                                                                                    ^ punctuation.section.parens.end
 
 # <- - meta.function-call
+
+if(a MATCHES "^\\$<")
+#                 ^ - punctuation.section.block.begin
+#                  ^ punctuation.definition.string.end
+    list(APPEND b "${a}")
+#   ^^^^ support.function
+else()
+# ^^ keyword.control
+    list(APPEND b "$<BUILD_INTERFACE:${a}>")
+#   ^^^^ support.function
+endif()
+# ^^^ keyword.control

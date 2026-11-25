@@ -617,7 +617,7 @@ contexts:
         - include: prototype
 
   generator-expression:
-    - match: (\$)(<)
+    - match: (\$)(<)(?=.*>)
       captures:
         1: punctuation.definition.variable.generator-expression.cmake
         2: punctuation.section.block.begin.cmake
